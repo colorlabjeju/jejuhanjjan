@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>제주한잔 — 나의 취향 컬러</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F2F1EF; --ink:#16161A; --ink2:#3C3C44; --ink3:#83838C; --border:#E5E4E1;
+  --border2:#D8D7D3;
+  --paper:#FFFFFF;
+  --point:#00AEEF; --point-d:#0090C8; --point-l:#E2F5FD; --point-l2:#C4EAFA; --point-dk:#023A50;
+  --teal:#1D9E75; --teal-l:#E8F3EE; --teal-dk:#0C5C42;
+  --purple:#6E6AAE; --purple-l:#ECEBF3; --purple-dk:#2C2A50;
+  --pink:#B85878; --pink-l:#F6EBEF; --pink-dk:#4B1F30;
+  --amber:#A67C2E; --amber-l:#F3ECDE; --amber-dk:#3D2E12;
+  --coral:#C05C3A; --coral-l:#F4E9E3; --coral-dk:#402016;
+  --r:9px; --r-lg:13px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* ── LAYOUT ── */
+.layout{display:grid;grid-template-columns:272px 1fr;grid-template-rows:60px 1fr;min-height:100vh}
+
+/* ── TOPBAR ── */
+.topbar{grid-column:1/-1;background:var(--point);border-bottom:0.5px solid var(--point-d);display:flex;align-items:center;padding:0 26px;gap:14px;position:sticky;top:0;z-index:200;box-shadow:0 1px 8px rgba(0,174,239,.15)}
+.logo{font-family:'Noto Serif KR',serif;font-size:18px;font-weight:600;color:#fff;letter-spacing:.01em;white-space:nowrap}
+.logo-img{height:26px;width:auto;display:block}
+.logo span{color:#E2F5FD}
+.topbar-tabs{display:flex;gap:2px;background:rgba(255,255,255,.18);border-radius:8px;padding:3px}
+.ttab{padding:6px 13px;border-radius:6px;border:none;background:transparent;color:rgba(255,255,255,.85);font-family:inherit;font-size:12px;cursor:pointer;transition:all .14s;white-space:nowrap}
+.ttab:hover{color:#fff}
+.ttab.on{background:#fff;color:var(--point-dk);font-weight:600;border:none;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.topbar-sep{flex:1}
+.topbar-pill{font-size:11px;color:#fff;padding:4px 10px;border:0.5px solid rgba(255,255,255,.4);border-radius:20px;white-space:nowrap;background:rgba(255,255,255,.12)}
+
+/* ── SIDEBAR ── */
+.sidebar{background:var(--paper);border-right:0.5px solid var(--border);padding:18px 0;display:flex;flex-direction:column;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto}
+.sb-sec{padding:14px 16px;border-bottom:0.5px solid var(--border)}
+.sb-sec:last-child{border-bottom:none}
+.sb-lbl{font-size:10px;font-weight:500;color:var(--ink3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.scale-row{display:flex;gap:3px}
+.sc-btn{flex:1;padding:6px 0;border-radius:6px;border:0.5px solid var(--border);background:var(--cream);color:var(--ink3);cursor:pointer;font-family:inherit;text-align:center;transition:all .13s}
+.sc-btn:hover{border-color:var(--point-l2)}
+.sc-btn .sv{font-size:14px;font-weight:500;display:block}
+.sc-btn .sl{font-size:9px}
+.alc-col{display:flex;flex-direction:column;gap:4px}
+.alc-btn{padding:8px 11px;border-radius:7px;border:0.5px solid var(--border);background:var(--cream);color:var(--ink2);cursor:pointer;font-family:inherit;font-size:12px;display:flex;align-items:center;transition:all .13s}
+.alc-btn:hover{border-color:var(--point-l2)}
+.alc-btn .ab{font-weight:500;font-size:13px}
+.alc-btn .ar{color:var(--ink3);font-size:11px;margin-left:auto}
+.type-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.type-btn{padding:8px;border-radius:7px;border:0.5px solid var(--border);background:var(--cream);cursor:pointer;font-family:inherit;display:flex;flex-direction:column;gap:3px;transition:all .13s}
+.type-btn:hover{border-color:var(--point-l2)}
+.type-btn .tn{font-size:12px;font-weight:500;color:var(--ink)}
+.type-btn .tc{font-size:10px;color:var(--ink3)}
+.tr-btn{padding:7px 8px;border-radius:7px;border:0.5px solid var(--border);background:var(--cream);cursor:pointer;font-family:inherit;display:flex;flex-direction:column;gap:2px;transition:all .13s;text-align:left}
+.tr-btn .tn{font-size:11px;font-weight:500;color:var(--ink)}
+.tr-btn .tc{font-size:9px;color:var(--ink3);letter-spacing:.02em}
+.tr-map-box{display:flex;flex-direction:column;gap:8px}
+.tr-map-svg{width:100%;height:auto;display:block;background:linear-gradient(160deg,var(--point-l),var(--cream));border-radius:9px;border:0.5px solid var(--border)}
+.tr-zone-marker{cursor:pointer;transition:opacity .13s}
+.tr-zone-marker:hover{opacity:.75}
+.tr-zone-hit{cursor:pointer}
+.tr-legend{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+.tr-leg-item{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--ink2);padding:3px 6px;border-radius:6px;cursor:pointer;border:0.5px solid transparent;transition:all .12s}
+.tr-leg-item:hover{background:var(--cream)}
+.tr-leg-item.on{background:var(--point-l);border-color:var(--point)}
+.tr-leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.tr-leg-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tr-leg-cnt{margin-left:auto;font-size:9px;color:var(--ink3);flex-shrink:0}
+.find-btn{margin:14px 16px 0;padding:11px;border-radius:var(--r);background:var(--point);color:#fff;font-family:inherit;font-size:13px;font-weight:500;border:none;cursor:pointer;width:calc(100% - 32px);transition:opacity .13s}
+.find-btn:hover{background:var(--point-d)}
+.find-btn:active{opacity:.9}
+
+/* ── MAIN ── */
+.main{padding:22px 26px;display:flex;flex-direction:column;gap:18px;overflow-y:auto;height:calc(100vh - 60px)}
+.page{display:none}.page.active{display:flex;flex-direction:column;gap:18px}
+
+/* ── 공통 ── */
+.pill{font-size:11px;padding:3px 9px;border-radius:20px;border:0.5px solid currentColor;display:inline-flex;align-items:center;gap:4px}
+.pill-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.sec-head{display:flex;align-items:center;gap:10px}
+.sec-title{font-size:15px;font-weight:500;color:var(--ink)}
+.cnt-badge{font-size:11px;color:var(--ink3);background:var(--cream);padding:3px 9px;border-radius:20px;border:0.5px solid var(--border)}
+.empty-state{text-align:center;padding:56px 20px;color:var(--ink3);display:flex;flex-direction:column;align-items:center;gap:10px}
+.es-title{font-size:15px;font-weight:500;color:var(--ink2)}
+.es-sub{font-size:12px;line-height:1.65}
+
+/* ── 추천 카드 ── */
+.profile-banner{background:var(--paper);border:1px solid var(--point-l2);border-radius:var(--r-lg);padding:16px 20px;display:flex;align-items:center;gap:16px;box-shadow:0 1px 8px rgba(0,174,239,.05)}
+.pb-swatches{display:flex;gap:4px}
+.pb-sw{width:28px;height:28px;border-radius:6px;flex-shrink:0}
+.pb-title{font-family:'Noto Serif KR',serif;font-size:16px;font-weight:600;color:var(--ink);margin-bottom:2px}
+.pb-sub{font-size:11px;color:var(--ink3)}
+.pb-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:11px}
+.drink-card{background:var(--paper);border-radius:var(--r-lg);border:0.5px solid var(--border);overflow:hidden;cursor:default;transition:border-color .13s}
+.drink-card:hover{border-color:var(--point);box-shadow:0 4px 16px rgba(0,174,239,.10)}
+.card-bar{height:5px;width:100%}
+.card-body{padding:12px 14px}
+.card-name{font-size:13px;font-weight:500;color:var(--ink);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-meta{font-size:11px;color:var(--ink3);margin-bottom:8px}
+.brow{display:flex;align-items:center;gap:6px}
+.blbl{font-size:10px;color:var(--ink3);width:24px;flex-shrink:0}
+.btrack{flex:1;height:3px;background:var(--border);border-radius:2px;overflow:hidden}
+.bfill{height:100%;border-radius:2px}
+.card-foot{padding:8px 14px;border-top:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.type-badge{font-size:10px;padding:2px 7px;border-radius:5px}
+.card-btns{display:flex;gap:4px}
+.cbtn{font-size:11px;padding:4px 9px;border-radius:6px;border:0.5px solid var(--border);background:transparent;color:var(--ink2);cursor:pointer;font-family:inherit;transition:all .12s}
+.cbtn:hover{border-color:var(--point);color:var(--point-dk)}
+.cbtn.p{background:var(--point);color:#fff;border-color:var(--point)}
+.cbtn:active{opacity:.8}
+
+/* ── 상세 모달 ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(28,27,24,.42);z-index:500;display:none;align-items:flex-start;justify-content:flex-end;padding:60px 18px 18px}
+.modal-overlay.open{display:flex}
+.modal{width:500px;max-height:calc(100vh - 80px);background:var(--paper);border-radius:16px;border:0.5px solid var(--border);overflow-y:auto;display:flex;flex-direction:column}
+.mhdr{padding:18px 20px 0;display:flex;align-items:flex-start;gap:12px}
+.mcolor{width:48px;height:48px;border-radius:9px;flex-shrink:0}
+.mtitle{font-family:'Noto Serif KR',serif;font-size:19px;font-weight:600;color:var(--ink);line-height:1.2}
+.msub{font-size:11px;color:var(--ink3);margin-top:3px}
+.mclose{margin-left:auto;background:none;border:none;font-size:19px;color:var(--ink3);cursor:pointer;padding:3px;flex-shrink:0}
+.mbody{padding:16px 20px;display:flex;flex-direction:column;gap:16px}
+.m-sec-lbl{font-size:10px;font-weight:500;color:var(--ink3);letter-spacing:.07em;text-transform:uppercase;margin-bottom:7px;padding-bottom:5px;border-bottom:0.5px solid var(--border)}
+.mstat-row{display:flex;gap:7px}
+.mstat{flex:1;background:var(--cream);border-radius:7px;padding:9px 11px}
+.mstat-lbl{font-size:10px;color:var(--ink3);margin-bottom:2px}
+.mstat-val{font-size:15px;font-weight:500;color:var(--ink)}
+.mstat-bar{margin-top:5px;height:3px;background:var(--border);border-radius:2px;overflow:hidden}
+.mstat-fill{height:100%;border-radius:2px}
+.mdesc{font-size:12px;color:var(--ink2);line-height:1.75}
+.ing-row{display:flex;gap:9px;align-items:flex-start}
+.ing-icon{width:30px;height:30px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:15px;background:var(--cream)}
+.ing-name{font-size:12px;font-weight:500;color:var(--ink);margin-bottom:1px}
+.ing-desc{font-size:11px;color:var(--ink3);line-height:1.5}
+.bw-mini{background:var(--cream);border-radius:9px;padding:12px}
+.bw-mini-name{font-size:13px;font-weight:500;color:var(--ink);margin-bottom:3px}
+.bw-mini-loc{font-size:11px;color:var(--teal);margin-bottom:6px}
+.bw-mini-desc{font-size:12px;color:var(--ink2);line-height:1.6}
+.pair-tags{display:flex;gap:5px;flex-wrap:wrap}
+.pair-tag{font-size:12px;padding:4px 10px;border-radius:20px;background:var(--cream);color:var(--ink2);border:0.5px solid var(--border)}
+.mactions{padding:0 20px 18px;display:flex;gap:8px}
+.mabtn{flex:1;padding:10px;border-radius:var(--r);font-family:inherit;font-size:13px;font-weight:500;cursor:pointer;transition:opacity .12s}
+.mabtn.p{background:var(--point);color:#fff;border:none}
+.mabtn.s{background:transparent;border:0.5px solid var(--border);color:var(--ink2)}
+.mabtn.s:hover{border-color:var(--point);color:var(--point-dk)}
+.mabtn:active{opacity:.8}
+
+/* ── 기록(다이어리) 탭 ── */
+.diary-layout{display:grid;grid-template-columns:1fr 320px;gap:16px;align-items:start}
+
+/* 기록 카드 */
+.log-card{background:var(--paper);border-radius:var(--r-lg);border:0.5px solid var(--border);overflow:hidden;transition:border-color .13s}
+.log-card:hover{border-color:var(--point)}
+.log-card-top{display:flex;gap:0}
+.log-color-strip{width:5px;flex-shrink:0}
+.log-body{padding:14px 16px;flex:1;min-width:0}
+.log-header{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px}
+.log-name{font-size:14px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.log-date{font-size:11px;color:var(--ink3);white-space:nowrap;flex-shrink:0}
+.log-meta-row{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.log-stars{display:flex;gap:2px;color:#EF9F27;font-size:14px}
+.log-type-badge{font-size:10px;padding:2px 7px;border-radius:5px}
+.log-context{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.lctx{font-size:11px;padding:2px 8px;border-radius:6px;background:var(--cream);color:var(--ink3);border:0.5px solid var(--border);display:inline-flex;align-items:center;gap:3px}
+.log-feeling{font-size:13px;color:var(--ink2);line-height:1.65;margin-bottom:10px}
+.log-flavor-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}
+.ftag{font-size:11px;padding:3px 9px;border-radius:20px;border:0.5px solid currentColor}
+.log-note{font-size:12px;color:var(--ink3);line-height:1.55;padding:10px 12px;background:var(--cream);border-radius:8px;border-left:2px solid var(--border)}
+.log-palette{display:flex;gap:3px;margin-top:10px}
+.lp-sw{width:20px;height:20px;border-radius:4px}
+.log-actions{display:flex;gap:6px;margin-top:10px}
+.log-action-btn{font-size:11px;padding:4px 10px;border-radius:6px;border:0.5px solid var(--border);background:transparent;color:var(--ink3);cursor:pointer;font-family:inherit}
+
+/* 기록 패널 (오른쪽) */
+.record-panel{background:var(--paper);border-radius:var(--r-lg);border:0.5px solid var(--border);position:sticky;top:16px}
+.rp-header{padding:14px 16px;border-bottom:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.rp-title{font-size:13px;font-weight:500;color:var(--ink)}
+.rp-subtitle{font-size:11px;color:var(--ink3)}
+.rp-body{padding:14px 16px;display:flex;flex-direction:column;gap:12px}
+.rp-field-label{font-size:10px;font-weight:500;color:var(--ink3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
+.rp-drink-info{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--cream);border-radius:8px}
+.rp-swatch{width:34px;height:34px;border-radius:7px;flex-shrink:0}
+.rp-drink-name{font-size:13px;font-weight:500;color:var(--ink)}
+.rp-drink-meta{font-size:11px;color:var(--ink3);margin-top:1px}
+
+/* 별점 선택 */
+.star-row{display:flex;gap:6px}
+.star-btn{font-size:22px;background:none;border:none;cursor:pointer;color:#E2DFDA;transition:color .12s;padding:0;line-height:1}
+.star-btn.on{color:#EF9F27}
+
+/* 상황 태그 선택 */
+.ctx-options{display:flex;gap:5px;flex-wrap:wrap}
+.ctx-opt{font-size:12px;padding:5px 10px;border-radius:20px;border:0.5px solid var(--border);background:var(--cream);color:var(--ink3);cursor:pointer;transition:all .12s;font-family:inherit}
+.ctx-opt.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* 향미 태그 */
+.flavor-options{display:flex;gap:5px;flex-wrap:wrap}
+.flv-opt{font-size:11px;padding:4px 9px;border-radius:20px;border:0.5px solid var(--border);background:var(--cream);color:var(--ink3);cursor:pointer;transition:all .12s;font-family:inherit}
+.flv-opt.on{border-color:var(--purple);background:var(--purple-l);color:var(--purple-dk)}
+
+/* 감정 선택 */
+.emotion-row{display:flex;gap:5px}
+.emo-btn{flex:1;padding:6px 4px;border-radius:8px;border:0.5px solid var(--border);background:var(--cream);cursor:pointer;text-align:center;font-family:inherit;transition:all .12s}
+.emo-btn .ef{font-size:18px;display:block;margin-bottom:2px}
+.emo-btn .el{font-size:9px;color:var(--ink3)}
+.emo-btn.on{border-color:var(--pink);background:var(--pink-l)}
+.emo-btn.on .el{color:var(--pink-dk)}
+
+/* 날씨 선택 */
+.weather-row{display:flex;gap:5px}
+.wx-btn{flex:1;padding:7px 4px;border-radius:7px;border:0.5px solid var(--border);background:var(--cream);cursor:pointer;text-align:center;font-family:inherit;font-size:18px;transition:all .12s}
+.wx-btn.on{border-color:var(--teal);background:var(--teal-l)}
+
+/* 텍스트 입력 */
+.rp-textarea{width:100%;padding:9px 11px;border:0.5px solid var(--border);border-radius:8px;background:var(--cream);font-family:inherit;font-size:12px;color:var(--ink);outline:none;resize:none;transition:border-color .13s}
+.rp-textarea:focus{border-color:var(--point)}
+.rp-input{width:100%;padding:8px 11px;border:0.5px solid var(--border);border-radius:8px;background:var(--cream);font-family:inherit;font-size:12px;color:var(--ink);outline:none;transition:border-color .13s}
+.rp-input:focus{border-color:var(--teal)}
+.save-btn-full{width:100%;padding:11px;border-radius:var(--r);background:var(--point);color:#fff;font-family:inherit;font-size:13px;font-weight:500;border:none;cursor:pointer;transition:opacity .13s}
+.save-btn-full:hover{background:var(--point-d)}
+.save-btn-full:active{opacity:.9}
+.no-selection{padding:24px 16px;text-align:center;color:var(--ink3);font-size:12px;line-height:1.7}
+
+/* 기록 통계 바 */
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.stat-box{background:var(--paper);border-radius:var(--r);border:0.5px solid var(--border);padding:12px 14px}
+.stat-lbl{font-size:10px;color:var(--ink3);margin-bottom:4px}
+.stat-val{font-size:20px;font-weight:500;color:var(--ink)}
+.stat-sub{font-size:10px;color:var(--ink3);margin-top:2px}
+
+/* ── 주종 안내 ── */
+.jj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+.jj-card{background:var(--paper);border-radius:var(--r-lg);border:0.5px solid var(--border);overflow:hidden;transition:border-color .13s}
+.jj-card:hover{border-color:var(--point)}
+.jj-strip{height:44px;display:flex}
+.jj-seg{flex:1}
+.jj-body{padding:14px}
+.jj-name{font-family:'Noto Serif KR',serif;font-size:15px;font-weight:600;color:var(--ink);margin-bottom:2px}
+.jj-eng{font-size:10px;color:var(--ink3);margin-bottom:9px}
+.jj-desc{font-size:12px;color:var(--ink2);line-height:1.7;margin-bottom:10px}
+.jj-3col{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:10px}
+.jjstat{background:var(--cream);border-radius:6px;padding:7px;text-align:center}
+.jjstat-lbl{font-size:9px;color:var(--ink3)}
+.jjstat-val{font-size:12px;font-weight:500;color:var(--ink);margin-top:1px}
+.jj-examples{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px}
+.jj-ex{font-size:10px;padding:2px 7px;border-radius:5px;border:0.5px solid currentColor}
+.jj-tip{font-size:11px;color:var(--ink2);line-height:1.55;background:var(--cream);border-radius:7px;padding:9px;margin-top:2px}
+
+/* ── 양조장 ── */
+.bw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+.bw-card{background:var(--paper);border-radius:var(--r-lg);border:0.5px solid var(--border);padding:16px;display:flex;flex-direction:column;gap:11px}
+.bw-hdr{display:flex;align-items:flex-start;gap:11px}
+.bw-emblem{width:42px;height:42px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.bw-name{font-size:13px;font-weight:500;color:var(--ink)}
+.bw-loc{font-size:11px;color:var(--teal);margin-top:2px}
+.bw-year{font-size:10px;color:var(--ink3);margin-top:1px}
+.bw-desc{font-size:12px;color:var(--ink2);line-height:1.65}
+.bw-prods{display:flex;gap:4px;flex-wrap:wrap}
+.bw-prod{font-size:10px;padding:2px 7px;border-radius:5px;background:var(--cream);color:var(--ink2);border:0.5px solid var(--border)}
+
+/* ── 리포트 ── */
+.report-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.rc{background:var(--paper);border-radius:var(--r-lg);border:0.5px solid var(--border);padding:16px;display:flex;flex-direction:column;gap:10px}
+.rc.wide{grid-column:1/-1}
+.rc-lbl{font-size:10px;font-weight:500;color:var(--ink3);letter-spacing:.07em;text-transform:uppercase}
+.rc-big{font-family:'Noto Serif KR',serif;font-size:19px;font-weight:600;color:var(--ink);line-height:1.3}
+.rc-desc{font-size:12px;color:var(--ink2);line-height:1.65}
+.r-pal{display:flex;gap:5px}
+.rpal-sw{flex:1;height:36px;border-radius:7px}
+.r-stats{display:flex;gap:8px}
+.r-stat{flex:1;background:var(--cream);border-radius:8px;padding:10px 12px}
+.rs-lbl{font-size:10px;color:var(--ink3);margin-bottom:3px}
+.rs-val{font-size:17px;font-weight:500;color:var(--ink)}
+.buy-list{display:flex;flex-direction:column;gap:7px}
+.buy-item{display:flex;align-items:center;gap:10px;padding:9px 11px;background:var(--cream);border-radius:9px}
+.buy-sw{width:30px;height:30px;border-radius:6px;flex-shrink:0}
+.buy-name{font-size:12px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.buy-meta{font-size:10px;color:var(--ink3);margin-top:1px}
+.buy-btn{font-size:11px;padding:4px 10px;border-radius:7px;background:var(--point);color:#fff;border:none;cursor:pointer;font-family:inherit;flex-shrink:0}
+.share-row{display:flex;gap:8px}
+.sh-btn{flex:1;padding:10px;border-radius:var(--r);border:0.5px solid var(--border);background:transparent;color:var(--ink2);font-family:inherit;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;transition:all .12s}
+.sh-btn:hover{border-color:var(--point);color:var(--point-dk)}
+
+@media(max-width:860px){
+  .layout{grid-template-columns:1fr;grid-template-rows:60px auto 1fr}
+  .sidebar{position:static;height:auto;border-right:none;border-bottom:0.5px solid var(--border);flex-direction:row;flex-wrap:wrap;padding:10px}
+  .sb-sec{border-bottom:none;padding:7px 9px;min-width:120px;flex:1}
+  .find-btn{margin:8px 9px 4px;width:calc(100% - 18px)}
+  .main{height:auto;padding:14px}
+  .diary-layout{grid-template-columns:1fr}
+  .record-panel{position:static}
+  .report-grid{grid-template-columns:1fr}
+  .rc.wide{grid-column:1}
+  .stats-bar{grid-template-columns:repeat(2,1fr)}
+  .modal{width:calc(100vw - 36px);max-width:500px}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+  <div class="topbar">
+    <img class="logo-img" src="data:image/png;base64,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" alt="제주한잔">
+    <div class="topbar-tabs">
+      <button class="ttab on" onclick="showPage('recommend',this)">추천</button>
+      <button class="ttab" onclick="showPage('diary',this)">기록</button>
+      <button class="ttab" onclick="showPage('terroir',this)">떼루아</button>
+      <button class="ttab" onclick="showPage('jujong',this)">주종 안내</button>
+      <button class="ttab" onclick="showPage('brewery',this)">양조장</button>
+      <button class="ttab" onclick="showPage('report',this)">리포트</button>
+    </div>
+    <div class="topbar-sep"></div>
+    <div class="topbar-pill" id="tp-count">보유 33종</div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sb-sec">
+      <div class="sb-lbl">당도</div>
+      <div class="scale-row" id="sweet-btns">
+        <button class="sc-btn" data-v="1" onclick="setSc('sweet',1,this)"><span class="sv">1</span><span class="sl">드라이</span></button>
+        <button class="sc-btn" data-v="2" onclick="setSc('sweet',2,this)"><span class="sv">2</span><span class="sl">약간</span></button>
+        <button class="sc-btn on" data-v="3" onclick="setSc('sweet',3,this)" style="border-color:var(--point);background:var(--point-l);color:var(--point-dk)"><span class="sv">3</span><span class="sl">중간</span></button>
+        <button class="sc-btn" data-v="4" onclick="setSc('sweet',4,this)"><span class="sv">4</span><span class="sl">달콤</span></button>
+        <button class="sc-btn" data-v="5" onclick="setSc('sweet',5,this)"><span class="sv">5</span><span class="sl">매우</span></button>
+      </div>
+    </div>
+    <div class="sb-sec">
+      <div class="sb-lbl">산미</div>
+      <div class="scale-row" id="sour-btns">
+        <button class="sc-btn on" data-v="1" onclick="setSc('sour',1,this)" style="border-color:var(--point);background:var(--point-l);color:var(--point-dk)"><span class="sv">1</span><span class="sl">없음</span></button>
+        <button class="sc-btn" data-v="2" onclick="setSc('sour',2,this)"><span class="sv">2</span><span class="sl">약간</span></button>
+        <button class="sc-btn" data-v="3" onclick="setSc('sour',3,this)"><span class="sv">3</span><span class="sl">중간</span></button>
+        <button class="sc-btn" data-v="4" onclick="setSc('sour',4,this)"><span class="sv">4</span><span class="sl">새콤</span></button>
+        <button class="sc-btn" data-v="5" onclick="setSc('sour',5,this)"><span class="sv">5</span><span class="sl">강함</span></button>
+      </div>
+    </div>
+    <div class="sb-sec">
+      <div class="sb-lbl">도수</div>
+      <div class="alc-col">
+        <button class="alc-btn on" data-v="low" onclick="setAlc('low',this)" style="border-color:var(--point);background:var(--point-l);color:var(--point-dk)"><span class="ab">저도</span><span class="ar">8–15%</span></button>
+        <button class="alc-btn" data-v="mid" onclick="setAlc('mid',this)"><span class="ab">중도</span><span class="ar">16–25%</span></button>
+        <button class="alc-btn" data-v="high" onclick="setAlc('high',this)"><span class="ab">고도</span><span class="ar">21–52%</span></button>
+      </div>
+    </div>
+    <div class="sb-sec">
+      <div class="sb-lbl">주종</div>
+      <div class="type-grid">
+        <button class="type-btn on" data-v="탁주" onclick="setType('탁주',this)" style="border-color:var(--point);background:var(--point-l)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="6" fill="#9FE1CB"/><rect x="4" y="5" width="8" height="3" rx="1.5" fill="#1D9E75" opacity=".5"/><rect x="4" y="1" width="8" height="2" rx="1" fill="#1D9E75"/></svg><div><div class="tn" style="color:var(--point-dk)">탁주</div><div class="tc">13종</div></div></button>
+        <button class="type-btn" data-v="약주" onclick="setType('약주',this)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 2H11L12 6H4L5 2Z" fill="#AFA9EC"/><rect x="4" y="6" width="8" height="8" rx="1.5" fill="#7F77DD"/></svg><div><div class="tn">약주</div><div class="tc">5종</div></div></button>
+        <button class="type-btn" data-v="증류주" onclick="setType('증류주',this)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 2H11L12 6H4L5 2Z" fill="#F0997B"/><rect x="4" y="6" width="8" height="8" rx="1.5" fill="#D85A30"/></svg><div><div class="tn">증류주</div><div class="tc">7종</div></div></button>
+        <button class="type-btn" data-v="all" onclick="setType('all',this)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="6" cy="10" r="4" fill="#FAC775" opacity=".8"/><circle cx="10" cy="10" r="4" fill="#ED93B1" opacity=".7"/><circle cx="8" cy="6" r="4" fill="#AFA9EC" opacity=".7"/></svg><div><div class="tn">전체</div><div class="tc">33종</div></div></button>
+      </div>
+    </div>
+    <div class="sb-sec">
+      <div class="sb-lbl">떼루아 <span id="tr-selected-label" style="color:var(--point-dk);font-weight:600;text-transform:none;letter-spacing:0;margin-left:2px">· 전체</span></div>
+      <div class="tr-map-box">
+        <svg viewBox="0 0 240 130" class="tr-map-svg" id="tr-map-svg">
+          <!-- 제주도 실루엣 -->
+          <ellipse cx="120" cy="66" rx="108" ry="44" fill="var(--cream)" stroke="var(--border)" stroke-width="1"/>
+          <ellipse cx="118" cy="64" rx="15" ry="12" fill="var(--border)" opacity=".4"/>
+          <text x="118" y="67" text-anchor="middle" font-size="7" fill="var(--ink3)" font-family="inherit">한라산</text>
+          <!-- 구역 마커 (JS로 렌더) -->
+          <g id="tr-markers"></g>
+        </svg>
+        <div class="tr-legend" id="tr-legend"></div>
+      </div>
+    </div>
+    <div style="flex:1"></div>
+    <button class="find-btn" onclick="doSearch()">취향에 맞는 술 찾기</button>
+  </aside>
+
+  <main class="main">
+
+    <!-- ① 추천 -->
+    <div class="page active" id="page-recommend">
+      <div id="pre-search" class="empty-state">
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="18" stroke="#E2DFDA" stroke-width="1.2"/><path d="M14 26c0 0 2-6 8-6s8 6 8 6" stroke="#928F87" stroke-width="1.2" stroke-linecap="round"/><circle cx="17" cy="18" r="2" fill="#928F87" opacity=".4"/><circle cx="27" cy="18" r="2" fill="#928F87" opacity=".4"/></svg>
+        <div class="es-title">왼쪽에서 취향을 선택해주세요</div>
+        <div class="es-sub">당도 · 산미 · 도수 · 주종을 고른 뒤<br>"취향에 맞는 술 찾기"를 눌러보세요</div>
+      </div>
+      <div id="search-results" style="display:none;flex-direction:column;gap:18px">
+        <div class="profile-banner" id="profile-banner"></div>
+        <div class="sec-head">
+          <div class="sec-title">추천 결과</div>
+          <div class="cnt-badge" id="res-count"></div>
+          <div style="flex:1;display:flex;justify-content:flex-end;gap:5px;flex-wrap:wrap" id="filter-chips"></div>
+        </div>
+        <div class="cards-grid" id="cards-grid"></div>
+      </div>
+    </div>
+
+    <!-- ② 기록 -->
+    <div class="page" id="page-diary">
+      <div class="stats-bar" id="diary-stats" style="display:none"></div>
+      <div class="diary-layout">
+        <div>
+          <div class="sec-head" style="margin-bottom:14px">
+            <div class="sec-title">시음 기록</div>
+            <div class="cnt-badge" id="diary-count">0종</div>
+            <div style="margin-left:auto;display:flex;gap:6px" id="diary-filter-btns"></div>
+          </div>
+          <div id="diary-list">
+            <div class="empty-state" style="padding:40px 20px">
+              <div class="es-title">첫 번째 기록을 남겨보세요</div>
+              <div class="es-sub">추천 결과에서 술을 선택하거나<br>오른쪽 패널에서 직접 검색해 기록할 수 있어요</div>
+            </div>
+          </div>
+        </div>
+        <div class="record-panel" id="record-panel">
+          <div class="rp-header">
+            <div>
+              <div class="rp-title">새 기록 작성</div>
+              <div class="rp-subtitle" id="rp-subtitle">추천에서 술을 선택하면 자동으로 채워집니다</div>
+            </div>
+          </div>
+          <div class="rp-body" id="rp-body">
+            <div id="rp-drink-slot">
+              <div class="rp-field-label">마신 술</div>
+              <div id="rp-drink-info-block">
+                <select id="drink-select" class="rp-input" onchange="selectDrinkFromDropdown(this.value)">
+                  <option value="">술을 선택하세요</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <div class="rp-field-label">날짜</div>
+              <input type="date" id="record-date" class="rp-input">
+            </div>
+            <div>
+              <div class="rp-field-label">별점</div>
+              <div class="star-row" id="star-row">
+                <button class="star-btn" data-s="1" onclick="setStar(1)">★</button>
+                <button class="star-btn" data-s="2" onclick="setStar(2)">★</button>
+                <button class="star-btn" data-s="3" onclick="setStar(3)">★</button>
+                <button class="star-btn" data-s="4" onclick="setStar(4)">★</button>
+                <button class="star-btn" data-s="5" onclick="setStar(5)">★</button>
+              </div>
+            </div>
+            <div>
+              <div class="rp-field-label">감정</div>
+              <div class="emotion-row" id="emotion-row">
+                <button class="emo-btn" data-e="😊" onclick="setEmo(this)"><span class="ef">😊</span><span class="el">좋아요</span></button>
+                <button class="emo-btn" data-e="😌" onclick="setEmo(this)"><span class="ef">😌</span><span class="el">편안해</span></button>
+                <button class="emo-btn" data-e="🤔" onclick="setEmo(this)"><span class="ef">🤔</span><span class="el">흥미로워</span></button>
+                <button class="emo-btn" data-e="😅" onclick="setEmo(this)"><span class="ef">😅</span><span class="el">강해요</span></button>
+                <button class="emo-btn" data-e="😍" onclick="setEmo(this)"><span class="ef">😍</span><span class="el">최고야</span></button>
+              </div>
+            </div>
+            <div>
+              <div class="rp-field-label">날씨 · 상황</div>
+              <div class="weather-row" id="weather-row">
+                <button class="wx-btn" data-w="☀️" onclick="setWx(this)" title="맑음">☀️</button>
+                <button class="wx-btn" data-w="🌤️" onclick="setWx(this)" title="구름 조금">🌤️</button>
+                <button class="wx-btn" data-w="🌧️" onclick="setWx(this)" title="비">🌧️</button>
+                <button class="wx-btn" data-w="❄️" onclick="setWx(this)" title="눈">❄️</button>
+                <button class="wx-btn" data-w="🌊" onclick="setWx(this)" title="바다 앞">🌊</button>
+              </div>
+            </div>
+            <div>
+              <div class="rp-field-label">함께한 사람</div>
+              <div class="ctx-options" id="ctx-options">
+                <button class="ctx-opt" onclick="toggleCtx(this)">혼자</button>
+                <button class="ctx-opt" onclick="toggleCtx(this)">친구와</button>
+                <button class="ctx-opt" onclick="toggleCtx(this)">연인과</button>
+                <button class="ctx-opt" onclick="toggleCtx(this)">가족과</button>
+                <button class="ctx-opt" onclick="toggleCtx(this)">동료와</button>
+              </div>
+            </div>
+            <div>
+              <div class="rp-field-label">향미 느낌</div>
+              <div class="flavor-options" id="flavor-options">
+                <button class="flv-opt" onclick="toggleFlv(this)">달콤</button>
+                <button class="flv-opt" onclick="toggleFlv(this)">새콤</button>
+                <button class="flv-opt" onclick="toggleFlv(this)">구수</button>
+                <button class="flv-opt" onclick="toggleFlv(this)">청량</button>
+                <button class="flv-opt" onclick="toggleFlv(this)">꽃향</button>
+                <button class="flv-opt" onclick="toggleFlv(this)">과일향</button>
+                <button class="flv-opt" onclick="toggleFlv(this)">약향</button>
+                <button class="flv-opt" onclick="toggleFlv(this)">곡향</button>
+                <button class="flv-opt" onclick="toggleFlv(this)">묵직</button>
+                <button class="flv-opt" onclick="toggleFlv(this)">드라이</button>
+                <button class="flv-opt" onclick="toggleFlv(this)">탄산감</button>
+                <button class="flv-opt" onclick="toggleFlv(this)">여운 긴</button>
+              </div>
+            </div>
+            <div>
+              <div class="rp-field-label">이 술의 느낌 · 생각</div>
+              <textarea class="rp-textarea" id="feeling-input" rows="3" placeholder="첫 모금의 인상, 향, 여운... 자유롭게 적어보세요"></textarea>
+            </div>
+            <div>
+              <div class="rp-field-label">한 줄 메모</div>
+              <input type="text" id="memo-input" class="rp-input" placeholder="다음에 또 마시고 싶다, 파전이랑 찰떡...">
+            </div>
+            <button class="save-btn-full" onclick="saveRecord()">기록 저장하기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 떼루아 -->
+    <div class="page" id="page-terroir">
+      <div class="sec-head"><div class="sec-title">제주 떼루아 지도</div><div class="cnt-badge" id="tr-count"></div></div>
+      <div style="background:var(--paper);border:0.5px solid var(--border);border-radius:var(--r-lg);padding:16px 20px;font-size:12px;color:var(--ink2);line-height:1.75">
+        <span style="font-weight:500;color:var(--ink)">떼루아(Terroir)</span>는 술의 원물이 자란 땅의 토양·기후·지형이 만들어내는 고유한 맛의 개성을 뜻합니다. 같은 원물이라도 어느 지역에서 자랐는지에 따라 향과 맛이 달라집니다. 제주한잔은 각 술의 원물이 자란 제주의 땅을 떼루아 구역으로 나누어 소개합니다.
+        <div style="display:flex;gap:16px;margin-top:10px;padding-top:10px;border-top:0.5px solid var(--border);font-size:11px;color:var(--ink3);flex-wrap:wrap">
+          <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:16px;height:0;border-top:1.5px solid var(--ink2)"></span>✓ 공식 분류 · 양조장 제공</span>
+          <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:16px;height:0;border-top:1.5px dashed var(--ink3)"></span>추정 분류 · 원물·재배지 기반</span>
+        </div>
+      </div>
+      <div id="terroir-map-wrap"></div>
+      <div class="sec-head" style="margin-top:6px"><div class="sec-title">떼루아 구역별 소개</div></div>
+      <div id="terroir-cards" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px"></div>
+    </div>
+
+    <!-- ③ 주종 안내 -->
+    <div class="page" id="page-jujong">
+      <div class="sec-head"><div class="sec-title">주종 안내</div><div class="cnt-badge">6가지 주종</div></div>
+      <div class="jj-grid" id="jj-grid"></div>
+    </div>
+
+    <!-- ④ 양조장 -->
+    <div class="page" id="page-brewery">
+      <div class="sec-head"><div class="sec-title">제주 양조장 이야기</div><div class="cnt-badge" id="bw-count"></div></div>
+      <div class="bw-grid" id="bw-grid"></div>
+    </div>
+
+    <!-- ⑤ 리포트 -->
+    <div class="page" id="page-report">
+      <div id="report-empty" class="empty-state"><div class="es-title">취향 탐색 후 리포트가 생성됩니다</div><div class="es-sub">왼쪽에서 취향을 선택하고 술을 찾아보세요</div></div>
+      <div id="report-content" style="display:none" class="report-grid">
+        <div class="rc wide"><div class="rc-lbl">나의 취향 컬러</div><div class="r-pal" id="rp-pal"></div><div class="rc-big" id="rp-type"></div><div class="rc-desc" id="rp-desc"></div><div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:4px" id="rp-tags"></div></div>
+        <div class="rc"><div class="rc-lbl">분석 요약</div><div class="r-stats"><div class="r-stat"><div class="rs-lbl">시음한 술</div><div class="rs-val" id="rp-cnt">0종</div></div><div class="r-stat"><div class="rs-lbl">선호 주종</div><div class="rs-val" style="font-size:15px;margin-top:4px" id="rp-pref">-</div></div></div><div style="display:flex;gap:5px;flex-wrap:wrap" id="rp-stat-tags"></div></div>
+        <div class="rc"><div class="rc-lbl">맛 지형도</div><div id="rp-map"></div></div>
+        <div class="rc wide"><div class="rc-lbl">구매 추천</div><div class="buy-list" id="rp-buy"></div></div>
+        <div class="rc wide"><div class="share-row"><button class="sh-btn">📤 컬러 카드 공유</button><button class="sh-btn">📋 리포트 저장</button></div></div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- 모달 -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal-box">
+    <div class="mhdr" id="modal-hdr"></div>
+    <div class="mbody" id="modal-body"></div>
+    <div class="mactions" id="modal-actions"></div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════ DATA ══════════════════ */
+const JUJONG=[
+  {name:'탁주',eng:'Takju / Makgeolli',color:'#1D9E75',colors:['#E1F5EE','#9FE1CB','#5DCAA5','#1D9E75'],desc:'쌀이나 곡물을 발효시킨 뒤 걸러내지 않아 뿌연 색을 띠는 우리나라 대표 전통주입니다. 효모와 유산균이 살아있어 톡 쏘는 청량감이 특징이며, 달콤하고 구수한 맛이 조화를 이룹니다.',abv:'5–15',sweet:'2–4',body:'1–3',process:'쌀·누룩·물을 함께 발효시킨 뒤 체로 거르는 방식으로 만들어집니다. 앙금을 걸러내지 않아 뿌연 빛깔이 납니다.',tip:'마시기 전 살살 흔들어 섞어주세요. 파전·두부김치와 특히 잘 어울립니다.',examples:['하마하마 너티','바질첨벙','함덕한잔딸기','이시보 막걸리']},
+  {name:'약주',eng:'Yakju',color:'#7F77DD',colors:['#EEEDFE','#CECBF6','#AFA9EC','#7F77DD'],desc:'탁주를 한 번 더 걸러 맑게 만든 발효주입니다. 쌀·누룩·물로 빚으며 맑고 투명한 빛깔에 은은한 향이 특징입니다.',abv:'10–20',sweet:'1–3',body:'1–3',process:'발효 후 용수(채)를 이용해 맑은 술만 걷어냅니다. 숙성 기간과 재료에 따라 다양한 풍미가 생겨납니다.',tip:'살짝 차갑게 마시면 향이 더 살아납니다. 회나 담백한 육류와 잘 어울립니다.',examples:['니모메','오메기술','녹고의눈물','오메기맑은술']},
+  {name:'증류주',eng:'Jeungnyuju / Soju',color:'#D85A30',colors:['#FAECE7','#F5C4B3','#F0997B','#D85A30'],desc:'발효주를 증류해 알코올 도수를 높인 전통 소주입니다. 맑고 투명하며 깔끔한 맛이 특징으로, 제주에서는 오메기술 증류주인 고소리술이 대표적입니다.',abv:'21–52',sweet:'1',body:'2–5',process:'발효된 술을 증류기(소줏고리)에 넣고 가열해 알코올 성분을 추출합니다.',tip:'상온 또는 살짝 차갑게 마시며 천천히 음미하세요.',examples:['고소리술','솔오름','신례명주','달그리안소주']},
+  {name:'리큐르',eng:'Liqueur',color:'#D4537E',colors:['#FBEAF0','#F4C0D1','#ED93B1','#D4537E'],desc:'증류주에 과일·약재·허브 등을 가미해 만든 혼성주입니다. 제주의 특산물인 한라봉·레몬·베리류를 활용한 제주 리큐르는 색감이 아름답고 향이 풍부합니다.',abv:'20–25',sweet:'4–5',body:'3–4',process:'증류주를 기반으로 제주 특산 과일과 허브를 첨가·침출시켜 만듭니다.',tip:'온더락이나 소다로 희석해 즐기면 과일 향이 더욱 살아납니다.',examples:['제주리몬첼로','무릉리도원','베리제주','애원283']},
+  {name:'와인',eng:'Fruit Wine',color:'#ED93B1',colors:['#FBEAF0','#F4C0D1','#ED93B1','#D4537E'],desc:'제주 천혜향·한라봉 등 감귤류로 빚은 전통식 과실주입니다. 제주 특산 과일의 풍미가 고스란히 담겨 있습니다.',abv:'9–12',sweet:'2–3',body:'1–2',process:'제주 감귤을 으깨어 당과 효모를 첨가한 뒤 발효시킵니다.',tip:'가볍게 차갑게 해서 식전주로 즐기세요.',examples:['마셔블랑스프링','1950 천혜향와인','1950 씨유앳더탑']},
+  {name:'과실주',eng:'Gwasil-ju',color:'#F0997B',colors:['#FAECE7','#F5C4B3','#F0997B','#D85A30'],desc:'제주 과실을 발효시켜 만든 순수 과실 발효주입니다. 원재료 그대로의 색과 향을 담고 있으며 가볍고 청량한 음용감이 특징입니다.',abv:'10–12',sweet:'2',body:'1',process:'신선한 과실을 직접 발효시켜 만듭니다. 과실 본연의 당분을 효모가 분해해 알코올을 생성합니다.',tip:'차게 마시면 과실 향이 더욱 선명하게 느껴집니다.',examples:['귤로만','혼디주']},
+];
+
+const BREWERIES=[
+  {name:'제주술익는집',loc:'제주시 애월읍',emoji:'🍶',year:'2018',desc:'제주 애월의 청정 자연에서 오메기떡을 활용한 전통 탁주와 약주를 빚는 양조장입니다. 제주 고유의 발효 문화를 현대적으로 재해석해 하마하마 시리즈를 선보이고 있습니다.',products:['하마하마 너티','하마하마 오메기','니모메','오메기술','오메기맑은술'],color:'#1D9E75',bg:'#E1F5EE'},
+  {name:'제주한잔 자체제조',loc:'제주시 애월읍',emoji:'🌿',year:'2020',desc:'제주한잔이 직접 기획·제조하는 한잔 시리즈 탁주입니다. 제주 각 마을의 특산 재료를 사용해 지역의 색깔을 술에 담아냅니다.',products:['함덕한잔딸기','세화한잔당근','애월한잔레몬','제주한잔블루베리','협재한잔키위','벚꽃피는날에 제주','바질첨벙','정글인제주'],color:'#D4537E',bg:'#FBEAF0'},
+  {name:'달그리안',loc:'서귀포시 남원읍',emoji:'🌾',year:'2015',desc:'남원읍의 청정 지하수와 제주 쌀로 빚는 전통 약주·증류주 전문 양조장입니다. 조선시대 전통 방식을 복원한 경면녹파주와 달그리안소주가 대표 제품입니다.',products:['달그리안 경면녹파주','달그리안소주','별그리안초설감'],color:'#7F77DD',bg:'#EEEDFE'},
+  {name:'제주술도가',loc:'제주시 한경면',emoji:'🔥',year:'2012',desc:'제주 전통 증류주인 고소리술을 현대적으로 복원한 양조장입니다. 제주 무형문화재로 지정된 전통 소주 제조법을 고집합니다.',products:['고소리술','솔오름','신례명주','바띠','미상25'],color:'#D85A30',bg:'#FAECE7'},
+  {name:'이시보',loc:'제주시 조천읍',emoji:'🌊',year:'2019',desc:'조천 앞바다에서 이름을 딴 양조장으로, 제주 용암수를 사용한 탁주를 빚습니다. 화산암 지층을 통과한 미네랄 풍부한 물이 술의 부드러운 질감을 만들어냅니다.',products:['이시보 막걸리','이시보 원 막걸리'],color:'#378ADD',bg:'#E6F1FB'},
+  {name:'1950 제주',loc:'서귀포시 표선면',emoji:'🍊',year:'2016',desc:'1950년대 제주 감귤 농업의 시작에서 영감을 얻은 과실주 전문 양조장입니다. 천혜향·감귤 등 제주 특산 과일을 원물 그대로 발효시킵니다.',products:['1950 천혜향와인','1950 씨유앳더탑'],color:'#EF9F27',bg:'#FAEEDA'},
+  {name:'무릉도원',loc:'제주시 한림읍',emoji:'🌺',year:'2017',desc:'한림읍 협재 해변 인근에 위치한 과실 리큐르 전문 양조장입니다. 제주 야생 베리와 봄 꽃을 활용해 아름다운 색감의 리큐르를 빚습니다.',products:['무릉리도원','베리제주','제주리몬첼로','애원283'],color:'#D4537E',bg:'#FBEAF0'},
+];
+
+const DB=[
+  {name:'귤로만',type:'과실주',도수:10,당도:2,산미:2,바디:1,brewery:'제주 서귀포',story:'제주 방언으로 "오롯이 혼자"를 뜻하는 이름. 과실 하나의 맛에 집중한 순수 발효주.',ingredients:[{icon:'🍊',name:'제주 감귤',desc:'서귀포산 신선한 감귤을 원물 그대로 발효'},{icon:'💧',name:'제주 용암수',desc:'화산암 지층을 통과한 미네랄이 풍부한 지하수'}],pairing:['회','탕수육','과일 샐러드'],color_story:'제주 감귤 껍질 색처럼 따뜻한 코랄 오렌지 계열',terroir:{zone:'CITRUS VALLEY',ko:'감귤 계곡',material:'제주 감귤',region:'서귀포 감귤권(추정)',reason:'서귀포 감귤을 원물 그대로 발효한 과실주로 감귤 계곡 떼루아입니다.',color:'#EF9F27',bg:'#FAEEDA',estimated:true}},
+  {name:'혼디주',type:'과실주',도수:12,당도:2,산미:3,바디:1,brewery:'제주 서귀포',story:'"함께"를 뜻하는 제주 방언 "혼디"에서 따온 이름. 여럿이 함께 나눠 마시기 좋습니다.',ingredients:[{icon:'🍒',name:'제주 베리류',desc:'제주 야생 베리를 수확해 발효'},{icon:'💧',name:'제주 용암수',desc:'미네랄 풍부한 제주 지하수'}],pairing:['치즈','과일','가벼운 전채'],color_story:'베리의 진한 붉은빛 코랄 레드 계열',terroir:{zone:'VOLCANIC RIDGE',ko:'화산 능선',material:'제주 베리류',region:'제주 중산간 과수지(추정)',reason:'제주 야생 베리를 발효한 과실주로 화산 능선 과수 떼루아 계열입니다.',color:'#D85A30',bg:'#FAECE7',estimated:true}},
+  {name:'제주리몬첼로',type:'리큐르',도수:22,당도:5,산미:3,바디:3,brewery:'무릉도원',story:'이탈리아 리몬첼로 방식을 제주 레몬으로 재현. 식후주로 마시면 상쾌함이 오래 지속됩니다.',ingredients:[{icon:'🍋',name:'제주 레몬',desc:'애월에서 재배한 무농약 레몬 껍질 침출'},{icon:'🥃',name:'제주 소주 베이스',desc:'제주 전통 증류주 기반'}],pairing:['해산물 파스타','생선 요리','디저트'],color_story:'레몬 껍질처럼 선명한 옐로우 핑크 계열',terroir:{zone:'CITRUS VALLEY',ko:'감귤 계곡',material:'제주 레몬',region:'애월 레몬 재배지(추정)',reason:'제주 레몬 껍질을 침출한 리큐르로 감귤·시트러스 떼루아에 속합니다.',color:'#EF9F27',bg:'#FAEEDA',estimated:true}},
+  {name:'무릉리도원',type:'리큐르',도수:22,당도:5,산미:1,바디:4,brewery:'제주곶밭',story:'무릉리 화산회토에서 자란 복숭아를 담은 리큐르. 큰 일교차가 만든 진한 과실향이 특징입니다.',ingredients:[{icon:'🍑',name:'무릉리 복숭아',desc:'서귀포 대정읍 무릉리 화산회토에서 재배한 복숭아'},{icon:'🌸',name:'봄 꽃',desc:'제주 봄꽃을 첨가해 화사한 향'}],pairing:['치즈케이크','마카롱','딸기'],color_story:'복숭아 과육처럼 따뜻한 핑크 앰버 계열',terroir:{zone:'VOLCANIC RIDGE',ko:'화산 능선',material:'무릉리 복숭아',region:'서귀포시 대정읍 무릉리',reason:'무릉리 중산간의 화산회토와 큰 일교차가 복숭아의 향과 당도를 높입니다. 제주에서는 드문 온대과수 산지로, 향이 농축된 과실 떼루아의 특징이 뚜렷합니다.',color:'#D85A30',bg:'#FAECE7',estimated:false}},
+  {name:'베리제주',type:'리큐르',도수:22,당도:5,산미:1,바디:3,brewery:'무릉도원',story:'제주 청정 지역에서 자란 베리의 건강한 달콤함을 그대로 담았습니다.',ingredients:[{icon:'🫐',name:'제주 블루베리',desc:'제주 청정 환경에서 자란 블루베리'},{icon:'🌿',name:'허브',desc:'제주 자생 허브 소량 첨가'}],pairing:['바닐라 아이스크림','초콜릿','요거트'],color_story:'블루베리처럼 깊고 진한 퍼플 핑크 계열',terroir:{zone:'VOLCANIC RIDGE',ko:'화산 능선',material:'제주 블루베리',region:'제주 중산간 과수지(추정)',reason:'제주 블루베리를 발효한 리큐르로 화산 능선 과수 떼루아 계열입니다.',color:'#D85A30',bg:'#FAECE7',estimated:true}},
+  {name:'애원283',type:'리큐르',도수:25,당도:4,산미:1,바디:3,brewery:'무릉도원',story:'애월 283번지 과수원의 한라봉을 담은 리큐르. 제주 감귤 문화의 정수.',ingredients:[{icon:'🍊',name:'한라봉',desc:'애월 283번지 과수원의 한라봉'},{icon:'🥃',name:'증류주 베이스',desc:'제주 전통 증류주 기반'}],pairing:['닭 요리','치즈','과일 타르트'],color_story:'한라봉의 주황빛 따뜻한 앰버 오렌지 계열',terroir:{zone:'CITRUS VALLEY',ko:'감귤 계곡',material:'한라봉',region:'애월 감귤 과수원(추정)',reason:'애월 283번지 한라봉을 침출한 리큐르로 감귤 떼루아 계열입니다.',color:'#EF9F27',bg:'#FAEEDA',estimated:true}},
+  {name:'니모메',type:'약주',도수:11,당도:3,산미:1,바디:1,brewery:'제주샘영농조합법인',story:'"나 홀로"를 뜻하는 제주 방언. 하논 분지의 제주 쌀로 빚어 조용히 혼자 음미하기 좋은 약주입니다.',ingredients:[{icon:'🌾',name:'하논쌀',desc:'하논·무릉리 논에서 생산한 제주 쌀. 감귤향보다 쌀의 구조가 술의 중심을 이룹니다'},{icon:'🍊',name:'귤피',desc:'제주 감귤 껍질을 소량 더해 은은한 향을 냅니다'}],pairing:['두부','나물 무침','담백한 전'],color_story:'맑고 투명한 쌀빛 라벤더 계열',terroir:{zone:'HANON BASIN',ko:'하논 분지',material:'하논쌀·귤피',region:'하논, 무릉리논 등 (귤은 제주 전역 예상)',reason:'하논과 무릉리 논에서 생산한 제주 쌀을 사용하며, 감귤향보다 쌀의 구조가 술의 중심을 이룹니다. 하논의 화산분화구 습지·논농사 스토리가 강합니다.',color:'#7F77DD',bg:'#EEEDFE',estimated:false}},
+  {name:'오메기술',type:'약주',도수:15,당도:2,산미:1,바디:2,brewery:'제주술익는집',story:'제주 무형문화재로 지정된 전통 제조법으로 빚는 제주 대표 전통주.',ingredients:[{icon:'🌾',name:'차조',desc:'제주 전통 곡물인 차조로 만든 오메기떡 발효'},{icon:'💧',name:'제주 지하수',desc:'제주 화산암층을 통과한 청정 지하수'}],pairing:['고기류','전','오메기떡'],color_story:'차조의 황금빛을 담은 옅은 앰버 계열',terroir:{zone:'WEST FIELD',ko:'서부 밭농업 지대',material:'차조',region:'제주 서부 밭농업 지대(추정)',reason:'제주 전통 곡물 차조를 오메기떡으로 발효한 술로, 서부 밭농업 떼루아와 원물 성격이 이어집니다.',color:'#BA7517',bg:'#FAEEDA',estimated:true}},
+  {name:'달그리안 경면녹파주',type:'약주',도수:15,당도:1,산미:4,바디:2,brewery:'달그리안',story:'조선시대 녹파주 제조법을 제주 녹차로 재현한 약주. 은은한 초록빛과 산뜻한 산미.',ingredients:[{icon:'🌿',name:'제주 녹차',desc:'서귀포 다원의 녹차 첨가'},{icon:'🌾',name:'제주 쌀·누룩',desc:'전통 방식 쌀 약주 기반'}],pairing:['해산물','냉채','봄 나물'],color_story:'녹차 빛깔을 담은 청아한 그린 퍼플 계열',terroir:{zone:'SOUTHWEST HERB',ko:'남서부 허브 지대',material:'제주 녹차',region:'서귀포 다원(추정)',reason:'서귀포 녹차를 가미한 약주로 중산간 허브·약초 떼루아 계열입니다.',color:'#1D9E75',bg:'#E1F5EE',estimated:true}},
+  {name:'녹고의눈물',type:'약주',도수:16,당도:1,산미:2,바디:2,brewery:'토향',story:'한라산 녹고 오름에서 흘러내리는 물을 형상화. 제주 자생 섬오가피의 은은한 향이 퍼지는 청아한 약주.',ingredients:[{icon:'🌿',name:'제주 섬오가피',desc:'제주 자생 약용식물로 허브·약초 계열의 향과 쌉쌀한 풍미'},{icon:'🌾',name:'제주 쌀',desc:'제주산 쌀 기반 약주'}],pairing:['생선 구이','나물','백김치'],color_story:'한라산 소나무 숲처럼 깊고 맑은 그린 계열',terroir:{zone:'SOUTHWEST HERB',ko:'남서부 허브 지대',material:'제주 섬오가피',region:'한라산 중산간, 청수리·애월·조천 일대 자생지',reason:'섬오가피는 제주 자생 약용식물로 허브·약초 계열의 향과 쌉쌀한 풍미가 특징입니다. 곶자왈과 중산간 생태계에서 자라는 야생 식생의 특성을 가장 잘 보여줍니다.',color:'#1D9E75',bg:'#E1F5EE',estimated:false}},
+  {name:'오메기맑은술',type:'약주',도수:16,당도:2,산미:3,바디:3,brewery:'제주술익는집',story:'오메기술을 체로 걸러 맑게 만든 약주. 탁주보다 산뜻하고 깔끔한 맛.',ingredients:[{icon:'🌾',name:'차조 오메기',desc:'전통 차조 오메기떡 발효 후 맑게 걸러냄'},{icon:'💧',name:'제주 청정수',desc:'제주 지하수'}],pairing:['회','해산물','담백한 구이'],color_story:'맑고 투명한 쌀빛 퍼플 계열',terroir:{zone:'WEST FIELD',ko:'서부 밭농업 지대',material:'차조',region:'제주 서부 밭농업 지대(추정)',reason:'오메기술을 맑게 거른 약주로, 같은 차조 원물의 서부 밭농업 떼루아에 속합니다.',color:'#BA7517',bg:'#FAEEDA',estimated:true}},
+  {name:'마셔블랑스프링',type:'와인',도수:9,당도:3,산미:1,바디:2,brewery:'1950 제주',story:'화이트 와인 방식으로 빚은 제주 봄의 술. 봄꽃 향이 화사하게 퍼집니다.',ingredients:[{icon:'🍇',name:'제주 청포도',desc:'제주 기후에서 자란 청포도'},{icon:'🌸',name:'봄꽃',desc:'제주 봄꽃 첨가'}],pairing:['치즈','샐러드','연어'],color_story:'봄 하늘처럼 청아한 페일 핑크 계열',terroir:{zone:'COASTAL WATER',ko:'해안 용암수 지대',material:'제주 청포도',region:'제주 해안 과수지(추정)',reason:'제주 청포도를 발효한 화이트 와인 스타일로 해안권 떼루아 계열입니다.',color:'#378ADD',bg:'#E6F1FB',estimated:true}},
+  {name:'1950 천혜향와인',type:'와인',도수:9,당도:3,산미:1,바디:1,brewery:'1950 제주',story:'1950년대 제주 감귤 산업의 시작을 기리는 이름. 천혜향의 달콤한 향을 그대로.',ingredients:[{icon:'🍊',name:'천혜향',desc:'서귀포에서 재배한 천혜향 원물 발효'},{icon:'💧',name:'제주 지하수',desc:'청정 지하수'}],pairing:['치즈','해산물','과일'],color_story:'천혜향의 주황빛 따뜻한 코랄 핑크 계열',terroir:{zone:'CITRUS VALLEY',ko:'감귤 계곡',material:'천혜향',region:'서귀포 감귤권(추정)',reason:'서귀포 천혜향을 원물로 하여 감귤 계곡 떼루아의 향과 산미를 담습니다.',color:'#EF9F27',bg:'#FAEEDA',estimated:true}},
+  {name:'1950 씨유앳더탑',type:'와인',도수:12,당도:2,산미:2,바디:2,brewery:'1950 제주',story:'한라산 정상에서의 만남을 약속하는 이름. 두 과실이 균형잡힌 맛을 냅니다.',ingredients:[{icon:'🍊',name:'한라봉',desc:'제주 대표 감귤 발효'},{icon:'🫐',name:'제주 블루베리',desc:'블루베리 블렌딩으로 산미'}],pairing:['바비큐','치즈 플레이트','파스타'],color_story:'두 과실이 만나는 딥 코랄 로제 계열',terroir:{zone:'CITRUS VALLEY',ko:'감귤 계곡',material:'한라봉·블루베리',region:'서귀포 감귤권(추정)',reason:'한라봉을 주원물로 하는 과실주로 감귤 계곡 떼루아에 가깝습니다.',color:'#EF9F27',bg:'#FAEEDA',estimated:true}},
+  {name:'바띠',type:'증류주',도수:21,당도:1,산미:1,바디:2,brewery:'제주술도가',story:'"바람이 티끌 하나 없이 맑다"는 제주 방언. 가장 부드러운 도수의 제주 증류주.',ingredients:[{icon:'🌾',name:'오메기',desc:'제주 차조 오메기 발효 증류'},{icon:'💧',name:'제주 용암수',desc:'미네랄 풍부한 용암층 지하수'}],pairing:['회','냉채','담백한 안주'],color_story:'맑고 투명한 코랄 계열',terroir:{zone:'WEST FIELD',ko:'서부 밭농업 지대',material:'오메기(차조)',region:'제주 서부 밭농업 지대(추정)',reason:'차조 오메기를 증류한 소주로, 서부 밭농업 원물에서 출발합니다.',color:'#BA7517',bg:'#FAEEDA',estimated:true}},
+  {name:'미상25',type:'증류주',도수:25,당도:1,산미:1,바디:2,brewery:'시트러스',story:'미상(未嘗)은 "아직 맛보지 못한"이라는 뜻. 새로운 맛을 기대하게 만드는 25도.',ingredients:[{icon:'🍊',name:'제주 감귤',desc:'남원권 감귤을 활용한 증류주'},{icon:'💧',name:'한라산 지하수',desc:'한라산에서 내려오는 청정수'}],pairing:['삼겹살','전','냉면'],color_story:'깔끔하고 투명한 연한 코랄 계열',terroir:{zone:'CITRUS VALLEY',ko:'감귤 계곡',material:'감귤',region:'남원·위미·신례리 일대',reason:'제주 최대 감귤 산지인 남원권의 감귤을 활용합니다. 풍부한 일조량, 해풍, 완만한 경사가 감귤의 향과 산미를 형성하는 대표적인 감귤 떼루아입니다.',color:'#EF9F27',bg:'#FAEEDA',estimated:false}},
+  {name:'고소리술',type:'증류주',도수:40,당도:1,산미:1,바디:4,brewery:'제주샘영농조합법인',story:'제주 무형문화재로 지정된 전통 증류주. 소줏고리라는 전통 도구로 만들어 "고소리술"이라 불립니다.',ingredients:[{icon:'🌾',name:'차조 오메기',desc:'전통 오메기떡 발효 후 소줏고리 증류'},{icon:'🔥',name:'전통 증류',desc:'무형문화재 제주 전통 소주 제조법'}],pairing:['오메기떡','돼지고기','제주 흑돼지'],color_story:'깊고 강한 다크 앰버 계열',terroir:{zone:'WEST FIELD',ko:'서부 밭농업 지대',material:'차조(좁쌀)',region:'한경·한림·애월 중산간, 구좌·표선 등 제주 전통 밭농업 지역',reason:'차조는 제주 전통 농업을 대표하는 곡물로, 특히 서부 평야와 중산간 밭지대에서 널리 재배되었습니다. 화산회토와 강한 바람이 만든 제주 밭농업의 상징적인 원물입니다.',color:'#BA7517',bg:'#FAEEDA',estimated:false}},
+  {name:'솔오름',type:'증류주',도수:40,당도:1,산미:1,바디:4,brewery:'제주술도가',story:'한라산 오름의 소나무에서 영감. 소나무 향이 깊게 배어 있어 독특한 풍미.',ingredients:[{icon:'🌲',name:'한라산 소나무',desc:'소나무 잎 가미로 피톤치드 향'},{icon:'🌾',name:'제주 오메기',desc:'전통 오메기 증류주 베이스'}],pairing:['육회','고기 요리','견과류'],color_story:'한라산 소나무처럼 깊고 진한 다크 앰버',terroir:{zone:'SOUTHWEST HERB',ko:'남서부 허브 지대',material:'한라산 소나무',region:'한라산 중산간(추정)',reason:'한라산 소나무 잎을 가미한 증류주로 중산간 자생 식생 떼루아에 가깝습니다.',color:'#1D9E75',bg:'#E1F5EE',estimated:true}},
+  {name:'별그리안초설감',type:'증류주',도수:40,당도:1,산미:1,바디:5,brewery:'달그리안',story:'초설(初雪)처럼 첫 눈이 내리는 날의 순수한 감동을 담은 이름. 바디감이 강해 음미하는 술.',ingredients:[{icon:'🥭',name:'제주 감귤 증류',desc:'감귤 뉘앙스를 더한 고도 증류주'},{icon:'🌾',name:'제주 곡물',desc:'제주산 곡물 발효·증류 베이스'}],pairing:['초콜릿','견과류','치즈'],color_story:'제주 초겨울처럼 깊고 무거운 다크 코랄',terroir:{zone:'VOLCANIC RIDGE',ko:'화산 능선',material:'제주 감귤·곡물',region:'제주 중산간(추정)',reason:'감귤 뉘앙스의 고도 증류주로 화산 능선 떼루아 특성에 가깝습니다.',color:'#D85A30',bg:'#FAECE7',estimated:true}},
+  {name:'신례명주',type:'증류주',도수:50,당도:1,산미:1,바디:4,brewery:'제주술도가',story:'신례리의 전통을 이은 명주. 50도의 강한 도수이지만 부드럽게 목을 넘어가는 것이 특징.',ingredients:[{icon:'🌾',name:'제주 쌀·차조',desc:'쌀과 차조를 혼합 발효해 3회 증류'},{icon:'🍃',name:'제주 허브',desc:'제주 자생 약초로 복합적인 향'}],pairing:['제주 흑돼지','전통 전','홀로 음미'],color_story:'강렬하고 깊은 다크 코랄 브라운 계열',terroir:{zone:'HANON BASIN',ko:'하논 분지',material:'제주 쌀·차조',region:'서귀포 신례리 논농사(추정)',reason:'신례리 전통을 이은 쌀 기반 명주로 논농사 떼루아 계열입니다.',color:'#7F77DD',bg:'#EEEDFE',estimated:true}},
+  {name:'달그리안소주',type:'증류주',도수:52,당도:1,산미:1,바디:5,brewery:'달그리안',story:'달그리안 양조장이 만드는 가장 강한 술. 52도이지만 오랜 숙성으로 부드러운 여운.',ingredients:[{icon:'🌾',name:'제주 쌀·보리',desc:'쌀과 보리 혼합 발효·증류'},{icon:'💧',name:'남원 지하수',desc:'서귀포 남원읍의 청정 지하수'}],pairing:['오랜 친구와','특별한 날','전통 안주'],color_story:'가장 깊고 강한 다크 앰버 브라운',terroir:{zone:'HANON BASIN',ko:'하논 분지',material:'제주 쌀·보리',region:'서귀포 남원 논농사(추정)',reason:'쌀·보리 곡물 기반 증류주로 논농사 떼루아에 가깝습니다.',color:'#7F77DD',bg:'#EEEDFE',estimated:true}},
+  {name:'하마하마 너티',type:'탁주',도수:8,당도:4,산미:1,바디:3,brewery:'제주술익는집',story:'너티(nutty)한 고소함이 특징. 달콤하고 고소해 전통주 입문자에게 가장 추천하는 술.',ingredients:[{icon:'🌰',name:'땅콩',desc:'제주 땅콩 첨가로 고소하고 달콤한 너티한 맛'},{icon:'🌾',name:'제주 쌀·차조',desc:'제주 쌀과 차조 기반 발효'}],pairing:['파전','두부','과자류'],color_story:'땅콩처럼 따뜻하고 고소한 앰버 크림 계열',terroir:{zone:'COASTAL WATER',ko:'해안 용암수 지대',material:'땅콩 + 쌀·차조',region:'제주 해안권(추정)',reason:'제주 땅콩을 더한 탁주로 해안권 원물 떼루아 계열로 배치했습니다.',color:'#378ADD',bg:'#E6F1FB',estimated:true}},
+  {name:'하마하마 오메기',type:'탁주',도수:8,당도:2,산미:4,바디:2,brewery:'제주술익는집',story:'제주 전통 오메기술을 현대적으로 재해석. 차조 특유의 구수함과 자연 발효 산미가 어우러집니다.',ingredients:[{icon:'🌾',name:'차조 오메기',desc:'제주 전통 차조 오메기 발효'},{icon:'🍋',name:'유산균',desc:'자연 발효 유산균이 풍부한 새콤한 산미'}],pairing:['삼겹살','파전','오메기떡'],color_story:'차조의 황금빛을 담은 민트 그린 계열',terroir:{zone:'WEST FIELD',ko:'서부 밭농업 지대',material:'차조',region:'제주 서부 밭농업 지대(추정)',reason:'제주 차조 오메기를 발효한 탁주로, 서부 밭작물 떼루아 계열입니다.',color:'#BA7517',bg:'#FAEEDA',estimated:true}},
+  {name:'정글인제주',type:'탁주',도수:8,당도:2,산미:2,바디:2,brewery:'제주한잔 자체제조',story:'제주 숲속을 걷는 듯한 청량한 느낌. 다양한 허브가 어우러져 복합적인 향.',ingredients:[{icon:'🌿',name:'제주 허브 믹스',desc:'제주 자생 허브 블렌딩'},{icon:'🌾',name:'제주 쌀',desc:'제주산 쌀 기반 발효'}],pairing:['삼겹살','해산물','녹색 채소'],color_story:'제주 숲처럼 청량한 민트 그린 계열',terroir:{zone:'SOUTHWEST HERB',ko:'남서부 허브 지대',material:'제주 자생 허브',region:'제주 중산간 자생지(추정)',reason:'제주 자생 허브를 블렌딩한 탁주로 남서부 허브 떼루아 성격을 지닙니다.',color:'#1D9E75',bg:'#E1F5EE',estimated:true}},
+  {name:'바질첨벙',type:'탁주',도수:8,당도:3,산미:1,바디:2,brewery:'제주한잔 자체제조',story:'바질의 허브향이 첨벙 담긴 탁주. 이탈리안 허브와 제주 전통주의 독창적인 만남.',ingredients:[{icon:'🌿',name:'신선 바질',desc:'제주 재배 신선한 바질 첨가'},{icon:'🌾',name:'제주 쌀',desc:'제주산 쌀 탁주 베이스'}],pairing:['피자','파스타','카프레제'],color_story:'바질 잎처럼 산뜻한 그린 민트 계열',terroir:{zone:'SOUTHWEST HERB',ko:'남서부 허브 지대',material:'바질(허브)',region:'제주 허브 재배지(추정)',reason:'허브 바질을 접목한 탁주로 허브 떼루아 계열로 묶입니다.',color:'#1D9E75',bg:'#E1F5EE',estimated:true}},
+  {name:'함덕한잔딸기',type:'탁주',도수:10,당도:4,산미:3,바디:2,brewery:'제주한잔 자체제조',story:'함덕 해변만큼 싱그러운 딸기 탁주. 계절 과일을 신선하게 담아낸 한잔 시리즈.',ingredients:[{icon:'🍓',name:'함덕 딸기',desc:'함덕 딸기 농장 신선 딸기'},{icon:'🌾',name:'제주 쌀',desc:'제주 쌀 탁주 베이스'}],pairing:['크림치즈','과자','요거트'],color_story:'함덕 딸기의 선명한 핑크 코랄 계열',terroir:{zone:'COASTAL WATER',ko:'해안 용암수 지대',material:'함덕 딸기',region:'함덕 해안 재배지(추정)',reason:'함덕 딸기를 담은 탁주로 해안권 떼루아에 묶입니다.',color:'#378ADD',bg:'#E6F1FB',estimated:true}},
+  {name:'세화한잔당근',type:'탁주',도수:10,당도:2,산미:4,바디:1,brewery:'제주한잔 자체제조',story:'세화 해변 당근밭의 신선한 당근이 들어간 이색 탁주. 은은한 단맛과 산미.',ingredients:[{icon:'🥕',name:'세화 당근',desc:'세화 해변 당근밭 신선 당근 착즙'},{icon:'🌾',name:'제주 쌀',desc:'제주 쌀 탁주 베이스'}],pairing:['샐러드','백숙','나물'],color_story:'당근의 생기 있는 오렌지 민트 계열',terroir:{zone:'COASTAL WATER',ko:'해안 용암수 지대',material:'세화 당근',region:'세화 해안 당근밭(추정)',reason:'세화 해안 당근을 착즙한 탁주로 해안권 떼루아 계열입니다.',color:'#378ADD',bg:'#E6F1FB',estimated:true}},
+  {name:'애월한잔레몬',type:'탁주',도수:10,당도:1,산미:5,바디:1,brewery:'제주한잔 자체제조',story:'애월 레몬 농장에서 직접 가져온 레몬으로 만든 가장 새콤한 탁주.',ingredients:[{icon:'🍋',name:'애월 레몬',desc:'애월 무농약 레몬 직접 착즙'},{icon:'🌾',name:'제주 쌀',desc:'제주 쌀 탁주에 레몬즙 블렌딩'}],pairing:['생선','해산물','닭요리'],color_story:'레몬처럼 선명하고 상큼한 옐로우 민트 계열',terroir:{zone:'CITRUS VALLEY',ko:'감귤 계곡',material:'애월 레몬',region:'애월 레몬 농장(추정)',reason:'애월 레몬을 착즙한 탁주로 시트러스 떼루아 특성이 뚜렷합니다.',color:'#EF9F27',bg:'#FAEEDA',estimated:true}},
+  {name:'제주한잔블루베리',type:'탁주',도수:10,당도:3,산미:3,바디:2,brewery:'제주한잔 자체제조',story:'제주 블루베리 농가와 협력해 만든 탁주. 보라빛 색감이 아름답고 달콤새콤한 맛이 균형잡혀 있습니다.',ingredients:[{icon:'🫐',name:'제주 블루베리',desc:'제주 청정 블루베리 통째로 발효'},{icon:'🌾',name:'제주 쌀',desc:'제주 쌀 탁주 베이스'}],pairing:['요거트','치즈','과자'],color_story:'블루베리처럼 아름다운 퍼플 민트 계열',terroir:{zone:'VOLCANIC RIDGE',ko:'화산 능선',material:'제주 블루베리',region:'제주 중산간 과수지(추정)',reason:'제주 블루베리를 담은 탁주로 화산 능선 온대 과수 떼루아에 속합니다.',color:'#D85A30',bg:'#FAECE7',estimated:true}},
+  {name:'협재한잔키위',type:'탁주',도수:10,당도:3,산미:3,바디:2,brewery:'제주한잔 자체제조',story:'협재 에메랄드 바다처럼 상큼한 키위 탁주. 초록빛 키위가 탁주와 만나 독특한 풍미.',ingredients:[{icon:'🥝',name:'협재 키위',desc:'협재 키위 농장의 키위'},{icon:'🌾',name:'제주 쌀',desc:'제주 쌀 탁주 베이스'}],pairing:['샐러드','닭요리','과일'],color_story:'키위처럼 싱그러운 그린 민트 계열',terroir:{zone:'COASTAL WATER',ko:'해안 용암수 지대',material:'협재 키위',region:'협재 해안 재배지(추정)',reason:'협재 키위를 담은 탁주로 해안권 떼루아에 속합니다.',color:'#378ADD',bg:'#E6F1FB',estimated:true}},
+  {name:'벚꽃피는날에 제주',type:'탁주',도수:12,당도:3,산미:2,바디:2,brewery:'제주한잔 자체제조',story:'제주 왕벚나무 발원지를 기리는 봄 한정 탁주. 벚꽃 향이 술잔에서 피어납니다.',ingredients:[{icon:'🌸',name:'제주 벚꽃',desc:'제주 왕벚나무 벚꽃 첨가'},{icon:'🌾',name:'제주 쌀',desc:'제주 쌀 탁주에 벚꽃 가미'}],pairing:['화전','봄나물','담백한 전채'],color_story:'벚꽃처럼 부드러운 핑크 민트 계열',terroir:{zone:'COASTAL WATER',ko:'해안 용암수 지대',material:'제주 벚꽃 + 쌀',region:'제주 해안권(추정)',reason:'벚꽃을 가미한 탁주로 해안권 원물 떼루아 계열로 배치했습니다.',color:'#378ADD',bg:'#E6F1FB',estimated:true}},
+  {name:'이시보 막걸리',type:'탁주',도수:12,당도:2,산미:3,바디:2,brewery:'이시보',story:'이시보(以示甫)는 "좋은 것을 보여준다"는 뜻. 제주 용암수의 미네랄이 깊은 맛을 만들어냅니다.',ingredients:[{icon:'🌊',name:'제주 용암수',desc:'조천 용암층 미네랄 풍부한 물'},{icon:'🌾',name:'제주 쌀·차조',desc:'제주산 쌀과 차조 블렌딩 발효'}],pairing:['파전','두부','오징어'],color_story:'조천 바다처럼 깊은 민트 그린 계열',terroir:{zone:'COASTAL WATER',ko:'해안 용암수 지대',material:'용암수 + 쌀·차조',region:'조천 해안 용암층(추정)',reason:'조천 해안 용암수를 강조한 탁주로 물의 떼루아를 중심으로 묶입니다.',color:'#378ADD',bg:'#E6F1FB',estimated:true}},
+  {name:'이시보 원 막걸리',type:'탁주',도수:15.5,당도:1,산미:4,바디:3,brewery:'이시보',story:'"원(原)"은 원래 그대로를 뜻합니다. 쌀·차조·누룩·물만으로 빚은 가감 없는 순수 발효주.',ingredients:[{icon:'🌊',name:'제주 용암수',desc:'미네랄 풍부한 용암층 지하수'},{icon:'🌾',name:'원물 그대로',desc:'쌀·차조·누룩·물만. 아무것도 첨가하지 않음'}],pairing:['홍어','돼지고기','묵은지'],color_story:'가장 전통적인 청회색 민트 계열',terroir:{zone:'COASTAL WATER',ko:'해안 용암수 지대',material:'용암수 + 쌀·차조',region:'조천 해안 용암층(추정)',reason:'용암수와 원물만으로 빚은 탁주로 해안 용암수 떼루아를 대표합니다.',color:'#378ADD',bg:'#E6F1FB',estimated:true}},
+];
+
+/* ══════════════════ UTIL ══════════════════ */
+const TS={
+  '탁주':{c:'#1D9E75',bg:'#E1F5EE',dk:'#085041'},
+  '약주':{c:'#7F77DD',bg:'#EEEDFE',dk:'#26215C'},
+  '리큐르':{c:'#D4537E',bg:'#FBEAF0',dk:'#4B1528'},
+  '와인':{c:'#ED93B1',bg:'#FBEAF0',dk:'#4B1528'},
+  '과실주':{c:'#D85A30',bg:'#FAECE7',dk:'#4A1B0C'},
+  '증류주':{c:'#BA7517',bg:'#FAEEDA',dk:'#412402'},
+};
+const ts=(t,k)=>(TS[t]||TS['탁주'])[k];
+function alcRange(d){return d<=15.5?'low':d<=25?'mid':'high';}
+function getColor(d){
+  if(d.type==='탁주'){if(d.당도>=4)return'#EF9F27';if(d.산미>=4)return'#1D9E75';return'#9FE1CB';}
+  if(d.type==='약주')return'#AFA9EC';
+  if(d.type==='리큐르')return d.당도>=4?'#ED93B1':'#D4537E';
+  if(d.type==='와인')return'#F4C0D1';
+  if(d.type==='과실주')return'#F0997B';
+  if(d.type==='증류주')return d.도수>=40?'#854F0B':'#BA7517';
+  return'#888780';
+}
+function scoreD(d){
+  const trPenalty=(state.terroir==='all'||(d.terroir&&d.terroir.zone===state.terroir))?0:5;
+  return Math.abs(d.당도-state.sweet)+Math.abs(d.산미-state.sour)
+    +(alcRange(d.도수)===state.alc?0:1.5)+((state.type==='all'||d.type===state.type)?0:2)+trPenalty;
+}
+function stars(n){return'★'.repeat(n)+'☆'.repeat(5-n);}
+function today(){return new Date().toISOString().split('T')[0];}
+
+/* ══════════════════ STATE ══════════════════ */
+const state={sweet:3,sour:1,alc:'low',type:'탁주',terroir:'all'};
+const rec={drink:null,color:null,date:today(),stars:0,emotion:'',weather:'',ctx:[],flavors:[],feeling:'',memo:''};
+let logs=[];
+let currentResults=[];
+let activeLogFilter='all';
+
+/* ══════════════════ SIDEBAR ══════════════════ */
+function setSc(g,v,el){
+  state[g]=v;
+  document.querySelectorAll(`#${g}-btns .sc-btn`).forEach(b=>{
+    const on=+b.dataset.v===v;
+    b.classList.toggle('on',on);
+    b.style.cssText=on?`border-color:var(--point);background:var(--point-l);color:var(--point-dk)`:'';
+  });
+}
+function setAlc(v){
+  state.alc=v;
+  document.querySelectorAll('.alc-btn').forEach(b=>{
+    const on=b.dataset.v===v;
+    b.style.cssText=on?'border-color:var(--point);background:var(--point-l);color:var(--point-dk)':'';
+  });
+}
+function setType(v){
+  state.type=v;
+  document.querySelectorAll('.type-btn').forEach(b=>{
+    const on=b.dataset.v===v;
+    b.style.borderColor=on?'var(--point)':'var(--border)';
+    b.style.background=on?'var(--point-l)':'var(--cream)';
+    b.querySelector('.tn').style.color=on?'var(--point-dk)':'var(--ink)';
+  });
+}
+function setTerroir(v){
+  state.terroir=v;
+  renderSidebarTerroirMap();
+  const labels={'all':'전체','WEST FIELD':'서부 밭','CITRUS VALLEY':'감귤 계곡','SOUTHWEST HERB':'허브 지대','VOLCANIC RIDGE':'화산 능선','HANON BASIN':'하논 분지','COASTAL WATER':'해안 용암수'};
+  document.getElementById('tr-selected-label').textContent='· '+(labels[v]||v);
+}
+
+// 사이드바 좌표(viewBox 0 0 240 130): 서→동, 북→남
+const SIDEBAR_ZONE_POS={
+  'WEST FIELD':{x:52,y:62},
+  'SOUTHWEST HERB':{x:75,y:88},
+  'VOLCANIC RIDGE':{x:100,y:96},
+  'HANON BASIN':{x:140,y:97},
+  'CITRUS VALLEY':{x:178,y:92},
+  'COASTAL WATER':{x:190,y:52},
+};
+
+function renderSidebarTerroirMap(){
+  const withT=DB.filter(d=>d.terroir);
+  const markers=Object.entries(SIDEBAR_ZONE_POS).map(([zone,pos])=>{
+    const zdef=TERROIR_ZONES.find(z=>z.zone===zone);
+    const drinks=withT.filter(d=>d.terroir.zone===zone);
+    const active=state.terroir===zone||state.terroir==='all';
+    const isSel=state.terroir===zone;
+    const r=isSel?9:6.5;
+    return`<g class="tr-zone-marker" onclick="setTerroir('${zone}')">
+      <circle cx="${pos.x}" cy="${pos.y}" r="${r+7}" fill="${zdef.color}" opacity="${isSel?.22:.1}"/>
+      <circle cx="${pos.x}" cy="${pos.y}" r="${r}" fill="${zdef.color}" opacity="${active?1:.4}" stroke="${isSel?'#fff':'none'}" stroke-width="${isSel?1.5:0}"/>
+      <text x="${pos.x}" y="${pos.y+2.5}" text-anchor="middle" font-size="7" font-weight="600" fill="#fff" font-family="inherit">${drinks.length}</text>
+    </g>`;
+  }).join('');
+  const svg=document.getElementById('tr-markers');
+  if(svg)svg.innerHTML=markers;
+
+  // 범례
+  const legItems=[{zone:'all',name:'전체',color:'var(--point)',cnt:withT.length}]
+    .concat(TERROIR_ZONES.map(z=>({zone:z.zone,name:z.ko.replace(' 지대','').replace(' 밭농업',''),color:z.color,cnt:withT.filter(d=>d.terroir.zone===z.zone).length})));
+  const leg=document.getElementById('tr-legend');
+  if(leg)leg.innerHTML=legItems.map(it=>`
+    <div class="tr-leg-item ${state.terroir===it.zone?'on':''}" onclick="setTerroir('${it.zone}')">
+      <span class="tr-leg-dot" style="background:${it.color}"></span>
+      <span class="tr-leg-name">${it.name}</span>
+      <span class="tr-leg-cnt">${it.cnt}</span>
+    </div>`).join('');
+}
+
+/* ══════════════════ PAGE ══════════════════ */
+function showPage(id,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.ttab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+}
+
+/* ══════════════════ SEARCH ══════════════════ */
+function doSearch(){
+  let pool=[...DB];
+  if(state.terroir!=='all'){
+    const filtered=pool.filter(d=>d.terroir&&d.terroir.zone===state.terroir);
+    if(filtered.length)pool=filtered;
+  }
+  const sorted=pool.sort((a,b)=>scoreD(a)-scoreD(b));
+  currentResults=sorted.slice(0,10);
+  renderBanner(currentResults[0]);
+  renderCards(currentResults);
+  updateReport(currentResults);
+  document.getElementById('pre-search').style.display='none';
+  document.getElementById('search-results').style.display='flex';
+  document.getElementById('tp-count').textContent=currentResults.length+'종 추천';
+}
+
+function renderBanner(d){
+  const col=getColor(d);
+  const cols=[col,ts(d.type,'bg'),ts(d.type,'c'),ts(d.type,'dk')];
+  const sL=['','드라이','살짝 달콤','중간 단맛','달콤한','매우 달콤한'];
+  document.getElementById('profile-banner').innerHTML=`
+    <div class="pb-swatches">${cols.map(c=>`<div class="pb-sw" style="background:${c}"></div>`).join('')}</div>
+    <div style="flex:1">
+      <div class="pb-title">${sL[state.sweet]} ${d.type} 취향</div>
+      <div class="pb-sub">${d.name} 계열이 가장 잘 맞아요</div>
+      <div class="pb-tags">
+        <span class="pill" style="color:var(--pink);border-color:var(--pink)"><span class="pill-dot" style="background:var(--pink)"></span>당도 ${state.sweet}</span>
+        <span class="pill" style="color:var(--teal);border-color:var(--teal)"><span class="pill-dot" style="background:var(--teal)"></span>산미 ${state.sour}</span>
+        <span class="pill" style="color:var(--coral);border-color:var(--coral)"><span class="pill-dot" style="background:var(--coral)"></span>${{low:'저도',mid:'중도',high:'고도'}[state.alc]}</span>
+        ${state.type!=='all'?`<span class="pill" style="color:${ts(state.type,'dk')};border-color:${ts(state.type,'c')}"><span class="pill-dot" style="background:${ts(state.type,'c')}"></span>${state.type}</span>`:''}
+      </div>
+    </div>`;
+}
+
+function renderCards(list){
+  document.getElementById('res-count').textContent=list.length+'종';
+  document.getElementById('filter-chips').innerHTML=[
+    `<span class="pill" style="color:var(--pink);border-color:var(--pink)"><span class="pill-dot" style="background:var(--pink)"></span>당도 ${state.sweet}</span>`,
+    `<span class="pill" style="color:var(--teal);border-color:var(--teal)"><span class="pill-dot" style="background:var(--teal)"></span>산미 ${state.sour}</span>`,
+    `<span class="pill" style="color:var(--coral);border-color:var(--coral)"><span class="pill-dot" style="background:var(--coral)"></span>${{low:'저도',mid:'중도',high:'고도'}[state.alc]}</span>`,
+    state.terroir!=='all'?`<span class="pill" style="color:var(--point-dk);border-color:var(--point)"><span class="pill-dot" style="background:var(--point)"></span>${state.terroir}</span>`:'',
+  ].join('');
+  const grid=document.getElementById('cards-grid');
+  grid.innerHTML='';
+  grid._data=list;
+  list.forEach((d,i)=>{
+    const col=getColor(d);
+    const sw=Math.round(d.당도/5*100),ss=Math.round(d.산미/5*100),bd=Math.round(d.바디/5*100);
+    const el=document.createElement('div');
+    el.className='drink-card';
+    el.innerHTML=`
+      <div class="card-bar" style="background:${col}"></div>
+      <div class="card-body">
+        <div class="card-name" title="${d.name}">${d.name}</div>
+        <div class="card-meta">${d.도수}% · ${d.brewery||d.type}</div>
+        ${d.terroir?`<div style="display:inline-flex;align-items:center;gap:3px;font-size:10px;padding:2px 7px;border-radius:6px;background:${d.terroir.bg};color:${d.terroir.color};margin-bottom:4px">📍 ${d.terroir.zone}${d.terroir.estimated===false?' ✓':''}</div>`:''}
+        <div style="display:flex;flex-direction:column;gap:4px;margin-top:7px">
+          <div class="brow"><div class="blbl">단맛</div><div class="btrack"><div class="bfill" style="width:${sw}%;background:#D4537E"></div></div></div>
+          <div class="brow"><div class="blbl">산미</div><div class="btrack"><div class="bfill" style="width:${ss}%;background:#1D9E75"></div></div></div>
+          <div class="brow"><div class="blbl">바디</div><div class="btrack"><div class="bfill" style="width:${bd}%;background:#BA7517"></div></div></div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <span class="type-badge" style="background:${ts(d.type,'bg')};color:${ts(d.type,'dk')};border:0.5px solid ${ts(d.type,'c')}">${d.type}</span>
+        <div class="card-btns">
+          <button class="cbtn" onclick="openModal(${i})">상세</button>
+          <button class="cbtn p" onclick="startRecord(${i})">기록하기</button>
+        </div>
+      </div>`;
+    grid.appendChild(el);
+  });
+}
+
+/* ══════════════════ MODAL ══════════════════ */
+function openModal(idx){
+  const list=document.getElementById('cards-grid')._data;
+  const d=list[idx];
+  const col=getColor(d);
+  const sw=Math.round(d.당도/5*100),ss=Math.round(d.산미/5*100),bd=Math.round(d.바디/5*100);
+  document.getElementById('modal-hdr').innerHTML=`
+    <div class="mcolor" style="background:${col}"></div>
+    <div style="flex:1">
+      <div class="mtitle">${d.name}</div>
+      <div class="msub">${d.도수}% · ${d.type} · ${d.brewery||''}</div>
+      <div style="display:flex;gap:5px;margin-top:7px;flex-wrap:wrap">
+        <span class="pill" style="color:${ts(d.type,'dk')};border-color:${ts(d.type,'c')}"><span class="pill-dot" style="background:${ts(d.type,'c')}"></span>${d.type}</span>
+        <span class="pill" style="color:var(--pink);border-color:var(--pink)"><span class="pill-dot" style="background:var(--pink)"></span>당도 ${d.당도}/5</span>
+        <span class="pill" style="color:var(--teal);border-color:var(--teal)"><span class="pill-dot" style="background:var(--teal)"></span>산미 ${d.산미}/5</span>
+        <span class="pill" style="color:var(--amber);border-color:var(--amber)"><span class="pill-dot" style="background:var(--amber)"></span>바디 ${d.바디}/5</span>
+      </div>
+    </div>
+    <button class="mclose" onclick="closeModal()">✕</button>`;
+  document.getElementById('modal-body').innerHTML=`
+    <div><div class="m-sec-lbl">맛 프로파일</div><div class="mstat-row">
+      <div class="mstat"><div class="mstat-lbl">당도</div><div class="mstat-val">${d.당도}/5</div><div class="mstat-bar"><div class="mstat-fill" style="width:${sw}%;background:#D4537E"></div></div></div>
+      <div class="mstat"><div class="mstat-lbl">산미</div><div class="mstat-val">${d.산미}/5</div><div class="mstat-bar"><div class="mstat-fill" style="width:${ss}%;background:#1D9E75"></div></div></div>
+      <div class="mstat"><div class="mstat-lbl">바디</div><div class="mstat-val">${d.바디}/5</div><div class="mstat-bar"><div class="mstat-fill" style="width:${bd}%;background:#BA7517"></div></div></div>
+      <div class="mstat"><div class="mstat-lbl">도수</div><div class="mstat-val">${d.도수}%</div><div class="mstat-bar"><div class="mstat-fill" style="width:${Math.round(d.도수/52*100)}%;background:#D85A30"></div></div></div>
+    </div></div>
+    ${d.story?`<div><div class="m-sec-lbl">이 술 이야기</div><div class="mdesc">${d.story}</div></div>`:''}
+    ${d.color_story?`<div><div class="m-sec-lbl">컬러 스토리</div><div style="display:flex;align-items:center;gap:10px"><div style="width:26px;height:26px;border-radius:6px;background:${col};flex-shrink:0"></div><div class="mdesc">${d.color_story}</div></div></div>`:''}
+    ${d.ingredients?`<div><div class="m-sec-lbl">주요 재료</div><div style="display:flex;flex-direction:column;gap:8px">${d.ingredients.map(g=>`<div class="ing-row"><div class="ing-icon">${g.icon}</div><div><div class="ing-name">${g.name}</div><div class="ing-desc">${g.desc}</div></div></div>`).join('')}</div></div>`:''}
+    ${d.terroir?`<div><div class="m-sec-lbl">떼루아 · 원물의 땅</div><div style="background:${d.terroir.bg};border-radius:9px;padding:13px 15px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span style="font-size:11px;font-weight:600;letter-spacing:.05em;color:${d.terroir.color}">${d.terroir.zone}</span><span style="font-size:11px;color:var(--ink3)">${d.terroir.ko}</span>${d.terroir.estimated===false?`<span style="font-size:9px;padding:1px 7px;border-radius:8px;background:${d.terroir.color};color:#fff;margin-left:auto">공식 분류</span>`:`<span style="font-size:9px;padding:1px 7px;border-radius:8px;background:transparent;color:var(--ink3);border:0.5px dashed var(--ink3);margin-left:auto">추정 분류</span>`}</div><div style="display:flex;gap:14px;margin-bottom:8px"><div><div style="font-size:10px;color:var(--ink3)">원물</div><div style="font-size:12px;font-weight:500;color:var(--ink)">${d.terroir.material}</div></div><div style="flex:1"><div style="font-size:10px;color:var(--ink3)">재배 지역</div><div style="font-size:12px;color:var(--ink2)">${d.terroir.region}</div></div></div><div style="font-size:12px;color:var(--ink2);line-height:1.65;padding-top:8px;border-top:0.5px solid rgba(0,0,0,.06)">${d.terroir.reason}</div></div></div>`:''}
+    ${d.brewery?`<div><div class="m-sec-lbl">양조장</div><div class="bw-mini">${(()=>{const bw=BREWERIES.find(b=>b.products.includes(d.name));return bw?`<div class="bw-mini-name">${bw.emoji} ${bw.name}</div><div class="bw-mini-loc">📍 ${bw.loc} · 설립 ${bw.year}년</div><div class="bw-mini-desc">${bw.desc}</div>`:`<div class="bw-mini-name">${d.brewery}</div>`;})()}</div></div>`:''}
+    ${d.pairing?`<div><div class="m-sec-lbl">어울리는 안주</div><div class="pair-tags">${d.pairing.map(p=>`<span class="pair-tag">${p}</span>`).join('')}</div></div>`:''}
+  `;
+  document.getElementById('modal-actions').innerHTML=`
+    <button class="mabtn p" onclick="startRecord(${idx},true)">기록하기</button>
+    <button class="mabtn s" onclick="closeModal()">닫기</button>`;
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeModal(e){if(!e||e.target===document.getElementById('modal-overlay'))document.getElementById('modal-overlay').classList.remove('open');}
+
+/* ══════════════════ RECORD FORM ══════════════════ */
+function setStar(n){
+  rec.stars=n;
+  document.querySelectorAll('.star-btn').forEach((b,i)=>b.classList.toggle('on',i<n));
+}
+function setEmo(el){
+  rec.emotion=el.dataset.e;
+  document.querySelectorAll('.emo-btn').forEach(b=>b.classList.toggle('on',b===el));
+}
+function setWx(el){
+  rec.weather=el.dataset.w;
+  document.querySelectorAll('.wx-btn').forEach(b=>b.classList.toggle('on',b===el));
+}
+function toggleCtx(el){el.classList.toggle('on');rec.ctx=Array.from(document.querySelectorAll('.ctx-opt.on')).map(b=>b.textContent);}
+function toggleFlv(el){el.classList.toggle('on');rec.flavors=Array.from(document.querySelectorAll('.flv-opt.on')).map(b=>b.textContent);}
+
+function startRecord(idx,fromModal=false){
+  const list=document.getElementById('cards-grid')._data;
+  const d=list[idx];
+  rec.drink=d;
+  rec.color=getColor(d);
+  if(fromModal)closeModal();
+  // 드롭다운 동기화
+  const sel=document.getElementById('drink-select');
+  if(sel)sel.value=d.name;
+  // 날짜 기본값
+  document.getElementById('record-date').value=today();
+  // 서브타이틀
+  document.getElementById('rp-subtitle').textContent=d.name+' · '+d.type;
+  // 초기화
+  setStar(0);rec.emotion='';rec.weather='';rec.ctx=[];rec.flavors=[];
+  document.querySelectorAll('.emo-btn,.wx-btn,.ctx-opt,.flv-opt').forEach(b=>b.classList.remove('on'));
+  document.getElementById('feeling-input').value='';
+  document.getElementById('memo-input').value='';
+  showPage('diary',document.querySelectorAll('.ttab')[1]);
+}
+
+function selectDrinkFromDropdown(name){
+  const d=DB.find(x=>x.name===name);
+  if(!d)return;
+  rec.drink=d;
+  rec.color=getColor(d);
+  document.getElementById('rp-subtitle').textContent=d.name+' · '+d.type;
+}
+
+function saveRecord(){
+  const d=rec.drink;
+  if(!d){alert('마신 술을 선택해주세요');return;}
+  const entry={
+    id:Date.now(),
+    drink:d,
+    color:rec.color,
+    date:document.getElementById('record-date').value||today(),
+    stars:rec.stars,
+    emotion:rec.emotion,
+    weather:rec.weather,
+    ctx:[...rec.ctx],
+    flavors:[...rec.flavors],
+    feeling:document.getElementById('feeling-input').value.trim(),
+    memo:document.getElementById('memo-input').value.trim(),
+  };
+  logs.unshift(entry);
+  renderDiaryList();
+  updateDiaryStats();
+  updateReport(currentResults);
+  // 폼 초기화
+  rec.drink=null;rec.stars=0;rec.emotion='';rec.weather='';rec.ctx=[];rec.flavors=[];
+  document.querySelectorAll('.emo-btn,.wx-btn,.ctx-opt,.flv-opt,.star-btn').forEach(b=>b.classList.remove('on'));
+  document.getElementById('feeling-input').value='';
+  document.getElementById('memo-input').value='';
+  document.getElementById('rp-subtitle').textContent='추천에서 술을 선택하면 자동으로 채워집니다';
+  document.getElementById('drink-select').value='';
+}
+
+/* ══════════════════ DIARY LIST ══════════════════ */
+function renderDiaryList(){
+  const cnt=document.getElementById('diary-count');
+  cnt.textContent=logs.length+'종';
+  const list=document.getElementById('diary-list');
+  const filtered=activeLogFilter==='all'?logs:logs.filter(e=>e.drink.type===activeLogFilter);
+  if(!filtered.length){list.innerHTML='<div class="empty-state" style="padding:36px 20px"><div class="es-title">기록이 없어요</div></div>';return;}
+  list.innerHTML=filtered.map(e=>{
+    const tc=ts(e.drink.type,'c'),tbg=ts(e.drink.type,'bg'),tdk=ts(e.drink.type,'dk');
+    const cols=[e.color,tbg,tc];
+    const dateStr=e.date?e.date.replace(/-/g,'.'):'';
+    return`<div class="log-card" id="log-${e.id}">
+      <div class="log-card-top">
+        <div class="log-color-strip" style="background:${e.color}"></div>
+        <div class="log-body">
+          <div class="log-header">
+            <div class="log-name" title="${e.drink.name}">${e.drink.name}</div>
+            <div class="log-date">${dateStr}</div>
+          </div>
+          <div class="log-meta-row">
+            ${e.stars?`<div class="log-stars" style="font-size:13px;color:#EF9F27">${'★'.repeat(e.stars)}<span style="color:#E2DFDA">${'★'.repeat(5-e.stars)}</span></div>`:''}
+            ${e.emotion?`<span style="font-size:16px">${e.emotion}</span>`:''}
+            ${e.weather?`<span style="font-size:15px">${e.weather}</span>`:''}
+            <span class="log-type-badge" style="background:${tbg};color:${tdk};border:0.5px solid ${tc}">${e.drink.type}</span>
+            <span style="font-size:11px;color:var(--ink3)">${e.drink.도수}%</span>
+          </div>
+          ${e.ctx.length||e.flavors.length?`<div class="log-context">
+            ${e.ctx.map(c=>`<span class="lctx">👤 ${c}</span>`).join('')}
+            ${e.flavors.map(f=>`<span class="ftag" style="color:var(--purple-dk);border-color:var(--purple)">${f}</span>`).join('')}
+          </div>`:''}
+          ${e.feeling?`<div class="log-feeling">${e.feeling}</div>`:''}
+          ${e.memo?`<div class="log-note">${e.memo}</div>`:''}
+          <div class="log-palette">${cols.map(c=>`<div class="lp-sw" style="background:${c}"></div>`).join('')}
+            <span style="font-size:10px;color:var(--ink3);margin-left:6px;align-self:center">단맛 ${e.drink.당도} · 산미 ${e.drink.산미} · 바디 ${e.drink.바디}</span>
+          </div>
+          <div class="log-actions">
+            <button class="log-action-btn" onclick="deleteLog(${e.id})">삭제</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function deleteLog(id){
+  logs=logs.filter(e=>e.id!==id);
+  renderDiaryList();
+  updateDiaryStats();
+}
+
+function updateDiaryStats(){
+  const sb=document.getElementById('diary-stats');
+  if(!logs.length){sb.style.display='none';return;}
+  sb.style.display='grid';
+  const avgStar=(logs.reduce((s,e)=>s+e.stars,0)/logs.length).toFixed(1);
+  const freq={};logs.forEach(e=>freq[e.drink.type]=(freq[e.drink.type]||0)+1);
+  const topType=Object.entries(freq).sort((a,b)=>b[1]-a[1])[0]?.[0]||'-';
+  const flvFreq={};logs.forEach(e=>e.flavors.forEach(f=>flvFreq[f]=(flvFreq[f]||0)+1));
+  const topFlv=Object.entries(flvFreq).sort((a,b)=>b[1]-a[1])[0]?.[0]||'-';
+  const emoFreq={};logs.forEach(e=>{if(e.emotion)emoFreq[e.emotion]=(emoFreq[e.emotion]||0)+1;});
+  const topEmo=Object.entries(emoFreq).sort((a,b)=>b[1]-a[1])[0]?.[0]||'—';
+  sb.innerHTML=`
+    <div class="stat-box"><div class="stat-lbl">총 기록</div><div class="stat-val">${logs.length}<span style="font-size:13px;color:var(--ink3)">종</span></div></div>
+    <div class="stat-box"><div class="stat-lbl">평균 별점</div><div class="stat-val">${avgStar}<span style="font-size:13px;color:#EF9F27"> ★</span></div></div>
+    <div class="stat-box"><div class="stat-lbl">선호 주종</div><div class="stat-val" style="font-size:16px;margin-top:4px">${topType}</div></div>
+    <div class="stat-box"><div class="stat-lbl">자주 느낀 향</div><div class="stat-val" style="font-size:16px;margin-top:4px">${topFlv}</div><div class="stat-sub">${topEmo} 기분</div></div>`;
+  // 필터 버튼
+  const types=['all',...new Set(logs.map(e=>e.drink.type))];
+  document.getElementById('diary-filter-btns').innerHTML=types.map(t=>`
+    <button onclick="setLogFilter('${t}')" style="font-size:11px;padding:3px 9px;border-radius:20px;border:0.5px solid ${activeLogFilter===t?ts(t==='all'?'탁주':t,'c'):'var(--border)'};background:${activeLogFilter===t?ts(t==='all'?'탁주':t,'bg'):'transparent'};color:${activeLogFilter===t?ts(t==='all'?'탁주':t,'dk'):'var(--ink3)'};cursor:pointer;font-family:inherit">${t==='all'?'전체':t}</button>`).join('');
+}
+function setLogFilter(t){activeLogFilter=t;renderDiaryList();updateDiaryStats();}
+
+/* ══════════════════ DROPDOWN INIT ══════════════════ */
+function initDropdown(){
+  const sel=document.getElementById('drink-select');
+  DB.forEach(d=>{const o=document.createElement('option');o.value=d.name;o.textContent=`${d.name} (${d.type} · ${d.도수}%)`;sel.appendChild(o);});
+}
+
+/* ══════════════════ JUJONG ══════════════════ */
+function renderJujong(){
+  document.getElementById('jj-grid').innerHTML=JUJONG.map(j=>`
+    <div class="jj-card">
+      <div class="jj-strip">${j.colors.map(c=>`<div class="jj-seg" style="background:${c}"></div>`).join('')}</div>
+      <div class="jj-body">
+        <div class="jj-name">${j.name}</div>
+        <div class="jj-eng">${j.eng}</div>
+        <div class="jj-desc">${j.desc}</div>
+        <div class="jj-3col">
+          <div class="jjstat"><div class="jjstat-lbl">도수</div><div class="jjstat-val">${j.abv}%</div></div>
+          <div class="jjstat"><div class="jjstat-lbl">당도</div><div class="jjstat-val">${j.sweet}</div></div>
+          <div class="jjstat"><div class="jjstat-lbl">바디</div><div class="jjstat-val">${j.body}</div></div>
+        </div>
+        <div class="jj-examples">${j.examples.map(e=>`<span class="jj-ex" style="color:${j.color};border-color:${j.color}">${e}</span>`).join('')}</div>
+        <div style="margin-top:10px;padding-top:10px;border-top:0.5px solid var(--border)">
+          <div style="font-size:10px;font-weight:500;color:var(--ink3);margin-bottom:4px">제조 방식</div>
+          <div style="font-size:12px;color:var(--ink2);line-height:1.65">${j.process}</div>
+        </div>
+        <div class="jj-tip">💡 ${j.tip}</div>
+      </div>
+    </div>`).join('');
+}
+
+/* ══════════════════ BREWERY ══════════════════ */
+function renderBrewery(){
+  document.getElementById('bw-count').textContent=BREWERIES.length+'개 양조장';
+  document.getElementById('bw-grid').innerHTML=BREWERIES.map(b=>`
+    <div class="bw-card">
+      <div class="bw-hdr">
+        <div class="bw-emblem" style="background:${b.bg}">${b.emoji}</div>
+        <div><div class="bw-name">${b.name}</div><div class="bw-loc">📍 ${b.loc}</div><div class="bw-year">설립 ${b.year}년</div></div>
+      </div>
+      <div class="bw-desc">${b.desc}</div>
+      <div><div style="font-size:10px;color:var(--ink3);margin-bottom:5px;font-weight:500">보유 제품</div><div class="bw-prods">${b.products.map(p=>`<span class="bw-prod">${p}</span>`).join('')}</div></div>
+    </div>`).join('');
+}
+
+/* ══════════════════ REPORT ══════════════════ */
+function updateReport(top){
+  document.getElementById('report-empty').style.display='none';
+  document.getElementById('report-content').style.display='grid';
+  const d=top[0];
+  const col=getColor(d);
+  const cols=[col,ts(d.type,'bg'),ts(d.type,'c'),ts(d.type,'dk')];
+  document.getElementById('rp-pal').innerHTML=cols.map(c=>`<div class="rpal-sw" style="background:${c}"></div>`).join('');
+  const sL=['','드라이','살짝 달콤','중간 단맛의','달콤한','매우 달콤한'];
+  const soL=['','산미 없는','약한 산미의','중간 산미의','새콤한','매우 새콤한'];
+  document.getElementById('rp-type').textContent=`${sL[state.sweet]} ${d.type} 취향`;
+  document.getElementById('rp-desc').textContent=`${soL[state.sour]} 스타일을 선호해요. ${d.name} 같은 술이 가장 잘 맞을 거예요.`;
+  document.getElementById('rp-tags').innerHTML=[
+    `<span class="pill" style="color:var(--pink);border-color:var(--pink)"><span class="pill-dot" style="background:var(--pink)"></span>당도 ${state.sweet}</span>`,
+    `<span class="pill" style="color:var(--teal);border-color:var(--teal)"><span class="pill-dot" style="background:var(--teal)"></span>산미 ${state.sour}</span>`,
+    `<span class="pill" style="color:${ts(d.type,'dk')};border-color:${ts(d.type,'c')}"><span class="pill-dot" style="background:${ts(d.type,'c')}"></span>${d.type}</span>`,
+  ].join('');
+  document.getElementById('rp-cnt').textContent=logs.length+'종';
+  document.getElementById('rp-pref').textContent=logs.length?((()=>{const f={};logs.forEach(e=>f[e.drink.type]=(f[e.drink.type]||0)+1);return Object.entries(f).sort((a,b)=>b[1]-a[1])[0][0];})()):'–';
+  document.getElementById('rp-stat-tags').innerHTML=top.slice(0,3).map(dr=>`<span class="pill" style="color:${ts(dr.type,'dk')};border-color:${ts(dr.type,'c')}"><span class="pill-dot" style="background:${getColor(dr)}"></span>${dr.name}</span>`).join('');
+  const cx=Math.round(30+d.당도/5*185),cy=Math.round(160-d.도수/52*130);
+  document.getElementById('rp-map').innerHTML=`
+    <svg width="100%" viewBox="0 0 260 185" style="border-radius:8px;background:var(--cream)">
+      <ellipse cx="190" cy="140" rx="52" ry="33" fill="#E1F5EE" opacity=".6"/>
+      <ellipse cx="78" cy="97" rx="44" ry="33" fill="#EEEDFE" opacity=".5"/>
+      <ellipse cx="185" cy="52" rx="44" ry="28" fill="#FBEAF0" opacity=".5"/>
+      <ellipse cx="66" cy="42" rx="34" ry="26" fill="#FAECE7" opacity=".5"/>
+      <line x1="20" y1="170" x2="245" y2="170" stroke="#E2DFDA" stroke-width=".5"/>
+      <line x1="20" y1="10" x2="20" y2="170" stroke="#E2DFDA" stroke-width=".5"/>
+      <text x="130" y="182" text-anchor="middle" font-size="9" fill="#928F87" font-family="inherit">← 드라이 · 달콤 →</text>
+      <text x="10" y="92" text-anchor="middle" font-size="9" fill="#928F87" font-family="inherit" transform="rotate(-90,10,92)">저도 ↑ 고도 ↓</text>
+      <text x="190" y="133" text-anchor="middle" font-size="9" fill="#085041" font-weight="500" font-family="inherit">막걸리</text>
+      <text x="78" y="90" text-anchor="middle" font-size="9" fill="#26215C" font-weight="500" font-family="inherit">약주</text>
+      <text x="185" y="46" text-anchor="middle" font-size="9" fill="#4B1528" font-weight="500" font-family="inherit">과실주</text>
+      <text x="63" y="37" text-anchor="middle" font-size="9" fill="#4A1B0C" font-weight="500" font-family="inherit">소주</text>
+      <circle cx="${cx}" cy="${cy}" r="13" fill="${col}" opacity=".25"/>
+      <circle cx="${cx}" cy="${cy}" r="7" fill="${col}"/>
+    </svg>`;
+  document.getElementById('rp-buy').innerHTML=top.slice(0,4).map(dr=>`
+    <div class="buy-item">
+      <div class="buy-sw" style="background:${getColor(dr)}"></div>
+      <div style="flex:1;min-width:0"><div class="buy-name">${dr.name}</div><div class="buy-meta">${dr.도수}% · ${dr.type}</div></div>
+      <button class="buy-btn">담기</button>
+    </div>`).join('');
+}
+
+/* ══════════════════ TERROIR ══════════════════ */
+// 제주도 대략적 위치(SVG viewBox 0 0 440 200 기준) — x:서→동, y:북→남
+const TERROIR_ZONES=[
+  {zone:'WEST FIELD',ko:'서부 밭농업 지대',x:88,y:100,color:'#BA7517',bg:'#FAEEDA'},
+  {zone:'SOUTHWEST HERB',ko:'남서부 허브 지대',x:120,y:145,color:'#1D9E75',bg:'#E1F5EE'},
+  {zone:'VOLCANIC RIDGE',ko:'화산 능선',x:160,y:160,color:'#D85A30',bg:'#FAECE7'},
+  {zone:'HANON BASIN',ko:'하논 분지',x:235,y:162,color:'#7F77DD',bg:'#EEEDFE'},
+  {zone:'CITRUS VALLEY',ko:'감귤 계곡',x:300,y:155,color:'#EF9F27',bg:'#FAEEDA'},
+  {zone:'COASTAL WATER',ko:'해안 용암수 지대',x:335,y:88,color:'#378ADD',bg:'#E6F1FB'},
+];
+
+function renderTerroir(){
+  const withT=DB.filter(d=>d.terroir);
+  document.getElementById('tr-count').textContent=TERROIR_ZONES.length+'개 구역';
+
+  // 제주도 실루엣 지도 + 떼루아 마커
+  const markers=TERROIR_ZONES.map(z=>{
+    const drinks=withT.filter(d=>d.terroir.zone===z.zone);
+    const r=12+drinks.length*1.6;
+    return`
+      <circle cx="${z.x}" cy="${z.y}" r="${r}" fill="${z.color}" opacity=".13"/>
+      <circle cx="${z.x}" cy="${z.y}" r="7" fill="${z.color}"/>
+      <text x="${z.x}" y="${z.y+3.5}" text-anchor="middle" font-size="9" font-weight="600" fill="#fff" font-family="inherit">${drinks.length}</text>
+      <text x="${z.x}" y="${z.y-r-4}" text-anchor="middle" font-size="8.5" font-weight="600" fill="${z.color}" font-family="inherit">${z.zone}</text>
+      <text x="${z.x}" y="${z.y+r+11}" text-anchor="middle" font-size="8" fill="var(--ink3)" font-family="inherit">${z.ko}</text>`;
+  }).join('');
+
+  document.getElementById('terroir-map-wrap').innerHTML=`
+    <div style="background:var(--paper);border:0.5px solid var(--border);border-radius:var(--r-lg);padding:18px;overflow:hidden">
+      <svg width="100%" viewBox="0 0 440 210" style="background:linear-gradient(160deg,#E6F1FB,#F7F4EE);border-radius:10px">
+        <!-- 제주도 대략 실루엣 (타원형) -->
+        <ellipse cx="220" cy="120" rx="185" ry="72" fill="#EAF3DE" opacity=".55" stroke="#C0DD97" stroke-width="1"/>
+        <!-- 한라산 중심 -->
+        <circle cx="205" cy="118" r="20" fill="#C0DD97" opacity=".5"/>
+        <text x="205" y="121" text-anchor="middle" font-size="9" fill="#3B6D11" font-family="inherit">한라산</text>
+        ${markers}
+        <!-- 방위 -->
+        <text x="30" y="120" font-size="8" fill="var(--ink3)" font-family="inherit">서</text>
+        <text x="405" y="120" font-size="8" fill="var(--ink3)" font-family="inherit">동</text>
+      </svg>
+    </div>`;
+
+  // 구역별 카드
+  document.getElementById('terroir-cards').innerHTML=TERROIR_ZONES.map(z=>{
+    const drinks=withT.filter(d=>d.terroir.zone===z.zone);
+    if(!drinks.length)return'';
+    const t=drinks[0].terroir;
+    const officialCount=drinks.filter(d=>d.terroir.estimated===false).length;
+    return`
+      <div style="background:var(--paper);border:0.5px solid var(--border);border-radius:var(--r-lg);overflow:hidden">
+        <div style="height:6px;background:${z.color}"></div>
+        <div style="padding:16px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px">
+            <span style="font-size:13px;font-weight:600;letter-spacing:.04em;color:${z.color}">${z.zone}</span>
+            <span style="font-size:11px;color:var(--ink3)">${z.ko}</span>
+            <span style="font-size:10px;color:var(--ink3);margin-left:auto">${drinks.length}종</span>
+          </div>
+          <div style="display:flex;gap:12px;margin:8px 0 10px">
+            <div><div style="font-size:10px;color:var(--ink3)">대표 원물</div><div style="font-size:12px;font-weight:500;color:var(--ink)">${t.material}</div></div>
+          </div>
+          <div style="font-size:10px;color:var(--ink3);margin-bottom:3px">재배 지역</div>
+          <div style="font-size:11px;color:var(--ink2);margin-bottom:10px;line-height:1.5">${t.region}</div>
+          <div style="font-size:12px;color:var(--ink2);line-height:1.65;background:${z.bg};border-radius:8px;padding:10px 12px;margin-bottom:10px">${t.reason}</div>
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:5px">
+            <span style="font-size:10px;color:var(--ink3);font-weight:500">이 떼루아의 술</span>
+            ${officialCount?`<span style="font-size:9px;padding:1px 6px;border-radius:8px;background:${z.bg};color:${z.color}">공식 ${officialCount}종</span>`:'<span style="font-size:9px;padding:1px 6px;border-radius:8px;background:var(--cream);color:var(--ink3);border:0.5px dashed var(--border)">추정 분류</span>'}
+          </div>
+          <div style="display:flex;gap:5px;flex-wrap:wrap">${drinks.map(d=>{const off=d.terroir.estimated===false;return`<span style="font-size:11px;padding:3px 9px;border-radius:20px;border:${off?'1px solid '+z.color:'0.5px dashed '+z.color};color:${z.color};cursor:pointer;${off?'font-weight:500':'opacity:.85'}" onclick="openModalByName('${d.name}')">${d.name}${off?' ✓':''}</span>`;}).join('')}</div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function openModalByName(name){
+  const idx=DB.findIndex(d=>d.name===name);
+  if(idx<0)return;
+  // cards-grid._data가 없을 수 있으므로 임시 세팅
+  const grid=document.getElementById('cards-grid');
+  if(!grid._data)grid._data=DB;
+  const gi=grid._data.findIndex(d=>d.name===name);
+  if(gi>=0){openModal(gi);}
+  else{grid._data=DB;openModal(idx);}
+}
+
+/* ══════════════════ INIT ══════════════════ */
+renderJujong();
+renderBrewery();
+renderTerroir();
+renderSidebarTerroirMap();
+initDropdown();
+document.getElementById('record-date').value=today();
+</script>
+</body>
+</html>
