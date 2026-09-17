@@ -110,6 +110,39 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--cream);color:var(--i
 .pbt-ko{font-size:11px;color:var(--ink2);margin-top:1px}
 .pbt-more{font-size:10px;color:var(--point-d);margin-top:7px;font-weight:500}
 .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:11px}
+/* ── Hero 카드 (1등 강조) ── */
+.hero-card{background:var(--paper);border:1px solid var(--point-l2);border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,174,239,.08)}
+.hero-top{height:8px;width:100%}
+.hero-inner{display:grid;grid-template-columns:1.1fr 1fr;gap:0}
+.hero-left{padding:22px 24px;border-right:0.5px solid var(--border)}
+.hero-right{padding:22px 24px;display:flex;flex-direction:column;gap:14px}
+.hero-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:var(--point-dk);background:var(--point-l);padding:4px 11px;border-radius:20px;margin-bottom:12px}
+.hero-name{font-family:'Noto Serif KR',serif;font-size:26px;font-weight:600;color:var(--ink);line-height:1.2;margin-bottom:5px}
+.hero-meta{font-size:12px;color:var(--ink3);margin-bottom:14px}
+.hero-swatch-row{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.hero-swatch{width:52px;height:52px;border-radius:12px;flex-shrink:0}
+.hero-color-story{font-size:12px;color:var(--ink2);line-height:1.6}
+.hero-story{font-size:13px;color:var(--ink2);line-height:1.75;margin-bottom:4px}
+.hero-terroir{background:var(--cream);border-radius:11px;padding:13px 15px;margin-top:4px}
+.hero-tr-head{display:flex;align-items:center;gap:7px;margin-bottom:7px}
+.hero-tr-zone{font-size:12px;font-weight:600;letter-spacing:.03em}
+.hero-tr-ko{font-size:11px;color:var(--ink3)}
+.hero-tr-badge{font-size:9px;padding:1px 7px;border-radius:8px;margin-left:auto}
+.hero-tr-reason{font-size:11px;color:var(--ink2);line-height:1.6}
+.hero-ing{display:flex;flex-direction:column;gap:9px}
+.hero-ing-row{display:flex;gap:9px;align-items:flex-start}
+.hero-ing-icon{width:30px;height:30px;border-radius:7px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:15px;background:var(--cream)}
+.hero-ing-name{font-size:12px;font-weight:500;color:var(--ink)}
+.hero-ing-desc{font-size:11px;color:var(--ink3);line-height:1.5}
+.hero-pair{display:flex;gap:5px;flex-wrap:wrap}
+.hero-pair-tag{font-size:11px;padding:4px 10px;border-radius:20px;background:var(--cream);color:var(--ink2);border:0.5px solid var(--border)}
+.hero-actions{display:flex;gap:8px;margin-top:6px}
+.hero-btn{flex:1;padding:11px;border-radius:var(--r);font-family:inherit;font-size:13px;font-weight:500;cursor:pointer;transition:opacity .12s;border:none}
+.hero-btn.p{background:var(--point);color:#fff}
+.hero-btn.s{background:transparent;border:0.5px solid var(--border);color:var(--ink2)}
+.hero-btn:active{opacity:.85}
+.hero-sec-lbl{font-size:10px;font-weight:500;color:var(--ink3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+@media(max-width:760px){.hero-inner{grid-template-columns:1fr}.hero-left{border-right:none;border-bottom:0.5px solid var(--border)}}
 .drink-card{background:var(--paper);border-radius:var(--r-lg);border:0.5px solid var(--border);overflow:hidden;cursor:default;transition:border-color .13s}
 .drink-card:hover{border-color:var(--point);box-shadow:0 4px 16px rgba(0,174,239,.10)}
 .card-bar{height:5px;width:100%}
@@ -120,6 +153,22 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--cream);color:var(--i
 .blbl{font-size:10px;color:var(--ink3);width:24px;flex-shrink:0}
 .btrack{flex:1;height:3px;background:var(--border);border-radius:2px;overflow:hidden}
 .bfill{height:100%;border-radius:2px}
+/* ── 5구간 취향 컬러바 (TCS) ── */
+.tcs-bar{display:flex;align-items:center;gap:7px}
+.tcs-bar-lbl{font-size:10px;color:var(--ink3);width:26px;flex-shrink:0}
+.tcs-seg-wrap{flex:1;display:flex;height:16px;border-radius:9px;overflow:hidden}
+.tcs-seg{flex:1;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;position:relative}
+.tcs-seg.on::after{content:'';position:absolute;width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.15)}
+.tcs-seg.on .tcs-num{position:relative;z-index:2;color:var(--ink);font-weight:700}
+.tcs-num{font-size:9px;font-weight:500}
+/* 큰 사이즈 (모달용) */
+.tcs-bar.lg .tcs-seg-wrap{height:26px;border-radius:14px}
+.tcs-bar.lg .tcs-seg{font-size:12px}
+.tcs-bar.lg .tcs-seg.on::after{width:22px;height:22px}
+.tcs-bar.lg .tcs-bar-lbl{width:auto;font-size:12px;font-weight:600;color:var(--ink2);margin-bottom:5px}
+.tcs-bar.lg{flex-direction:column;align-items:stretch;gap:5px}
+.tcs-title-row{display:flex;align-items:baseline;gap:6px}
+.tcs-title-en{font-size:10px;color:var(--ink3)}
 .card-foot{padding:8px 14px;border-top:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 .type-badge{font-size:10px;padding:2px 7px;border-radius:5px}
 .card-btns{display:flex;gap:4px}
@@ -364,15 +413,17 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--cream);color:var(--i
     <div class="sb-sec">
       <div class="sb-lbl">주종</div>
       <div class="type-grid">
-        <button class="type-btn on" data-v="탁주" onclick="setType('탁주',this)" style="border-color:var(--point);background:var(--point-l)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="6" fill="#9FE1CB"/><rect x="4" y="5" width="8" height="3" rx="1.5" fill="#1D9E75" opacity=".5"/><rect x="4" y="1" width="8" height="2" rx="1" fill="#1D9E75"/></svg><div><div class="tn" style="color:var(--point-dk)">탁주</div><div class="tc">13종</div></div></button>
+        <button class="type-btn on" data-v="탁주" onclick="setType('탁주',this)" style="border-color:var(--point);background:var(--point-l)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="6" fill="#9FE1CB"/><rect x="4" y="5" width="8" height="3" rx="1.5" fill="#1D9E75" opacity=".5"/><rect x="4" y="1" width="8" height="2" rx="1" fill="#1D9E75"/></svg><div><div class="tn" style="color:var(--point-dk)">탁주</div><div class="tc">12종</div></div></button>
         <button class="type-btn" data-v="약주" onclick="setType('약주',this)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 2H11L12 6H4L5 2Z" fill="#AFA9EC"/><rect x="4" y="6" width="8" height="8" rx="1.5" fill="#7F77DD"/></svg><div><div class="tn">약주</div><div class="tc">5종</div></div></button>
         <button class="type-btn" data-v="증류주" onclick="setType('증류주',this)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M5 2H11L12 6H4L5 2Z" fill="#F0997B"/><rect x="4" y="6" width="8" height="8" rx="1.5" fill="#D85A30"/></svg><div><div class="tn">증류주</div><div class="tc">7종</div></div></button>
+        <button class="type-btn" data-v="리큐르" onclick="setType('리큐르',this)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 2H10L11 5H5L6 2Z" fill="#ED93B1"/><rect x="5" y="5" width="6" height="9" rx="1.5" fill="#D4537E"/><circle cx="8" cy="9" r="1.5" fill="#FBEAF0" opacity=".6"/></svg><div><div class="tn">리큐르</div><div class="tc">4종</div></div></button>
         <button class="type-btn" data-v="all" onclick="setType('all',this)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="6" cy="10" r="4" fill="#FAC775" opacity=".8"/><circle cx="10" cy="10" r="4" fill="#ED93B1" opacity=".7"/><circle cx="8" cy="6" r="4" fill="#AFA9EC" opacity=".7"/></svg><div><div class="tn">전체</div><div class="tc">33종</div></div></button>
       </div>
       <div class="sb-type-desc" id="sb-type-desc">
         <div class="std-row"><span class="std-name">탁주</span><span class="std-txt">쌀·곡물을 발효해 걸러낸 뿌연 술. 톡 쏘는 청량감과 구수함</span></div>
         <div class="std-row"><span class="std-name">약주</span><span class="std-txt">탁주를 맑게 걸러낸 발효주. 은은한 향과 깔끔한 맛</span></div>
         <div class="std-row"><span class="std-name">증류주</span><span class="std-txt">발효주를 증류해 도수를 높인 소주. 깔끔하고 강한 풍미</span></div>
+        <div class="std-row"><span class="std-name">리큐르</span><span class="std-txt">증류주에 과일·약재를 더한 혼성주. 향이 풍부하고 달콤함</span></div>
       </div>
     </div>
     <div style="flex:1"></div>
@@ -391,9 +442,14 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--cream);color:var(--i
       <div id="search-results" style="display:none;flex-direction:column;gap:18px">
         <div class="profile-banner" id="profile-banner"></div>
         <div class="sec-head">
-          <div class="sec-title">추천 결과</div>
+          <div class="sec-title">가장 잘 맞는 한 잔</div>
           <div class="cnt-badge" id="res-count"></div>
           <div style="flex:1;display:flex;justify-content:flex-end;gap:5px;flex-wrap:wrap" id="filter-chips"></div>
+        </div>
+        <div id="hero-card"></div>
+        <div class="sec-head" style="margin-top:4px">
+          <div class="sec-title" style="font-size:14px">이런 술도 잘 어울려요</div>
+          <div class="cnt-badge" id="rest-count"></div>
         </div>
         <div class="cards-grid" id="cards-grid"></div>
       </div>
@@ -571,8 +627,8 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--cream);color:var(--i
 const JUJONG=[
   {name:'탁주',eng:'Takju / Makgeolli',color:'#1D9E75',colors:['#E1F5EE','#9FE1CB','#5DCAA5','#1D9E75'],desc:'쌀이나 곡물을 발효시킨 뒤 걸러내지 않아 뿌연 색을 띠는 우리나라 대표 전통주입니다. 효모와 유산균이 살아있어 톡 쏘는 청량감이 특징이며, 달콤하고 구수한 맛이 조화를 이룹니다.',abv:'5–15',sweet:'2–4',body:'1–3',process:'쌀·누룩·물을 함께 발효시킨 뒤 체로 거르는 방식으로 만들어집니다. 앙금을 걸러내지 않아 뿌연 빛깔이 납니다.',tip:'마시기 전 살살 흔들어 섞어주세요. 파전·두부김치와 특히 잘 어울립니다.',examples:['하마하마 너티','바질첨벙','함덕한잔딸기','이시보 막걸리']},
   {name:'약주',eng:'Yakju',color:'#7F77DD',colors:['#EEEDFE','#CECBF6','#AFA9EC','#7F77DD'],desc:'탁주를 한 번 더 걸러 맑게 만든 발효주입니다. 쌀·누룩·물로 빚으며 맑고 투명한 빛깔에 은은한 향이 특징입니다.',abv:'10–20',sweet:'1–3',body:'1–3',process:'발효 후 용수(채)를 이용해 맑은 술만 걷어냅니다. 숙성 기간과 재료에 따라 다양한 풍미가 생겨납니다.',tip:'살짝 차갑게 마시면 향이 더 살아납니다. 회나 담백한 육류와 잘 어울립니다.',examples:['니모메','오메기술','녹고의눈물','오메기맑은술']},
-  {name:'증류주',eng:'Jeungnyuju / Soju',color:'#D85A30',colors:['#FAECE7','#F5C4B3','#F0997B','#D85A30'],desc:'발효주를 증류해 알코올 도수를 높인 전통 소주입니다. 맑고 투명하며 깔끔한 맛이 특징으로, 제주에서는 오메기술 증류주인 고소리술이 대표적입니다.',abv:'21–52',sweet:'1',body:'2–5',process:'발효된 술을 증류기(소줏고리)에 넣고 가열해 알코올 성분을 추출합니다.',tip:'상온 또는 살짝 차갑게 마시며 천천히 음미하세요.',examples:['고소리술','솔오름','신례명주','달그리안소주']},
-  {name:'리큐르',eng:'Liqueur',color:'#D4537E',colors:['#FBEAF0','#F4C0D1','#ED93B1','#D4537E'],desc:'증류주에 과일·약재·허브 등을 가미해 만든 혼성주입니다. 제주의 특산물인 한라봉·레몬·베리류를 활용한 제주 리큐르는 색감이 아름답고 향이 풍부합니다.',abv:'20–25',sweet:'4–5',body:'3–4',process:'증류주를 기반으로 제주 특산 과일과 허브를 첨가·침출시켜 만듭니다.',tip:'온더락이나 소다로 희석해 즐기면 과일 향이 더욱 살아납니다.',examples:['제주리몬첼로','무릉리도원','베리제주','애원283']},
+  {name:'증류주',eng:'Jeungnyuju / Soju',color:'#D85A30',colors:['#FAECE7','#F5C4B3','#F0997B','#D85A30'],desc:'발효주를 증류해 알코올 도수를 높인 전통 소주입니다. 맑고 투명하며 깔끔한 맛이 특징으로, 제주에서는 오메기술 증류주인 고소리술이 대표적입니다.',abv:'21–52',sweet:'1',body:'2–5',process:'발효된 술을 증류기(소줏고리)에 넣고 가열해 알코올 성분을 추출합니다.',tip:'상온 또는 살짝 차갑게 마시며 천천히 음미하세요.',examples:['고소리술','술오름','신례명주','달그리안소주']},
+  {name:'리큐르',eng:'Liqueur',color:'#D4537E',colors:['#FBEAF0','#F4C0D1','#ED93B1','#D4537E'],desc:'증류주에 과일·약재·허브 등을 가미해 만든 혼성주입니다. 제주의 특산물인 한라봉·레몬·베리류를 활용한 제주 리큐르는 색감이 아름답고 향이 풍부합니다.',abv:'20–25',sweet:'4–5',body:'3–4',process:'증류주를 기반으로 제주 특산 과일과 허브를 첨가·침출시켜 만듭니다.',tip:'온더락이나 소다로 희석해 즐기면 과일 향이 더욱 살아납니다.',examples:['제주리몬첼로','무릉리도원','베리제주','애월283']},
   {name:'와인',eng:'Fruit Wine',color:'#ED93B1',colors:['#FBEAF0','#F4C0D1','#ED93B1','#D4537E'],desc:'제주 천혜향·한라봉 등 감귤류로 빚은 전통식 과실주입니다. 제주 특산 과일의 풍미가 고스란히 담겨 있습니다.',abv:'9–12',sweet:'2–3',body:'1–2',process:'제주 감귤을 으깨어 당과 효모를 첨가한 뒤 발효시킵니다.',tip:'가볍게 차갑게 해서 식전주로 즐기세요.',examples:['마셔블랑스프링','1950 천혜향와인','1950 씨유앳더탑']},
   {name:'과실주',eng:'Gwasil-ju',color:'#F0997B',colors:['#FAECE7','#F5C4B3','#F0997B','#D85A30'],desc:'제주 과실을 발효시켜 만든 순수 과실 발효주입니다. 원재료 그대로의 색과 향을 담고 있으며 가볍고 청량한 음용감이 특징입니다.',abv:'10–12',sweet:'2',body:'1',process:'신선한 과실을 직접 발효시켜 만듭니다. 과실 본연의 당분을 효모가 분해해 알코올을 생성합니다.',tip:'차게 마시면 과실 향이 더욱 선명하게 느껴집니다.',examples:['귤로만','혼디주']},
 ];
@@ -581,10 +637,10 @@ const BREWERIES=[
   {name:'제주술익는집',loc:'제주시 애월읍',emoji:'🍶',year:'2018',desc:'제주 애월의 청정 자연에서 오메기떡을 활용한 전통 탁주와 약주를 빚는 양조장입니다. 제주 고유의 발효 문화를 현대적으로 재해석해 하마하마 시리즈를 선보이고 있습니다.',products:['하마하마 너티','하마하마 오메기','니모메','오메기술','오메기맑은술'],color:'#1D9E75',bg:'#E1F5EE'},
   {name:'제주한잔 자체제조',loc:'제주시 애월읍',emoji:'🌿',year:'2020',desc:'제주한잔이 직접 기획·제조하는 한잔 시리즈 탁주입니다. 제주 각 마을의 특산 재료를 사용해 지역의 색깔을 술에 담아냅니다.',products:['함덕한잔딸기','세화한잔당근','애월한잔레몬','제주한잔블루베리','협재한잔키위','벚꽃피는날에 제주','바질첨벙','정글인제주'],color:'#D4537E',bg:'#FBEAF0'},
   {name:'달그리안',loc:'서귀포시 남원읍',emoji:'🌾',year:'2015',desc:'남원읍의 청정 지하수와 제주 쌀로 빚는 전통 약주·증류주 전문 양조장입니다. 조선시대 전통 방식을 복원한 경면녹파주와 달그리안소주가 대표 제품입니다.',products:['달그리안 경면녹파주','달그리안소주','별그리안초설감'],color:'#7F77DD',bg:'#EEEDFE'},
-  {name:'제주술도가',loc:'제주시 한경면',emoji:'🔥',year:'2012',desc:'제주 전통 증류주인 고소리술을 현대적으로 복원한 양조장입니다. 제주 무형문화재로 지정된 전통 소주 제조법을 고집합니다.',products:['고소리술','솔오름','신례명주','바띠','미상25'],color:'#D85A30',bg:'#FAECE7'},
+  {name:'제주술도가',loc:'제주시 한경면',emoji:'🔥',year:'2012',desc:'제주 전통 증류주인 고소리술을 현대적으로 복원한 양조장입니다. 제주 무형문화재로 지정된 전통 소주 제조법을 고집합니다.',products:['고소리술','술오름','신례명주','바띠','미상25'],color:'#D85A30',bg:'#FAECE7'},
   {name:'이시보',loc:'제주시 조천읍',emoji:'🌊',year:'2019',desc:'조천 앞바다에서 이름을 딴 양조장으로, 제주 용암수를 사용한 탁주를 빚습니다. 화산암 지층을 통과한 미네랄 풍부한 물이 술의 부드러운 질감을 만들어냅니다.',products:['이시보 막걸리','이시보 원 막걸리'],color:'#378ADD',bg:'#E6F1FB'},
   {name:'1950 제주',loc:'서귀포시 표선면',emoji:'🍊',year:'2016',desc:'1950년대 제주 감귤 농업의 시작에서 영감을 얻은 과실주 전문 양조장입니다. 천혜향·감귤 등 제주 특산 과일을 원물 그대로 발효시킵니다.',products:['1950 천혜향와인','1950 씨유앳더탑'],color:'#EF9F27',bg:'#FAEEDA'},
-  {name:'무릉도원',loc:'제주시 한림읍',emoji:'🌺',year:'2017',desc:'한림읍 협재 해변 인근에 위치한 과실 리큐르 전문 양조장입니다. 제주 야생 베리와 봄 꽃을 활용해 아름다운 색감의 리큐르를 빚습니다.',products:['무릉리도원','베리제주','제주리몬첼로','애원283'],color:'#D4537E',bg:'#FBEAF0'},
+  {name:'무릉도원',loc:'제주시 한림읍',emoji:'🌺',year:'2017',desc:'한림읍 협재 해변 인근에 위치한 과실 리큐르 전문 양조장입니다. 제주 야생 베리와 봄 꽃을 활용해 아름다운 색감의 리큐르를 빚습니다.',products:['무릉리도원','베리제주','제주리몬첼로','애월283'],color:'#D4537E',bg:'#FBEAF0'},
 ];
 
 const DB=[
@@ -593,7 +649,7 @@ const DB=[
   {name:'제주리몬첼로',type:'리큐르',도수:22,당도:5,산미:3,바디:3,brewery:'무릉도원',story:'이탈리아 리몬첼로 방식을 제주 레몬으로 재현. 식후주로 마시면 상쾌함이 오래 지속됩니다.',ingredients:[{icon:'🍋',name:'제주 레몬',desc:'애월에서 재배한 무농약 레몬 껍질 침출'},{icon:'🥃',name:'제주 소주 베이스',desc:'제주 전통 증류주 기반'}],pairing:['해산물 파스타','생선 요리','디저트'],color_story:'레몬 껍질처럼 선명한 옐로우 핑크 계열',terroir:{zone:'CITRUS VALLEY',ko:'감귤 계곡',material:'제주 레몬',region:'애월 레몬 재배지(추정)',reason:'제주 레몬 껍질을 침출한 리큐르로 감귤·시트러스 떼루아에 속합니다.',color:'#EF9F27',bg:'#FAEEDA',estimated:true}},
   {name:'무릉리도원',type:'리큐르',도수:22,당도:5,산미:1,바디:4,brewery:'제주곶밭',story:'무릉리 화산회토에서 자란 복숭아를 담은 리큐르. 큰 일교차가 만든 진한 과실향이 특징입니다.',ingredients:[{icon:'🍑',name:'무릉리 복숭아',desc:'서귀포 대정읍 무릉리 화산회토에서 재배한 복숭아'},{icon:'🌸',name:'봄 꽃',desc:'제주 봄꽃을 첨가해 화사한 향'}],pairing:['치즈케이크','마카롱','딸기'],color_story:'복숭아 과육처럼 따뜻한 핑크 앰버 계열',terroir:{zone:'VOLCANIC RIDGE',ko:'화산 능선',material:'무릉리 복숭아',region:'서귀포시 대정읍 무릉리',reason:'무릉리 중산간의 화산회토와 큰 일교차가 복숭아의 향과 당도를 높입니다. 제주에서는 드문 온대과수 산지로, 향이 농축된 과실 떼루아의 특징이 뚜렷합니다.',color:'#D85A30',bg:'#FAECE7',estimated:false}},
   {name:'베리제주',type:'리큐르',도수:22,당도:5,산미:1,바디:3,brewery:'무릉도원',story:'제주 청정 지역에서 자란 베리의 건강한 달콤함을 그대로 담았습니다.',ingredients:[{icon:'🫐',name:'제주 블루베리',desc:'제주 청정 환경에서 자란 블루베리'},{icon:'🌿',name:'허브',desc:'제주 자생 허브 소량 첨가'}],pairing:['바닐라 아이스크림','초콜릿','요거트'],color_story:'블루베리처럼 깊고 진한 퍼플 핑크 계열',terroir:{zone:'VOLCANIC RIDGE',ko:'화산 능선',material:'제주 블루베리',region:'제주 중산간 과수지(추정)',reason:'제주 블루베리를 발효한 리큐르로 화산 능선 과수 떼루아 계열입니다.',color:'#D85A30',bg:'#FAECE7',estimated:true}},
-  {name:'애원283',type:'리큐르',도수:25,당도:4,산미:1,바디:3,brewery:'무릉도원',story:'애월 283번지 과수원의 한라봉을 담은 리큐르. 제주 감귤 문화의 정수.',ingredients:[{icon:'🍊',name:'한라봉',desc:'애월 283번지 과수원의 한라봉'},{icon:'🥃',name:'증류주 베이스',desc:'제주 전통 증류주 기반'}],pairing:['닭 요리','치즈','과일 타르트'],color_story:'한라봉의 주황빛 따뜻한 앰버 오렌지 계열',terroir:{zone:'CITRUS VALLEY',ko:'감귤 계곡',material:'한라봉',region:'애월 감귤 과수원(추정)',reason:'애월 283번지 한라봉을 침출한 리큐르로 감귤 떼루아 계열입니다.',color:'#EF9F27',bg:'#FAEEDA',estimated:true}},
+  {name:'애월283',type:'리큐르',도수:25,당도:4,산미:1,바디:3,brewery:'무릉도원',story:'애월 283번지 과수원의 한라봉을 담은 리큐르. 제주 감귤 문화의 정수.',ingredients:[{icon:'🍊',name:'한라봉',desc:'애월 283번지 과수원의 한라봉'},{icon:'🥃',name:'증류주 베이스',desc:'제주 전통 증류주 기반'}],pairing:['닭 요리','치즈','과일 타르트'],color_story:'한라봉의 주황빛 따뜻한 앰버 오렌지 계열',terroir:{zone:'CITRUS VALLEY',ko:'감귤 계곡',material:'한라봉',region:'애월 감귤 과수원(추정)',reason:'애월 283번지 한라봉을 침출한 리큐르로 감귤 떼루아 계열입니다.',color:'#EF9F27',bg:'#FAEEDA',estimated:true}},
   {name:'니모메',type:'약주',도수:11,당도:3,산미:1,바디:1,brewery:'제주샘영농조합법인',story:'"나 홀로"를 뜻하는 제주 방언. 하논 분지의 제주 쌀로 빚어 조용히 혼자 음미하기 좋은 약주입니다.',ingredients:[{icon:'🌾',name:'하논쌀',desc:'하논·무릉리 논에서 생산한 제주 쌀. 감귤향보다 쌀의 구조가 술의 중심을 이룹니다'},{icon:'🍊',name:'귤피',desc:'제주 감귤 껍질을 소량 더해 은은한 향을 냅니다'}],pairing:['두부','나물 무침','담백한 전'],color_story:'맑고 투명한 쌀빛 라벤더 계열',terroir:{zone:'HANON BASIN',ko:'하논 분지',material:'하논쌀·귤피',region:'하논, 무릉리논 등 (귤은 제주 전역 예상)',reason:'하논과 무릉리 논에서 생산한 제주 쌀을 사용하며, 감귤향보다 쌀의 구조가 술의 중심을 이룹니다. 하논의 화산분화구 습지·논농사 스토리가 강합니다.',color:'#7F77DD',bg:'#EEEDFE',estimated:false}},
   {name:'오메기술',type:'약주',도수:15,당도:2,산미:1,바디:2,brewery:'제주술익는집',story:'제주 무형문화재로 지정된 전통 제조법으로 빚는 제주 대표 전통주.',ingredients:[{icon:'🌾',name:'차조',desc:'제주 전통 곡물인 차조로 만든 오메기떡 발효'},{icon:'💧',name:'제주 지하수',desc:'제주 화산암층을 통과한 청정 지하수'}],pairing:['고기류','전','오메기떡'],color_story:'차조의 황금빛을 담은 옅은 앰버 계열',terroir:{zone:'WEST FIELD',ko:'서부 밭농업 지대',material:'차조',region:'제주 서부 밭농업 지대(추정)',reason:'제주 전통 곡물 차조를 오메기떡으로 발효한 술로, 서부 밭농업 떼루아와 원물 성격이 이어집니다.',color:'#BA7517',bg:'#FAEEDA',estimated:true}},
   {name:'달그리안 경면녹파주',type:'약주',도수:15,당도:1,산미:4,바디:2,brewery:'달그리안',story:'조선시대 녹파주 제조법을 제주 녹차로 재현한 약주. 은은한 초록빛과 산뜻한 산미.',ingredients:[{icon:'🌿',name:'제주 녹차',desc:'서귀포 다원의 녹차 첨가'},{icon:'🌾',name:'제주 쌀·누룩',desc:'전통 방식 쌀 약주 기반'}],pairing:['해산물','냉채','봄 나물'],color_story:'녹차 빛깔을 담은 청아한 그린 퍼플 계열',terroir:{zone:'SOUTHWEST HERB',ko:'남서부 허브 지대',material:'제주 녹차',region:'서귀포 다원(추정)',reason:'서귀포 녹차를 가미한 약주로 중산간 허브·약초 떼루아 계열입니다.',color:'#1D9E75',bg:'#E1F5EE',estimated:true}},
@@ -605,7 +661,7 @@ const DB=[
   {name:'바띠',type:'증류주',도수:21,당도:1,산미:1,바디:2,brewery:'제주술도가',story:'"바람이 티끌 하나 없이 맑다"는 제주 방언. 가장 부드러운 도수의 제주 증류주.',ingredients:[{icon:'🌾',name:'오메기',desc:'제주 차조 오메기 발효 증류'},{icon:'💧',name:'제주 용암수',desc:'미네랄 풍부한 용암층 지하수'}],pairing:['회','냉채','담백한 안주'],color_story:'맑고 투명한 코랄 계열',terroir:{zone:'WEST FIELD',ko:'서부 밭농업 지대',material:'오메기(차조)',region:'제주 서부 밭농업 지대(추정)',reason:'차조 오메기를 증류한 소주로, 서부 밭농업 원물에서 출발합니다.',color:'#BA7517',bg:'#FAEEDA',estimated:true}},
   {name:'미상25',type:'증류주',도수:25,당도:1,산미:1,바디:2,brewery:'시트러스',story:'미상(未嘗)은 "아직 맛보지 못한"이라는 뜻. 새로운 맛을 기대하게 만드는 25도.',ingredients:[{icon:'🍊',name:'제주 감귤',desc:'남원권 감귤을 활용한 증류주'},{icon:'💧',name:'한라산 지하수',desc:'한라산에서 내려오는 청정수'}],pairing:['삼겹살','전','냉면'],color_story:'깔끔하고 투명한 연한 코랄 계열',terroir:{zone:'CITRUS VALLEY',ko:'감귤 계곡',material:'감귤',region:'남원·위미·신례리 일대',reason:'제주 최대 감귤 산지인 남원권의 감귤을 활용합니다. 풍부한 일조량, 해풍, 완만한 경사가 감귤의 향과 산미를 형성하는 대표적인 감귤 떼루아입니다.',color:'#EF9F27',bg:'#FAEEDA',estimated:false}},
   {name:'고소리술',type:'증류주',도수:40,당도:1,산미:1,바디:4,brewery:'제주샘영농조합법인',story:'제주 무형문화재로 지정된 전통 증류주. 소줏고리라는 전통 도구로 만들어 "고소리술"이라 불립니다.',ingredients:[{icon:'🌾',name:'차조 오메기',desc:'전통 오메기떡 발효 후 소줏고리 증류'},{icon:'🔥',name:'전통 증류',desc:'무형문화재 제주 전통 소주 제조법'}],pairing:['오메기떡','돼지고기','제주 흑돼지'],color_story:'깊고 강한 다크 앰버 계열',terroir:{zone:'WEST FIELD',ko:'서부 밭농업 지대',material:'차조(좁쌀)',region:'한경·한림·애월 중산간, 구좌·표선 등 제주 전통 밭농업 지역',reason:'차조는 제주 전통 농업을 대표하는 곡물로, 특히 서부 평야와 중산간 밭지대에서 널리 재배되었습니다. 화산회토와 강한 바람이 만든 제주 밭농업의 상징적인 원물입니다.',color:'#BA7517',bg:'#FAEEDA',estimated:false}},
-  {name:'솔오름',type:'증류주',도수:40,당도:1,산미:1,바디:4,brewery:'제주술도가',story:'한라산 오름의 소나무에서 영감. 소나무 향이 깊게 배어 있어 독특한 풍미.',ingredients:[{icon:'🌲',name:'한라산 소나무',desc:'소나무 잎 가미로 피톤치드 향'},{icon:'🌾',name:'제주 오메기',desc:'전통 오메기 증류주 베이스'}],pairing:['육회','고기 요리','견과류'],color_story:'한라산 소나무처럼 깊고 진한 다크 앰버',terroir:{zone:'SOUTHWEST HERB',ko:'남서부 허브 지대',material:'한라산 소나무',region:'한라산 중산간(추정)',reason:'한라산 소나무 잎을 가미한 증류주로 중산간 자생 식생 떼루아에 가깝습니다.',color:'#1D9E75',bg:'#E1F5EE',estimated:true}},
+  {name:'술오름',type:'증류주',도수:40,당도:1,산미:1,바디:4,brewery:'제주술도가',story:'한라산 오름의 소나무에서 영감. 소나무 향이 깊게 배어 있어 독특한 풍미.',ingredients:[{icon:'🌲',name:'한라산 소나무',desc:'소나무 잎 가미로 피톤치드 향'},{icon:'🌾',name:'제주 오메기',desc:'전통 오메기 증류주 베이스'}],pairing:['육회','고기 요리','견과류'],color_story:'한라산 소나무처럼 깊고 진한 다크 앰버',terroir:{zone:'SOUTHWEST HERB',ko:'남서부 허브 지대',material:'한라산 소나무',region:'한라산 중산간(추정)',reason:'한라산 소나무 잎을 가미한 증류주로 중산간 자생 식생 떼루아에 가깝습니다.',color:'#1D9E75',bg:'#E1F5EE',estimated:true}},
   {name:'별그리안초설감',type:'증류주',도수:40,당도:1,산미:1,바디:5,brewery:'달그리안',story:'초설(初雪)처럼 첫 눈이 내리는 날의 순수한 감동을 담은 이름. 바디감이 강해 음미하는 술.',ingredients:[{icon:'🥭',name:'제주 감귤 증류',desc:'감귤 뉘앙스를 더한 고도 증류주'},{icon:'🌾',name:'제주 곡물',desc:'제주산 곡물 발효·증류 베이스'}],pairing:['초콜릿','견과류','치즈'],color_story:'제주 초겨울처럼 깊고 무거운 다크 코랄',terroir:{zone:'VOLCANIC RIDGE',ko:'화산 능선',material:'제주 감귤·곡물',region:'제주 중산간(추정)',reason:'감귤 뉘앙스의 고도 증류주로 화산 능선 떼루아 특성에 가깝습니다.',color:'#D85A30',bg:'#FAECE7',estimated:true}},
   {name:'신례명주',type:'증류주',도수:50,당도:1,산미:1,바디:4,brewery:'제주술도가',story:'신례리의 전통을 이은 명주. 50도의 강한 도수이지만 부드럽게 목을 넘어가는 것이 특징.',ingredients:[{icon:'🌾',name:'제주 쌀·차조',desc:'쌀과 차조를 혼합 발효해 3회 증류'},{icon:'🍃',name:'제주 허브',desc:'제주 자생 약초로 복합적인 향'}],pairing:['제주 흑돼지','전통 전','홀로 음미'],color_story:'강렬하고 깊은 다크 코랄 브라운 계열',terroir:{zone:'HANON BASIN',ko:'하논 분지',material:'제주 쌀·차조',region:'서귀포 신례리 논농사(추정)',reason:'신례리 전통을 이은 쌀 기반 명주로 논농사 떼루아 계열입니다.',color:'#7F77DD',bg:'#EEEDFE',estimated:true}},
   {name:'달그리안소주',type:'증류주',도수:52,당도:1,산미:1,바디:5,brewery:'달그리안',story:'달그리안 양조장이 만드는 가장 강한 술. 52도이지만 오랜 숙성으로 부드러운 여운.',ingredients:[{icon:'🌾',name:'제주 쌀·보리',desc:'쌀과 보리 혼합 발효·증류'},{icon:'💧',name:'남원 지하수',desc:'서귀포 남원읍의 청정 지하수'}],pairing:['오랜 친구와','특별한 날','전통 안주'],color_story:'가장 깊고 강한 다크 앰버 브라운',terroir:{zone:'HANON BASIN',ko:'하논 분지',material:'제주 쌀·보리',region:'서귀포 남원 논농사(추정)',reason:'쌀·보리 곡물 기반 증류주로 논농사 떼루아에 가깝습니다.',color:'#7F77DD',bg:'#EEEDFE',estimated:true}},
@@ -634,14 +690,99 @@ const TS={
 };
 const ts=(t,k)=>(TS[t]||TS['탁주'])[k];
 function alcRange(d){return d<=15.5?'low':d<=25?'mid':'high';}
+// ── 색 생성: 밝기=맛의 무게감, 색조=원물/떼루아 ──
+// HSL(hue,sat) 원물 색조 매핑
+function drinkHueSat(d){
+  const n=d.name, t=d.type;
+  const has=(s)=>n.includes(s);
+  // 원물 계열 판별 (이름·재료 기반)
+  if(has('레몬'))return{h:50,s:.60};
+  if(has('감귤')||has('천혜향')||has('한라봉')||has('리몬')||has('283')||has('귤로만')||has('미상'))return{h:42,s:.55};
+  if(has('딸기'))return{h:8,s:.55};
+  if(has('블루베리')||has('베리'))return{h:352,s:.42};
+  if(has('복숭아')||has('도원'))return{h:18,s:.52};
+  if(has('키위'))return{h:75,s:.42};
+  if(has('당근'))return{h:28,s:.5};
+  if(has('바질')||has('정글')||has('녹고')||has('녹파')||has('술오름')||has('오가피'))return{h:95,s:.30};
+  if(has('벚꽃')||has('블랑')||has('마셔'))return{h:340,s:.32};
+  // 주종 기본값
+  if(t==='증류주')return{h:28,s:.34};      // 곡물 증류 → 웜 브라운
+  if(t==='약주')return{h:46,s:.28};        // 쌀 약주 → 뉴트럴 베이지
+  if(t==='탁주')return{h:44,s:.32};        // 쌀·차조 탁주 → 베이지
+  if(t==='리큐르')return{h:15,s:.5};
+  if(t==='와인')return{h:345,s:.35};
+  if(t==='과실주')return{h:30,s:.5};
+  return{h:42,s:.35};
+}
+// 맛의 무게감 (0 가벼움 ~ 1 묵직)
+function weightScore(d){
+  const raw=d.바디*2 + d.당도*0.6 + (d.도수/52)*3;
+  return Math.max(0,Math.min(1,(raw-3)/(12-3)));
+}
+function hslToHex(h,s,l){
+  h/=360;
+  const a=s*Math.min(l,1-l);
+  const f=n=>{const k=(n+h*12)%12;const c=l-a*Math.max(-1,Math.min(k-3,Math.min(9-k,1)));return Math.round(255*c);};
+  return '#'+[f(0),f(8),f(4)].map(x=>x.toString(16).padStart(2,'0')).join('').toUpperCase();
+}
+// ── 5구간 축별 팔레트 (참고 이미지) ──
+const AXIS_PAL={
+  당도:['#D6D2CF','#E9DEDE','#EDD1D8','#EA9DB6','#D05C7F'],
+  산미:['#F1EBD9','#E5DFB9','#D5D389','#BBC964','#A6C637'],
+  바디:['#EFE7D6','#D8C7AE','#C0A882','#9E8158','#7E6144'],
+};
+// 대표 5종 브랜드 확정색 (직접 지정)
+const FIXED_COLOR={
+  '고소리술':'#B89638',
+  '미상25':'#9F4B2D',
+  '녹고의눈물':'#647F4F',
+  '무릉리도원':'#D87055',
+  '니모메':'#DA7847',
+};
+function _hx(h){h=h.replace('#','');return[parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];}
+function _hex(r,g,b){return '#'+[r,g,b].map(x=>Math.max(0,Math.min(255,Math.round(x))).toString(16).padStart(2,'0')).join('').toUpperCase();}
+function _rgb2hsl(r,g,b){r/=255;g/=255;b/=255;const mx=Math.max(r,g,b),mn=Math.min(r,g,b);let h,s,l=(mx+mn)/2;if(mx===mn){h=s=0;}else{const d=mx-mn;s=l>0.5?d/(2-mx-mn):d/(mx+mn);switch(mx){case r:h=(g-b)/d+(g<b?6:0);break;case g:h=(b-r)/d+2;break;default:h=(r-g)/d+4;}h/=6;}return[h,s,l];}
+function _hsl2rgb(h,s,l){let r,g,b;if(s===0){r=g=b=l;}else{const hue2=(p,q,t)=>{if(t<0)t+=1;if(t>1)t-=1;if(t<1/6)return p+(q-p)*6*t;if(t<1/2)return q;if(t<2/3)return p+(q-p)*(2/3-t)*6;return p;};const q=l<0.5?l*(1+s):l+s-l*s;const p=2*l-q;r=hue2(p,q,h+1/3);g=hue2(p,q,h);b=hue2(p,q,h-1/3);}return[r*255,g*255,b*255];}
+
+// 당·산·바디 컬러를 혼합해 메인 컬러 도출
 function getColor(d){
-  if(d.type==='탁주'){if(d.당도>=4)return'#EF9F27';if(d.산미>=4)return'#1D9E75';return'#9FE1CB';}
-  if(d.type==='약주')return'#AFA9EC';
-  if(d.type==='리큐르')return d.당도>=4?'#ED93B1':'#D4537E';
-  if(d.type==='와인')return'#F4C0D1';
-  if(d.type==='과실주')return'#F0997B';
-  if(d.type==='증류주')return d.도수>=40?'#854F0B':'#BA7517';
-  return'#888780';
+  if(FIXED_COLOR[d.name])return FIXED_COLOR[d.name];
+  const cs=_hx(AXIS_PAL['당도'][d.당도-1]);
+  const ca=_hx(AXIS_PAL['산미'][d.산미-1]);
+  const cb=_hx(AXIS_PAL['바디'][d.바디-1]);
+  // 바디 가중 혼합 (바디가 메인 톤을 잡고, 당도·산도가 색조를 조정)
+  const ws=1.0, wa=1.0, wb=1.6, tot=ws+wa+wb;
+  let r=(cs[0]*ws+ca[0]*wa+cb[0]*wb)/tot;
+  let g=(cs[1]*ws+ca[1]*wa+cb[1]*wb)/tot;
+  let b=(cs[2]*ws+ca[2]*wa+cb[2]*wb)/tot;
+  // 채도 강화 + 살짝 어둡게 (참고 5종 톤에 맞춤)
+  let [h,s,l]=_rgb2hsl(r,g,b);
+  s=Math.min(1,s*1.9);
+  l=l*0.80;
+  const [rr,gg,bb]=_hsl2rgb(h,s,l);
+  return _hex(rr,gg,bb);
+}
+// ── 5구간 취향 컬러바 (참고 이미지 스타일) ──
+const TCS_PAL={
+  당도:['#D6D2CF','#E9DEDE','#EDD1D8','#EA9DB6','#D05C7F'],
+  산미:['#F1EBD9','#E5DFB9','#D5D389','#BBC964','#A6C637'],
+  바디:['#EFE7D6','#D8C7AE','#C0A882','#9E8158','#7E6144'],
+};
+const TCS_EN={당도:'Sugar',산미:'Acidity',바디:'Body'};
+// value: 1~5, size: 'sm'(카드) | 'lg'(모달)
+function tcsBar(label,value,size='sm'){
+  const pal=TCS_PAL[label];
+  const segs=pal.map((c,i)=>{
+    const n=i+1;const on=n===value;
+    return `<div class="tcs-seg${on?' on':''}" style="background:${c}"><span class="tcs-num">${n}</span></div>`;
+  }).join('');
+  if(size==='lg'){
+    return `<div class="tcs-bar lg">
+      <div class="tcs-title-row"><span class="tcs-bar-lbl">${label}</span><span class="tcs-title-en">${TCS_EN[label]}</span></div>
+      <div class="tcs-seg-wrap">${segs}</div>
+    </div>`;
+  }
+  return `<div class="tcs-bar"><span class="tcs-bar-lbl">${label}</span><div class="tcs-seg-wrap">${segs}</div></div>`;
 }
 function scoreD(d){
   return Math.abs(d.당도-state.sweet)+Math.abs(d.산미-state.sour)
@@ -693,13 +834,63 @@ function showPage(id,btn){
 /* ══════════════════ SEARCH ══════════════════ */
 function doSearch(){
   const sorted=[...DB].sort((a,b)=>scoreD(a)-scoreD(b));
-  currentResults=sorted.slice(0,10);
+  currentResults=sorted.slice(0,7);
   renderBanner(currentResults[0]);
-  renderCards(currentResults);
+  renderHero(currentResults[0]);
+  renderCards(currentResults.slice(1,7));
   updateReport(currentResults);
   document.getElementById('pre-search').style.display='none';
   document.getElementById('search-results').style.display='flex';
   document.getElementById('tp-count').textContent=currentResults.length+'종 추천';
+}
+
+function renderHero(d){
+  const col=getColor(d);
+  const tz=d.terroir;
+  document.getElementById('res-count').textContent='BEST MATCH';
+  document.getElementById('rest-count').textContent=(currentResults.length-1)+'종';
+  const ing=(d.ingredients||[]).map(g=>`<div class="hero-ing-row"><div class="hero-ing-icon">${g.icon}</div><div><div class="hero-ing-name">${g.name}</div><div class="hero-ing-desc">${g.desc}</div></div></div>`).join('');
+  const pair=(d.pairing||[]).map(p=>`<span class="hero-pair-tag">${p}</span>`).join('');
+  const drinkIdx=DB.indexOf(d);
+  document.getElementById('hero-card').innerHTML=`
+    <div class="hero-card">
+      <div class="hero-top" style="background:${col}"></div>
+      <div class="hero-inner">
+        <div class="hero-left">
+          <div class="hero-badge">⭐ 가장 잘 맞는 한 잔</div>
+          <div class="hero-name">${d.name}</div>
+          <div class="hero-meta">${d.도수}% · ${d.type} · ${d.brewery||''}</div>
+          <div class="hero-swatch-row">
+            <div class="hero-swatch" style="background:${col}"></div>
+            <div class="hero-color-story">${d.color_story||''}</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:11px;margin-bottom:16px">
+            ${tcsBar('당도',d.당도,'lg')}
+            ${tcsBar('산미',d.산미,'lg')}
+            ${tcsBar('바디',d.바디,'lg')}
+          </div>
+          ${d.story?`<div class="hero-sec-lbl">이 술 이야기</div><div class="hero-story">${d.story}</div>`:''}
+        </div>
+        <div class="hero-right">
+          ${tz?`<div>
+            <div class="hero-terroir">
+              <div class="hero-tr-head">
+                <span class="hero-tr-zone" style="color:${tz.color}">${tz.zone}</span>
+                <span class="hero-tr-ko">${tz.ko}</span>
+                ${tz.estimated===false?`<span class="hero-tr-badge" style="background:${tz.color};color:#fff">공식</span>`:`<span class="hero-tr-badge" style="background:transparent;color:var(--ink3);border:0.5px dashed var(--ink3)">추정</span>`}
+              </div>
+              <div class="hero-tr-reason">📍 ${tz.region}<br>${tz.reason}</div>
+            </div>
+          </div>`:''}
+          ${ing?`<div><div class="hero-sec-lbl">주요 재료</div><div class="hero-ing">${ing}</div></div>`:''}
+          ${pair?`<div><div class="hero-sec-lbl">어울리는 안주</div><div class="hero-pair">${pair}</div></div>`:''}
+          <div class="hero-actions">
+            <button class="hero-btn p" onclick="startRecordByName('${d.name}')">이 술 기록하기</button>
+            <button class="hero-btn s" onclick="openModalByName('${d.name}')">더 자세히</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
 }
 
 function renderBanner(d){
@@ -732,7 +923,6 @@ function renderBanner(d){
 }
 
 function renderCards(list){
-  document.getElementById('res-count').textContent=list.length+'종';
   document.getElementById('filter-chips').innerHTML=[
     `<span class="pill" style="color:var(--pink);border-color:var(--pink)"><span class="pill-dot" style="background:var(--pink)"></span>당도 ${state.sweet}</span>`,
     `<span class="pill" style="color:var(--teal);border-color:var(--teal)"><span class="pill-dot" style="background:var(--teal)"></span>산미 ${state.sour}</span>`,
@@ -753,9 +943,9 @@ function renderCards(list){
         <div class="card-meta">${d.도수}% · ${d.brewery||d.type}</div>
         ${d.terroir?`<div style="display:inline-flex;align-items:center;gap:3px;font-size:10px;padding:2px 7px;border-radius:6px;background:${d.terroir.bg};color:${d.terroir.color};margin-bottom:4px">📍 ${d.terroir.zone}${d.terroir.estimated===false?' ✓':''}</div>`:''}
         <div style="display:flex;flex-direction:column;gap:4px;margin-top:7px">
-          <div class="brow"><div class="blbl">단맛</div><div class="btrack"><div class="bfill" style="width:${sw}%;background:#D4537E"></div></div></div>
-          <div class="brow"><div class="blbl">산미</div><div class="btrack"><div class="bfill" style="width:${ss}%;background:#1D9E75"></div></div></div>
-          <div class="brow"><div class="blbl">바디</div><div class="btrack"><div class="bfill" style="width:${bd}%;background:#BA7517"></div></div></div>
+          ${tcsBar('당도',d.당도)}
+          ${tcsBar('산미',d.산미)}
+          ${tcsBar('바디',d.바디)}
         </div>
       </div>
       <div class="card-foot">
@@ -772,6 +962,10 @@ function renderCards(list){
 /* ══════════════════ MODAL ══════════════════ */
 function openModal(idx){
   const list=document.getElementById('cards-grid')._data;
+  openModalFromData(list,idx);
+}
+function openModalFromData(list,idx){
+  window._modalData=list;
   const d=list[idx];
   const col=getColor(d);
   const sw=Math.round(d.당도/5*100),ss=Math.round(d.산미/5*100),bd=Math.round(d.바디/5*100);
@@ -789,12 +983,19 @@ function openModal(idx){
     </div>
     <button class="mclose" onclick="closeModal()">✕</button>`;
   document.getElementById('modal-body').innerHTML=`
-    <div><div class="m-sec-lbl">맛 프로파일</div><div class="mstat-row">
-      <div class="mstat"><div class="mstat-lbl">당도</div><div class="mstat-val">${d.당도}/5</div><div class="mstat-bar"><div class="mstat-fill" style="width:${sw}%;background:#D4537E"></div></div></div>
-      <div class="mstat"><div class="mstat-lbl">산미</div><div class="mstat-val">${d.산미}/5</div><div class="mstat-bar"><div class="mstat-fill" style="width:${ss}%;background:#1D9E75"></div></div></div>
-      <div class="mstat"><div class="mstat-lbl">바디</div><div class="mstat-val">${d.바디}/5</div><div class="mstat-bar"><div class="mstat-fill" style="width:${bd}%;background:#BA7517"></div></div></div>
-      <div class="mstat"><div class="mstat-lbl">도수</div><div class="mstat-val">${d.도수}%</div><div class="mstat-bar"><div class="mstat-fill" style="width:${Math.round(d.도수/52*100)}%;background:#D85A30"></div></div></div>
-    </div></div>
+    <div><div class="m-sec-lbl">맛 프로파일</div>
+      <div style="display:flex;flex-direction:column;gap:13px">
+        ${tcsBar('당도',d.당도,'lg')}
+        ${tcsBar('산미',d.산미,'lg')}
+        ${tcsBar('바디',d.바디,'lg')}
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:12px;border-top:0.5px solid var(--border)">
+        <span style="font-size:12px;font-weight:600;color:var(--ink2)">도수</span>
+        <span style="font-size:10px;color:var(--ink3)">ABV</span>
+        <div style="flex:1;height:6px;background:var(--cream);border-radius:3px;overflow:hidden;margin:0 4px"><div style="width:${Math.round(d.도수/52*100)}%;height:100%;background:var(--coral);border-radius:3px"></div></div>
+        <span style="font-size:13px;font-weight:600;color:var(--ink)">${d.도수}%</span>
+      </div>
+    </div>
     ${d.story?`<div><div class="m-sec-lbl">이 술 이야기</div><div class="mdesc">${d.story}</div></div>`:''}
     ${d.color_story?`<div><div class="m-sec-lbl">컬러 스토리</div><div style="display:flex;align-items:center;gap:10px"><div style="width:26px;height:26px;border-radius:6px;background:${col};flex-shrink:0"></div><div class="mdesc">${d.color_story}</div></div></div>`:''}
     ${d.ingredients?`<div><div class="m-sec-lbl">주요 재료</div><div style="display:flex;flex-direction:column;gap:8px">${d.ingredients.map(g=>`<div class="ing-row"><div class="ing-icon">${g.icon}</div><div><div class="ing-name">${g.name}</div><div class="ing-desc">${g.desc}</div></div></div>`).join('')}</div></div>`:''}
@@ -803,7 +1004,7 @@ function openModal(idx){
     ${d.pairing?`<div><div class="m-sec-lbl">어울리는 안주</div><div class="pair-tags">${d.pairing.map(p=>`<span class="pair-tag">${p}</span>`).join('')}</div></div>`:''}
   `;
   document.getElementById('modal-actions').innerHTML=`
-    <button class="mabtn p" onclick="startRecord(${idx},true)">기록하기</button>
+    <button class="mabtn p" onclick="closeModal();startRecordByName('${d.name}')">기록하기</button>
     <button class="mabtn s" onclick="closeModal()">닫기</button>`;
   document.getElementById('modal-overlay').classList.add('open');
 }
@@ -825,20 +1026,23 @@ function setWx(el){
 function toggleCtx(el){el.classList.toggle('on');rec.ctx=Array.from(document.querySelectorAll('.ctx-opt.on')).map(b=>b.textContent);}
 function toggleFlv(el){el.classList.toggle('on');rec.flavors=Array.from(document.querySelectorAll('.flv-opt.on')).map(b=>b.textContent);}
 
+function startRecordByName(name){
+  const d=DB.find(x=>x.name===name);
+  if(d)startRecordDrink(d);
+}
 function startRecord(idx,fromModal=false){
   const list=document.getElementById('cards-grid')._data;
   const d=list[idx];
+  if(fromModal)closeModal();
+  startRecordDrink(d);
+}
+function startRecordDrink(d){
   rec.drink=d;
   rec.color=getColor(d);
-  if(fromModal)closeModal();
-  // 드롭다운 동기화
   const sel=document.getElementById('drink-select');
   if(sel)sel.value=d.name;
-  // 날짜 기본값
   document.getElementById('record-date').value=today();
-  // 서브타이틀
   document.getElementById('rp-subtitle').textContent=d.name+' · '+d.type;
-  // 초기화
   setStar(0);rec.emotion='';rec.weather='';rec.ctx=[];rec.flavors=[];
   document.querySelectorAll('.emo-btn,.wx-btn,.ctx-opt,.flv-opt').forEach(b=>b.classList.remove('on'));
   document.getElementById('feeling-input').value='';
@@ -1151,14 +1355,11 @@ function renderTerroir(){
 }
 
 function openModalByName(name){
+  const gi=(currentResults||[]).findIndex(d=>d.name===name);
+  if(gi>=0){openModalFromData(currentResults,gi);return;}
   const idx=DB.findIndex(d=>d.name===name);
   if(idx<0)return;
-  // cards-grid._data가 없을 수 있으므로 임시 세팅
-  const grid=document.getElementById('cards-grid');
-  if(!grid._data)grid._data=DB;
-  const gi=grid._data.findIndex(d=>d.name===name);
-  if(gi>=0){openModal(gi);}
-  else{grid._data=DB;openModal(idx);}
+  openModalFromData(DB,idx);
 }
 
 /* ══════════════════ ALL DRINKS ══════════════════ */
@@ -1200,9 +1401,9 @@ function renderAllDrinks(){
                 <div class="card-meta">${d.도수}% · ${d.brewery||d.type}</div>
                 ${d.terroir?`<div style="display:inline-flex;align-items:center;gap:3px;font-size:10px;padding:2px 7px;border-radius:6px;background:${d.terroir.bg};color:${d.terroir.color};margin-bottom:4px">📍 ${d.terroir.zone}${d.terroir.estimated===false?' ✓':''}</div>`:''}
                 <div style="display:flex;flex-direction:column;gap:4px;margin-top:7px">
-                  <div class="brow"><div class="blbl">단맛</div><div class="btrack"><div class="bfill" style="width:${sw}%;background:var(--pink)"></div></div></div>
-                  <div class="brow"><div class="blbl">산미</div><div class="btrack"><div class="bfill" style="width:${ss}%;background:var(--teal)"></div></div></div>
-                  <div class="brow"><div class="blbl">바디</div><div class="btrack"><div class="bfill" style="width:${bd}%;background:var(--amber)"></div></div></div>
+                  ${tcsBar('당도',d.당도)}
+                  ${tcsBar('산미',d.산미)}
+                  ${tcsBar('바디',d.바디)}
                 </div>
               </div>
               <div class="card-foot">
