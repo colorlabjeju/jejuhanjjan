@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#00AEEF">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="제주한잔">
+<title>제주한잔 — 나의 취향 컬러</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F2F1EF; --ink:#16161A; --ink2:#3C3C44; --ink3:#83838C; --border:#E5E4E1; --border2:#D8D7D3;
+  --paper:#FFFFFF;
+  --point:#00AEEF; --point-d:#0090C8; --point-l:#E2F5FD; --point-l2:#C4EAFA; --point-dk:#023A50;
+  --teal:#1D9E75; --teal-l:#E8F3EE; --teal-dk:#0C5C42;
+  --purple:#6E6AAE; --purple-l:#ECEBF3; --purple-dk:#2C2A50;
+  --pink:#B85878; --pink-l:#F6EBEF; --pink-dk:#4B1F30;
+  --amber:#A67C2E; --amber-l:#F3ECDE; --amber-dk:#3D2E12;
+  --coral:#C05C3A; --coral-l:#F4E9E3; --coral-dk:#402016;
+  --r:10px; --r-lg:14px;
+  --bar-h:54px; --tab-h:0px;
+  --sat:env(safe-area-inset-top,0px); --sab:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:'Noto Sans KR',sans-serif;background:#DEDDDA;color:var(--ink);
+  font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased;overscroll-behavior:none;
+}
+button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
+button{cursor:pointer;border:none;background:none}
+
+/* ═══ APP FRAME ═══ */
+.app{
+  position:relative;max-width:480px;margin:0 auto;background:var(--cream);
+  min-height:100dvh;display:flex;flex-direction:column;overflow:hidden;
+  box-shadow:0 0 50px rgba(0,0,0,.10);
+}
+
+/* ═══ APPBAR ═══ */
+.appbar{
+  position:fixed;top:0;left:0;right:0;z-index:120;max-width:480px;margin:0 auto;
+  height:calc(var(--bar-h) + var(--sat));padding:var(--sat) 14px 0;
+  background:var(--point);display:flex;align-items:center;gap:10px;
+  box-shadow:0 1px 10px rgba(0,174,239,.22);
+}
+.ab-logo{height:22px;width:auto;display:block}
+.ab-title{font-family:'Noto Serif KR',serif;font-size:16px;font-weight:600;color:#fff;white-space:nowrap}
+.ab-sep{flex:1}
+.ab-pill{font-size:11px;color:#fff;padding:4px 10px;border:0.5px solid rgba(255,255,255,.42);border-radius:20px;background:rgba(255,255,255,.14);white-space:nowrap}
+.ab-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.16);color:#fff;font-size:13px;font-weight:500}
+.ab-icon:active{background:rgba(255,255,255,.3)}
+
+/* ═══ SCROLL AREA ═══ */
+.screens{
+  flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  padding:calc(var(--bar-h) + var(--sat) + 14px) 14px calc(var(--tab-h) + var(--sab) + 26px);
+}
+.screen{display:none;flex-direction:column;gap:14px}
+.screen.active{display:flex}
+
+/* ═══ HAMBURGER / DRAWER ═══ */
+.ab-burger{width:34px;height:34px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4.5px;border-radius:9px;flex-shrink:0}
+.ab-burger span{display:block;width:17px;height:1.8px;background:#fff;border-radius:2px}
+.ab-burger:active{background:rgba(255,255,255,.22)}
+.ab-filter{display:flex;align-items:center;gap:5px;font-size:11.5px;color:#fff;padding:6px 11px;border:0.5px solid rgba(255,255,255,.42);border-radius:20px;background:rgba(255,255,255,.14);white-space:nowrap}
+.ab-filter:active{background:rgba(255,255,255,.3)}
+.ab-filter svg{width:13px;height:13px;stroke:#fff;fill:none;stroke-width:1.7;stroke-linecap:round}
+.drawer-ov{position:fixed;inset:0;z-index:150;background:rgba(12,12,16,.46);opacity:0;pointer-events:none;transition:opacity .22s}
+.drawer-ov.open{opacity:1;pointer-events:auto}
+.drawer{
+  position:fixed;top:0;bottom:0;left:max(0px,calc(50% - 240px));z-index:160;
+  width:min(86vw,320px);background:var(--paper);display:flex;flex-direction:column;
+  transform:translateX(-102%);transition:transform .27s cubic-bezier(.32,.72,0,1);
+  box-shadow:4px 0 26px rgba(0,0,0,.17);
+}
+.drawer.open{transform:translateX(0)}
+.dw-hd{padding:calc(var(--sat) + 13px) 14px 13px;background:var(--point);display:flex;align-items:center;gap:10px;flex-shrink:0}
+.dw-hd .ab-logo{height:21px}
+.dw-x{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.2);color:#fff;font-size:14px;display:flex;align-items:center;justify-content:center;margin-left:auto;flex-shrink:0}
+.dw-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.dw-sec{padding:13px 12px;border-bottom:0.5px solid var(--border);display:flex;flex-direction:column;gap:9px}
+.dw-lbl{font-size:10px;font-weight:500;color:var(--ink3);letter-spacing:.08em;padding:0 2px}
+.dnav{width:100%;display:flex;align-items:center;gap:11px;padding:11px 11px;border-radius:10px;font-size:13.5px;color:var(--ink2);text-align:left}
+.dnav svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.dnav .dn-cnt{margin-left:auto;font-size:10.5px;color:var(--ink3)}
+.dnav.on{background:var(--point-l);color:var(--point-dk);font-weight:500}
+.dnav.on .dn-cnt{color:var(--point-d)}
+.dnav:active{background:var(--cream)}
+.dw-nav-list{display:flex;flex-direction:column;gap:2px}
+
+/* ═══ COMMON ═══ */
+.card{background:var(--paper);border:0.5px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.sec-head{display:flex;align-items:center;gap:8px;padding:2px 2px 0}
+.sec-title{font-family:'Noto Serif KR',serif;font-size:15px;font-weight:600;color:var(--ink)}
+.cnt-badge{font-size:11px;color:var(--point-dk);background:var(--point-l);border-radius:20px;padding:2px 9px}
+.pill{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:3px 9px;border-radius:20px;border:0.5px solid var(--border2);color:var(--ink2);white-space:nowrap;background:var(--paper)}
+.pill-dot{width:6px;height:6px;border-radius:50%;display:block}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:1px 0 3px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{font-size:12px;padding:6px 13px;border-radius:20px;border:0.5px solid var(--border);background:var(--paper);color:var(--ink3);white-space:nowrap;flex-shrink:0}
+.chip.on{border-color:var(--point);background:var(--point-l);color:var(--point-dk);font-weight:500}
+.empty{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;padding:46px 22px;color:var(--ink3)}
+.empty-t{font-family:'Noto Serif KR',serif;font-size:15px;color:var(--ink2)}
+.empty-s{font-size:12px;line-height:1.7}
+.btn-primary{
+  width:100%;padding:15px;border-radius:var(--r);background:var(--point);color:#fff;
+  font-size:15px;font-weight:500;box-shadow:0 2px 10px rgba(0,174,239,.3);
+}
+.btn-primary:active{background:var(--point-d);transform:scale(.99)}
+.btn-ghost{width:100%;padding:13px;border-radius:var(--r);border:0.5px solid var(--border2);background:var(--paper);color:var(--ink2);font-size:13px}
+.seg{display:flex;gap:3px;background:var(--border);border-radius:11px;padding:3px}
+.seg button{flex:1;padding:8px 0;border-radius:8px;font-size:12.5px;color:var(--ink3);transition:all .14s}
+.seg button.on{background:var(--paper);color:var(--point-dk);font-weight:500;box-shadow:0 1px 4px rgba(0,0,0,.09)}
+
+/* ═══ TASTE SUMMARY (home) ═══ */
+.taste-bar{display:flex;align-items:center;gap:9px;background:var(--paper);border:0.5px solid var(--border);border-radius:var(--r-lg);padding:11px 13px}
+.tb-chips{flex:1;display:flex;gap:5px;flex-wrap:wrap;min-width:0}
+.tb-edit{font-size:12px;color:var(--point-d);font-weight:500;white-space:nowrap;padding:4px 2px}
+
+/* ═══ TASTE PANEL (home) ═══ */
+.tp-hd{width:100%;display:flex;align-items:center;gap:10px;padding:14px 15px;text-align:left}
+.tp-title{font-family:'Noto Serif KR',serif;font-size:15px;font-weight:600;color:var(--ink)}
+.tp-chips{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+.tp-arrow{color:var(--ink3);font-size:12px;transition:transform .2s;flex-shrink:0}
+.tp-body{padding:15px;display:flex;flex-direction:column;gap:17px;border-top:0.5px solid var(--border)}
+#taste-panel.collapsed .tp-body{display:none}
+#taste-panel.collapsed .tp-arrow{transform:rotate(-90deg)}
+#taste-panel:not(.collapsed) .tp-chips{display:none}
+
+/* ═══ PROFILE BANNER ═══ */
+.pb{background:var(--paper);border:0.5px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.pb-sw-row{display:flex;height:56px}
+.pb-sw{flex:1}
+.pb-in{padding:14px 15px 15px;display:flex;flex-direction:column;gap:6px}
+.pb-title{font-family:'Noto Serif KR',serif;font-size:19px;font-weight:600;line-height:1.3}
+.pb-sub{font-size:12.5px;color:var(--ink2)}
+.pb-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:3px}
+.pb-terroir{display:flex;align-items:center;gap:10px;margin-top:10px;padding:11px 12px;border-radius:var(--r);background:var(--cream)}
+.pbt-zone{font-size:12px;font-weight:600;letter-spacing:.04em}
+.pbt-ko{font-size:11px;color:var(--ink3)}
+.pbt-more{margin-left:auto;font-size:11.5px;color:var(--point-d);font-weight:500;white-space:nowrap}
+
+/* ═══ TCS BAR ═══ */
+.tcs-stack{display:flex;flex-direction:column;gap:5px;margin-top:8px}
+.tcs-bar{display:flex;align-items:center;gap:7px}
+.tcs-bar-lbl{font-size:10px;color:var(--ink3);width:26px;flex-shrink:0}
+.tcs-seg-wrap{flex:1;display:flex;height:16px;border-radius:9px;overflow:hidden}
+.tcs-seg{flex:1;display:flex;align-items:center;justify-content:center;position:relative}
+.tcs-seg.on::after{content:'';position:absolute;width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.15)}
+.tcs-seg.on .tcs-num{position:relative;z-index:2;color:var(--ink);font-weight:700}
+.tcs-num{font-size:9px;font-weight:500;color:rgba(255,255,255,.85)}
+.tcs-bar.lg{flex-direction:column;align-items:stretch;gap:5px}
+.tcs-bar.lg .tcs-seg-wrap{height:26px;border-radius:14px}
+.tcs-bar.lg .tcs-num{font-size:12px}
+.tcs-bar.lg .tcs-seg.on::after{width:22px;height:22px}
+.tcs-bar.lg .tcs-bar-lbl{width:auto;font-size:12px;font-weight:600;color:var(--ink2)}
+.tcs-title-row{display:flex;align-items:baseline;gap:6px}
+.tcs-title-en{font-size:10px;color:var(--ink3)}
+.tcs-lg-stack{display:flex;flex-direction:column;gap:13px}
+
+/* ═══ HERO (BEST MATCH) ═══ */
+.hero{background:var(--paper);border:0.5px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.hero-top{height:74px}
+.hero-in{padding:14px 15px 15px;display:flex;flex-direction:column;gap:12px}
+.hero-badge{align-self:flex-start;font-size:10.5px;padding:4px 11px;border-radius:20px;background:var(--point-l);color:var(--point-dk);font-weight:500}
+.hero-name{font-family:'Noto Serif KR',serif;font-size:23px;font-weight:600;line-height:1.25}
+.hero-meta{font-size:12px;color:var(--ink3);margin-top:3px}
+.hero-sw-row{display:flex;align-items:center;gap:11px}
+.hero-sw{width:42px;height:42px;border-radius:11px;flex-shrink:0}
+.hero-cs{font-size:12.5px;color:var(--ink2);line-height:1.65}
+.hero-lbl{font-size:10.5px;font-weight:500;color:var(--ink3);letter-spacing:.06em;margin-bottom:6px}
+.hero-story{font-size:13px;color:var(--ink2);line-height:1.75}
+.hero-acts{display:flex;gap:8px}
+.hero-btn{flex:1;padding:13px;border-radius:var(--r);font-size:13.5px;font-weight:500}
+.hero-btn.p{background:var(--point);color:#fff}
+.hero-btn.s{background:var(--cream);color:var(--ink2);border:0.5px solid var(--border2)}
+
+/* ═══ DRINK ROW CARD ═══ */
+.drink-row{display:flex;background:var(--paper);border:0.5px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.drink-row:active{background:#FBFBFA}
+.dr-bar{width:6px;flex-shrink:0}
+.dr-in{flex:1;min-width:0;padding:13px 14px;display:flex;flex-direction:column;gap:3px}
+.dr-top{display:flex;align-items:baseline;gap:7px}
+.dr-name{font-family:'Noto Serif KR',serif;font-size:15.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dr-abv{font-size:11.5px;color:var(--ink3);white-space:nowrap;margin-left:auto}
+.dr-meta{font-size:11.5px;color:var(--ink3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dr-zone{display:inline-flex;align-items:center;gap:3px;font-size:10px;padding:2px 7px;border-radius:6px;align-self:flex-start;margin-top:2px}
+.bars{display:flex;flex-direction:column;gap:4px;margin-top:8px}
+.brow{display:flex;align-items:center;gap:7px}
+.blbl{font-size:10px;color:var(--ink3);width:26px;flex-shrink:0}
+.btrack{flex:1;height:4px;border-radius:3px;background:var(--cream);overflow:hidden}
+.bfill{height:100%;border-radius:3px}
+.dr-foot{display:flex;align-items:center;gap:6px;margin-top:9px}
+.type-badge{font-size:10.5px;padding:2px 9px;border-radius:20px}
+.dr-rec{margin-left:auto;font-size:11.5px;font-weight:500;color:var(--point-d);border:0.5px solid var(--point-l2);background:var(--point-l);border-radius:20px;padding:5px 12px}
+.dr-rec:active{background:var(--point-l2)}
+.rank{position:absolute;left:0;top:0}
+
+/* ═══ STATS ═══ */
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat{background:var(--paper);border:0.5px solid var(--border);border-radius:var(--r);padding:11px 13px}
+.stat-l{font-size:10px;color:var(--ink3);margin-bottom:3px}
+.stat-v{font-size:19px;font-weight:500;line-height:1.2}
+.stat-s{font-size:10.5px;color:var(--ink3);margin-top:2px}
+
+/* ═══ LOG CARD ═══ */
+.log{display:flex;background:var(--paper);border:0.5px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.log-strip{width:6px;flex-shrink:0}
+.log-in{flex:1;min-width:0;padding:13px 14px;display:flex;flex-direction:column;gap:6px}
+.log-hd{display:flex;align-items:baseline;gap:8px}
+.log-name{font-family:'Noto Serif KR',serif;font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.log-date{font-size:11px;color:var(--ink3);margin-left:auto;white-space:nowrap}
+.log-meta{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.log-ctx{display:flex;gap:4px;flex-wrap:wrap}
+.ltag{font-size:10.5px;padding:2px 8px;border-radius:20px;background:var(--cream);color:var(--ink2)}
+.ftag{font-size:10.5px;padding:2px 8px;border-radius:20px;border:0.5px solid var(--purple);color:var(--purple-dk)}
+.log-feel{font-size:12.5px;color:var(--ink2);line-height:1.7;background:var(--cream);border-radius:9px;padding:10px 11px}
+.log-note{font-size:12px;color:var(--ink3);font-style:italic}
+.log-pal{display:flex;gap:4px;align-items:center;margin-top:2px}
+.lp{width:22px;height:14px;border-radius:4px}
+.log-del{align-self:flex-end;font-size:11px;color:var(--ink3);padding:5px 10px;border-radius:8px;border:0.5px solid var(--border)}
+
+/* ═══ FAB ═══ */
+.fab{
+  position:fixed;z-index:110;right:calc(50% - 240px + 16px);bottom:calc(var(--tab-h) + var(--sab) + 16px);
+  height:50px;padding:0 20px;border-radius:26px;background:var(--point);color:#fff;
+  font-size:14px;font-weight:500;display:none;align-items:center;gap:7px;
+  box-shadow:0 4px 16px rgba(0,174,239,.42);
+}
+.fab.show{display:flex}
+.fab:active{background:var(--point-d)}
+@media(max-width:512px){.fab{right:16px}}
+
+/* ═══ SHEET ═══ */
+.sheet-ov{position:fixed;inset:0;z-index:200;background:rgba(12,12,16,.46);opacity:0;pointer-events:none;transition:opacity .22s}
+.sheet-ov.open{opacity:1;pointer-events:auto}
+.sheet{
+  position:fixed;left:0;right:0;bottom:0;z-index:210;max-width:480px;margin:0 auto;
+  background:var(--paper);border-radius:20px 20px 0 0;
+  max-height:92dvh;display:flex;flex-direction:column;
+  transform:translateY(102%);transition:transform .28s cubic-bezier(.32,.72,0,1);
+  box-shadow:0 -6px 30px rgba(0,0,0,.18);
+}
+.sheet.open{transform:translateY(0)}
+.sh-grip{padding:9px 0 3px;display:flex;justify-content:center;flex-shrink:0}
+.sh-grip i{width:38px;height:4px;border-radius:3px;background:var(--border2);display:block}
+.sh-hd{padding:6px 16px 12px;display:flex;align-items:flex-start;gap:11px;border-bottom:0.5px solid var(--border);flex-shrink:0}
+.sh-title{font-family:'Noto Serif KR',serif;font-size:18px;font-weight:600;line-height:1.3}
+.sh-sub{font-size:12px;color:var(--ink3);margin-top:2px}
+.sh-x{width:32px;height:32px;border-radius:50%;background:var(--cream);color:var(--ink3);font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:auto}
+.sh-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px;display:flex;flex-direction:column;gap:18px}
+.sh-foot{padding:12px 16px calc(12px + var(--sab));border-top:0.5px solid var(--border);display:flex;gap:8px;flex-shrink:0;background:var(--paper)}
+.sh-foot .btn-primary{box-shadow:none}
+.mcolor{width:46px;height:46px;border-radius:12px;flex-shrink:0}
+
+/* ═══ FIELDS ═══ */
+.field{display:flex;flex-direction:column;gap:8px}
+.f-lbl{font-size:11px;font-weight:500;color:var(--ink3);letter-spacing:.04em}
+.f-in{width:100%;padding:12px 13px;border-radius:var(--r);border:0.5px solid var(--border2);background:var(--cream);font-size:14px}
+.f-in:focus{outline:none;border-color:var(--point);background:var(--paper)}
+textarea.f-in{resize:none;line-height:1.7}
+.scale{display:flex;gap:5px}
+.sc{flex:1;padding:10px 0 8px;border-radius:var(--r);border:0.5px solid var(--border);background:var(--cream);display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .13s}
+.sc .v{font-size:15px;font-weight:500;color:var(--ink2)}
+.sc .l{font-size:9.5px;color:var(--ink3)}
+.sc.on{border-color:var(--point);background:var(--point-l)}
+.sc.on .v,.sc.on .l{color:var(--point-dk)}
+.alc-row{display:flex;gap:6px}
+.alc{flex:1;padding:11px 0;border-radius:var(--r);border:0.5px solid var(--border);background:var(--cream);display:flex;flex-direction:column;align-items:center;gap:2px}
+.alc .b{font-size:13px;color:var(--ink2)}
+.alc .r{font-size:10px;color:var(--ink3)}
+.alc.on{border-color:var(--point);background:var(--point-l)}
+.alc.on .b,.alc.on .r{color:var(--point-dk)}
+.type-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.tybtn{display:flex;align-items:center;gap:8px;padding:11px 12px;border-radius:var(--r);border:0.5px solid var(--border);background:var(--cream);text-align:left}
+.tybtn .tn{font-size:13px;color:var(--ink)}
+.tybtn .tc{font-size:10px;color:var(--ink3)}
+.tybtn.on{border-color:var(--point);background:var(--point-l)}
+.tybtn.on .tn{color:var(--point-dk);font-weight:500}
+.hint{font-size:11px;color:var(--ink3);background:var(--cream);border-radius:9px;padding:9px 11px;line-height:1.6}
+.opt-row{display:flex;gap:5px;flex-wrap:wrap}
+.opt{padding:8px 13px;border-radius:20px;border:0.5px solid var(--border);background:var(--cream);font-size:12.5px;color:var(--ink2)}
+.opt.on{border-color:var(--point);background:var(--point-l);color:var(--point-dk);font-weight:500}
+.star-row{display:flex;gap:4px}
+.star{flex:1;padding:9px 0;font-size:24px;color:#E2DFDA;line-height:1}
+.star.on{color:#EF9F27}
+.emo-row{display:flex;gap:5px}
+.emo{flex:1;padding:9px 2px;border-radius:var(--r);border:0.5px solid var(--border);background:var(--cream);display:flex;flex-direction:column;align-items:center;gap:3px}
+.emo .ef{font-size:19px;line-height:1}
+.emo .el{font-size:9.5px;color:var(--ink3)}
+.emo.on{border-color:var(--point);background:var(--point-l)}
+.wx-row{display:flex;gap:5px}
+.wx{flex:1;padding:11px 0;border-radius:var(--r);border:0.5px solid var(--border);background:var(--cream);font-size:19px;line-height:1}
+.wx.on{border-color:var(--point);background:var(--point-l)}
+
+/* ═══ DETAIL SHEET ═══ */
+.m-lbl{font-size:10.5px;font-weight:500;color:var(--ink3);letter-spacing:.06em;margin-bottom:8px}
+.mstat-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.mstat{background:var(--cream);border-radius:10px;padding:10px 12px}
+.mstat-l{font-size:10px;color:var(--ink3)}
+.mstat-v{font-size:15px;font-weight:500;margin:2px 0 6px}
+.mstat-bar{height:4px;border-radius:3px;background:#E2DFDA;overflow:hidden}
+.mdesc{font-size:13px;color:var(--ink2);line-height:1.75}
+.ing{display:flex;gap:10px;align-items:flex-start}
+.ing-ic{width:34px;height:34px;border-radius:9px;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.ing-n{font-size:13px;font-weight:500}
+.ing-d{font-size:11.5px;color:var(--ink3);line-height:1.6}
+.pair{display:flex;gap:5px;flex-wrap:wrap}
+.pair-t{font-size:12px;padding:5px 11px;border-radius:20px;background:var(--cream);color:var(--ink2)}
+.bw-mini{background:var(--cream);border-radius:11px;padding:13px 14px}
+.bw-mini-n{font-size:13.5px;font-weight:500}
+.bw-mini-l{font-size:11px;color:var(--ink3);margin:3px 0 7px}
+.bw-mini-d{font-size:12px;color:var(--ink2);line-height:1.7}
+
+/* ═══ TERROIR ═══ */
+.map-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r-lg);background:var(--paper);border:0.5px solid var(--border);padding:16px 0}
+.map-scroll::-webkit-scrollbar{display:none}
+.map-inner{min-width:720px;padding:0 12px}
+.zone-card{background:var(--paper);border:0.5px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.zone-top{height:5px}
+.zone-in{padding:14px 15px;display:flex;flex-direction:column;gap:8px}
+
+/* ═══ JUJONG / BREWERY ═══ */
+.jj-strip{display:flex;height:8px}
+.jj-seg{flex:1}
+.jj-in{padding:15px;display:flex;flex-direction:column;gap:9px}
+.jj-n{font-family:'Noto Serif KR',serif;font-size:17px;font-weight:600}
+.jj-e{font-size:10.5px;color:var(--ink3);letter-spacing:.05em;margin-top:-6px}
+.jj-3{display:flex;gap:7px}
+.jj-s{flex:1;background:var(--cream);border-radius:9px;padding:8px 10px;text-align:center}
+.jj-sl{font-size:9.5px;color:var(--ink3)}
+.jj-sv{font-size:13px;font-weight:500;margin-top:2px}
+.jj-tip{font-size:12px;color:var(--teal-dk);background:var(--teal-l);border-radius:9px;padding:10px 12px;line-height:1.65}
+.bw-hd{display:flex;gap:11px;align-items:center}
+.bw-em{width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.bw-n{font-family:'Noto Serif KR',serif;font-size:16px;font-weight:600}
+.bw-l{font-size:11px;color:var(--ink3);margin-top:2px}
+.prod{font-size:11.5px;padding:4px 10px;border-radius:20px;background:var(--cream);color:var(--ink2)}
+
+/* ═══ REPORT ═══ */
+.rc-lbl{font-size:10.5px;font-weight:500;color:var(--ink3);letter-spacing:.06em}
+.rc-big{font-family:'Noto Serif KR',serif;font-size:20px;font-weight:600;line-height:1.35}
+.rpal{display:flex;gap:5px}
+.rpal i{flex:1;height:44px;border-radius:9px;display:block}
+.buy{display:flex;align-items:center;gap:11px;padding:10px 12px;background:var(--cream);border-radius:11px}
+.buy-sw{width:32px;height:32px;border-radius:8px;flex-shrink:0}
+.buy-n{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.buy-m{font-size:10.5px;color:var(--ink3);margin-top:1px}
+.buy-b{font-size:11.5px;padding:6px 13px;border-radius:20px;background:var(--point);color:#fff;flex-shrink:0}
+
+/* ═══ TOAST ═══ */
+.toast{
+  position:fixed;z-index:400;left:50%;transform:translate(-50%,14px);
+  bottom:calc(var(--tab-h) + var(--sab) + 80px);
+  background:rgba(22,22,26,.93);color:#fff;font-size:13px;padding:11px 20px;border-radius:24px;
+  opacity:0;pointer-events:none;transition:all .25s;white-space:nowrap;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ═══ APPBAR ═══ -->
+  <header class="appbar">
+    <button class="ab-burger" onclick="openDrawer()" aria-label="메뉴"><span></span><span></span><span></span></button>
+    <img class="ab-logo" src="data:image/png;base64,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" alt="제주한잔">
+    <div class="ab-sep"></div>
+    <div class="ab-pill" id="ab-pill">보유 33종</div>
+  </header>
+
+  <!-- ═══ SCREENS ═══ -->
+  <div class="screens" id="screens">
+
+    <!-- ① 추천 -->
+    <section class="screen active" id="s-home">
+      <div class="card" id="taste-panel">
+        <button class="tp-hd" onclick="toggleTaste()">
+          <div style="flex:1;min-width:0">
+            <div class="tp-title">취향 고르기</div>
+            <div class="tp-chips" id="taste-chips"></div>
+          </div>
+          <span class="tp-arrow">▾</span>
+        </button>
+        <div class="tp-body" id="tp-body">
+          <div class="field"><div class="f-lbl">당도</div>
+            <div class="scale" id="sweet-row">
+              <button class="sc" data-v="1" onclick="setSc('sweet',1)"><span class="v">1</span><span class="l">드라이</span></button>
+              <button class="sc" data-v="2" onclick="setSc('sweet',2)"><span class="v">2</span><span class="l">약간</span></button>
+              <button class="sc on" data-v="3" onclick="setSc('sweet',3)"><span class="v">3</span><span class="l">중간</span></button>
+              <button class="sc" data-v="4" onclick="setSc('sweet',4)"><span class="v">4</span><span class="l">달콤</span></button>
+              <button class="sc" data-v="5" onclick="setSc('sweet',5)"><span class="v">5</span><span class="l">매우</span></button>
+            </div></div>
+          <div class="field"><div class="f-lbl">산미</div>
+            <div class="scale" id="sour-row">
+              <button class="sc on" data-v="1" onclick="setSc('sour',1)"><span class="v">1</span><span class="l">없음</span></button>
+              <button class="sc" data-v="2" onclick="setSc('sour',2)"><span class="v">2</span><span class="l">약간</span></button>
+              <button class="sc" data-v="3" onclick="setSc('sour',3)"><span class="v">3</span><span class="l">중간</span></button>
+              <button class="sc" data-v="4" onclick="setSc('sour',4)"><span class="v">4</span><span class="l">새콤</span></button>
+              <button class="sc" data-v="5" onclick="setSc('sour',5)"><span class="v">5</span><span class="l">강함</span></button>
+            </div>
+            <div class="hint">🍋 5는 <b>레몬</b>처럼 강한 산미를 기준으로 해요</div></div>
+          <div class="field"><div class="f-lbl">도수</div>
+            <div class="alc-row" id="alc-row">
+              <button class="alc on" data-v="low" onclick="setAlc('low')"><span class="b">저도</span><span class="r">8–15%</span></button>
+              <button class="alc" data-v="mid" onclick="setAlc('mid')"><span class="b">중도</span><span class="r">16–25%</span></button>
+              <button class="alc" data-v="high" onclick="setAlc('high')"><span class="b">고도</span><span class="r">21–52%</span></button>
+            </div></div>
+          <div class="field"><div class="f-lbl">주종</div>
+            <div class="type-grid" id="type-grid"></div>
+            <div class="hint" id="type-desc"></div></div>
+          <button class="btn-primary" onclick="doSearch()">취향에 맞는 술 찾기</button>
+        </div>
+      </div>
+
+      <div id="home-empty">
+        <div class="card empty">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="18" stroke="#E2DFDA" stroke-width="1.2"/><path d="M14 26c0 0 2-6 8-6s8 6 8 6" stroke="#928F87" stroke-width="1.2" stroke-linecap="round"/><circle cx="17" cy="18" r="2" fill="#928F87" opacity=".4"/><circle cx="27" cy="18" r="2" fill="#928F87" opacity=".4"/></svg>
+          <div class="empty-t">위에서 취향을 골라주세요</div>
+          <div class="empty-s">당도 · 산미 · 도수 · 주종을 고르고<br>「취향에 맞는 술 찾기」를 누르면 결과가 여기 나와요</div>
+        </div>
+      </div>
+
+      <div id="home-results" style="display:none;flex-direction:column;gap:14px">
+        <div class="pb" id="pb"></div>
+        <div id="hero-card"></div>
+        <div class="sec-head"><div class="sec-title">그 외 추천</div><div class="cnt-badge" id="res-count"></div></div>
+        <div id="res-list" style="display:flex;flex-direction:column;gap:10px"></div>
+        <button class="btn-ghost" onclick="openTaste()">취향 다시 고르기</button>
+      </div>
+    </section>
+
+    <!-- ② 기록 -->
+    <section class="screen" id="s-diary">
+      <div class="stats" id="diary-stats" style="display:none"></div>
+      <div class="chips" id="diary-filter"></div>
+      <div class="sec-head"><div class="sec-title">시음 기록</div><div class="cnt-badge" id="diary-count">0종</div></div>
+      <div id="diary-list" style="display:flex;flex-direction:column;gap:10px"></div>
+    </section>
+
+    <!-- ③ 떼루아 -->
+    <section class="screen" id="s-terroir">
+      <div class="sec-head"><div class="sec-title">제주 떼루아 지도</div><div class="cnt-badge" id="tr-count"></div></div>
+      <div class="card" style="padding:14px 15px;font-size:12.5px;color:var(--ink2);line-height:1.75">
+        <b style="color:var(--ink);font-weight:500">떼루아(Terroir)</b>는 술의 원물이 자란 땅의 토양·기후·지형이 만들어내는 고유한 맛의 개성입니다. 제주한잔은 각 술의 원물이 자란 제주의 땅을 떼루아 구역으로 나누어 소개합니다.
+        <div style="display:flex;flex-direction:column;gap:5px;margin-top:10px;padding-top:10px;border-top:0.5px solid var(--border);font-size:11px;color:var(--ink3)">
+          <span>✓ 공식 분류 · 양조장 제공</span>
+          <span>· 추정 분류 · 원물·재배지 기반</span>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--ink3);text-align:center">← 지도를 좌우로 밀어보세요 →</div>
+      <div class="map-scroll"><div class="map-inner" id="map-inner"></div></div>
+      <div class="sec-head"><div class="sec-title">구역별 소개</div></div>
+      <div id="zone-cards" style="display:flex;flex-direction:column;gap:12px"></div>
+    </section>
+
+    <!-- ④ 전체 술 -->
+    <section class="screen" id="s-alldrinks">
+      <div class="sec-head"><div class="sec-title">전체 술 목록</div><div class="cnt-badge" id="all-count"></div></div>
+      <input class="f-in" id="ex-search" type="search" placeholder="술 이름 · 양조장 검색" oninput="renderAll()">
+      <div class="chips" id="all-filter"></div>
+      <div id="all-groups" style="display:flex;flex-direction:column;gap:20px"></div>
+    </section>
+
+    <!-- ⑤ 주종 안내 -->
+    <section class="screen" id="s-jujong">
+      <div class="sec-head"><div class="sec-title">주종 안내</div><div class="cnt-badge">6가지 주종</div></div>
+      <div id="ex-jujong" style="display:flex;flex-direction:column;gap:12px"></div>
+    </section>
+
+    <!-- ⑥ 양조장 -->
+    <section class="screen" id="s-brewery">
+      <div class="sec-head"><div class="sec-title">제주 양조장 이야기</div><div class="cnt-badge" id="bw-count"></div></div>
+      <div id="ex-brewery" style="display:flex;flex-direction:column;gap:12px"></div>
+    </section>
+
+    <!-- ⑦ 리포트 -->
+    <section class="screen" id="s-report">
+      <div id="rep-empty">
+        <div class="card empty">
+          <div class="empty-t">취향 탐색 후 리포트가 생성됩니다</div>
+          <div class="empty-s">추천을 한 번 받으면<br>나의 취향 컬러 리포트가 만들어져요</div>
+        </div>
+        <button class="btn-primary" style="margin-top:12px" onclick="openTaste()">취향 고르러 가기</button>
+      </div>
+      <div id="rep-content" style="display:none;flex-direction:column;gap:12px">
+        <div class="card" style="padding:15px;display:flex;flex-direction:column;gap:10px">
+          <div class="rc-lbl">나의 취향 컬러</div>
+          <div class="rpal" id="rp-pal"></div>
+          <div class="rc-big" id="rp-type"></div>
+          <div class="mdesc" id="rp-desc"></div>
+          <div style="display:flex;gap:5px;flex-wrap:wrap" id="rp-tags"></div>
+        </div>
+        <div class="card" style="padding:15px;display:flex;flex-direction:column;gap:10px">
+          <div class="rc-lbl">분석 요약</div>
+          <div class="stats">
+            <div class="stat"><div class="stat-l">시음한 술</div><div class="stat-v" id="rp-cnt">0종</div></div>
+            <div class="stat"><div class="stat-l">선호 주종</div><div class="stat-v" style="font-size:16px" id="rp-pref">–</div></div>
+          </div>
+          <div style="display:flex;gap:5px;flex-wrap:wrap" id="rp-stat-tags"></div>
+        </div>
+        <div class="card" style="padding:15px;display:flex;flex-direction:column;gap:10px">
+          <div class="rc-lbl">맛 지형도</div><div id="rp-map"></div>
+        </div>
+        <div class="card" style="padding:15px;display:flex;flex-direction:column;gap:10px">
+          <div class="rc-lbl">구매 추천</div>
+          <div style="display:flex;flex-direction:column;gap:7px" id="rp-buy"></div>
+        </div>
+        <button class="btn-ghost" onclick="toast('컬러 카드 공유는 준비 중입니다')">📤 컬러 카드 공유</button>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ═══ FAB ═══ -->
+  <button class="fab" id="fab" onclick="openRecord(null)">＋ 기록</button>
+
+</div>
+
+<!-- ═══ SHEETS ═══ -->
+<div class="sheet-ov" id="ov" onclick="closeSheets()"></div>
+
+<!-- ═══ 드로어 (좌측 사이드바 + 7탭을 숨김 처리) ═══ -->
+<div class="drawer-ov" id="dov" onclick="closeDrawer()"></div>
+<aside class="drawer" id="drawer">
+  <div class="dw-hd">
+    <img class="ab-logo" src="data:image/png;base64,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" alt="제주한잔">
+    <button class="dw-x" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="dw-body" id="dw-body">
+
+    <div class="dw-sec">
+      <div class="dw-lbl">메뉴</div>
+      <div class="dw-nav-list">
+        <button class="dnav on" data-s="home" onclick="go('home')">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>나한테 맞는 제주한잔 찾기</button>
+        <button class="dnav" data-s="diary" onclick="go('diary')">
+          <svg viewBox="0 0 24 24"><path d="M5 4h12a2 2 0 012 2v14l-4-2-4 2-4-2-2 1V6a2 2 0 012-2z"/><path d="M9 9h6M9 13h4"/></svg>기록<span class="dn-cnt" id="dn-diary"></span></button>
+        <button class="dnav" data-s="terroir" onclick="go('terroir')">
+          <svg viewBox="0 0 24 24"><path d="M9 4L3 6.5v13L9 17l6 2.5 6-2.5v-13L15 6.5 9 4z"/><path d="M9 4v13M15 6.5v13"/></svg>떼루아<span class="dn-cnt">6구역</span></button>
+        <button class="dnav" data-s="alldrinks" onclick="go('alldrinks')">
+          <svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/></svg>전체 술<span class="dn-cnt" id="dn-all"></span></button>
+        <button class="dnav" data-s="jujong" onclick="go('jujong')">
+          <svg viewBox="0 0 24 24"><path d="M10 3h4v3.2c0 .6.2 1.1.5 1.6l1.4 1.7c.7.8 1.1 1.9 1.1 3V19a2 2 0 01-2 2H9a2 2 0 01-2-2v-6.5c0-1.1.4-2.2 1.1-3l1.4-1.7c.3-.5.5-1 .5-1.6V3z"/><path d="M7.4 13h9.2"/></svg>주종 안내<span class="dn-cnt">6주종</span></button>
+        <button class="dnav" data-s="brewery" onclick="go('brewery')">
+          <svg viewBox="0 0 24 24"><path d="M3 20V10l5-3v3l5-3v3l5-3v13z"/><path d="M8 20v-4h4v4"/></svg>양조장<span class="dn-cnt" id="dn-bw"></span></button>
+        <button class="dnav" data-s="report" onclick="go('report')">
+          <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8.5 15.5v-3M12 15.5v-6M15.5 15.5v-4"/></svg>리포트</button>
+      </div>
+    </div>
+
+  </div>
+</aside>
+
+<!-- 상세 시트 -->
+<div class="sheet" id="sheet-detail">
+  <div class="sh-grip"><i></i></div>
+  <div class="sh-hd" id="dt-hd"></div>
+  <div class="sh-body" id="dt-body"></div>
+  <div class="sh-foot" id="dt-foot"></div>
+</div>
+
+<!-- 기록 시트 -->
+<div class="sheet" id="sheet-record">
+  <div class="sh-grip"><i></i></div>
+  <div class="sh-hd">
+    <div><div class="sh-title">기록 남기기</div><div class="sh-sub" id="rec-sub">마신 술을 선택해주세요</div></div>
+    <button class="sh-x" onclick="closeSheets()">✕</button>
+  </div>
+  <div class="sh-body">
+    <div class="field"><div class="f-lbl">마신 술</div>
+      <select class="f-in" id="drink-select" onchange="pickDrink(this.value)"><option value="">술을 선택하세요</option></select></div>
+    <div class="field"><div class="f-lbl">날짜</div><input type="date" class="f-in" id="rec-date"></div>
+    <div class="field"><div class="f-lbl">별점</div>
+      <div class="star-row" id="star-row">
+        <button class="star" onclick="setStar(1)">★</button><button class="star" onclick="setStar(2)">★</button>
+        <button class="star" onclick="setStar(3)">★</button><button class="star" onclick="setStar(4)">★</button>
+        <button class="star" onclick="setStar(5)">★</button></div></div>
+    <div class="field"><div class="f-lbl">감정</div>
+      <div class="emo-row" id="emo-row">
+        <button class="emo" data-e="😊" onclick="setEmo(this)"><span class="ef">😊</span><span class="el">좋아요</span></button>
+        <button class="emo" data-e="😌" onclick="setEmo(this)"><span class="ef">😌</span><span class="el">편안해</span></button>
+        <button class="emo" data-e="🤔" onclick="setEmo(this)"><span class="ef">🤔</span><span class="el">흥미로워</span></button>
+        <button class="emo" data-e="😅" onclick="setEmo(this)"><span class="ef">😅</span><span class="el">강해요</span></button>
+        <button class="emo" data-e="😍" onclick="setEmo(this)"><span class="ef">😍</span><span class="el">최고야</span></button>
+      </div></div>
+    <div class="field"><div class="f-lbl">날씨 · 상황</div>
+      <div class="wx-row" id="wx-row">
+        <button class="wx" data-w="☀️" onclick="setWx(this)">☀️</button><button class="wx" data-w="🌤️" onclick="setWx(this)">🌤️</button>
+        <button class="wx" data-w="🌧️" onclick="setWx(this)">🌧️</button><button class="wx" data-w="❄️" onclick="setWx(this)">❄️</button>
+        <button class="wx" data-w="🌊" onclick="setWx(this)">🌊</button></div></div>
+    <div class="field"><div class="f-lbl">함께한 사람</div>
+      <div class="opt-row" id="ctx-row"></div></div>
+    <div class="field"><div class="f-lbl">향미 느낌</div>
+      <div class="opt-row" id="flv-row"></div></div>
+    <div class="field"><div class="f-lbl">이 술의 느낌 · 생각</div>
+      <textarea class="f-in" id="feel-in" rows="3" placeholder="첫 모금의 인상, 향, 여운... 자유롭게 적어보세요"></textarea></div>
+    <div class="field"><div class="f-lbl">한 줄 메모</div>
+      <input class="f-in" id="memo-in" placeholder="다음에 또 마시고 싶다, 파전이랑 찰떡..."></div>
+  </div>
+  <div class="sh-foot"><button class="btn-primary" onclick="saveRecord()">기록 저장하기</button></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ══════════════════ DATA ══════════════════ */
+const JUJONG=[
+  {name:'탁주',eng:'Takju / Makgeolli',color:'#1D9E75',colors:['#E1F5EE','#9FE1CB','#5DCAA5','#1D9E75'],desc:'쌀이나 곡물을 발효시킨 뒤 걸러내지 않아 뿌연 색을 띠는 우리나라 대표 전통주입니다. 효모와 유산균이 살아있어 톡 쏘는 청량감이 특징이며, 달콤하고 구수한 맛이 조화를 이룹니다.',abv:'5–15',sweet:'2–4',body:'1–3',process:'쌀·누룩·물을 함께 발효시킨 뒤 체로 거르는 방식으로 만들어집니다. 앙금을 걸러내지 않아 뿌연 빛깔이 납니다.',tip:'마시기 전 살살 흔들어 섞어주세요. 파전·두부김치와 특히 잘 어울립니다.',examples:['하마하마 너티','바질첨벙','함덕한잔딸기','이시보 막걸리']},
+  {name:'약주',eng:'Yakju',color:'#7F77DD',colors:['#EEEDFE','#CECBF6','#AFA9EC','#7F77DD'],desc:'탁주를 한 번 더 걸러 맑게 만든 발효주입니다. 쌀·누룩·물로 빚으며 맑고 투명한 빛깔에 은은한 향이 특징입니다.',abv:'10–20',sweet:'1–3',body:'1–3',process:'발효 후 용수(채)를 이용해 맑은 술만 걷어냅니다. 숙성 기간과 재료에 따라 다양한 풍미가 생겨납니다.',tip:'살짝 차갑게 마시면 향이 더 살아납니다. 회나 담백한 육류와 잘 어울립니다.',examples:['니모메','오메기술','녹고의눈물','오메기맑은술']},
+  {name:'증류주',eng:'Jeungnyuju / Soju',color:'#D85A30',colors:['#FAECE7','#F5C4B3','#F0997B','#D85A30'],desc:'발효주를 증류해 알코올 도수를 높인 전통 소주입니다. 맑고 투명하며 깔끔한 맛이 특징으로, 제주에서는 오메기술 증류주인 고소리술이 대표적입니다.',abv:'21–52',sweet:'1',body:'2–5',process:'발효된 술을 증류기(소줏고리)에 넣고 가열해 알코올 성분을 추출합니다.',tip:'상온 또는 살짝 차갑게 마시며 천천히 음미하세요.',examples:['고소리술','술오름','신례명주','달그리안소주']},
+  {name:'리큐르',eng:'Liqueur',color:'#D4537E',colors:['#FBEAF0','#F4C0D1','#ED93B1','#D4537E'],desc:'증류주에 과일·약재·허브 등을 가미해 만든 혼성주입니다. 제주의 특산물인 한라봉·레몬·베리류를 활용한 제주 리큐르는 색감이 아름답고 향이 풍부합니다.',abv:'20–25',sweet:'4–5',body:'3–4',process:'증류주를 기반으로 제주 특산 과일과 허브를 첨가·침출시켜 만듭니다.',tip:'온더락이나 소다로 희석해 즐기면 과일 향이 더욱 살아납니다.',examples:['제주리몬첼로','무릉리도원','베리제주','애월283']},
+  {name:'와인',eng:'Fruit Wine',color:'#ED93B1',colors:['#FBEAF0','#F4C0D1','#ED93B1','#D4537E'],desc:'제주 천혜향·한라봉 등 감귤류로 빚은 전통식 과실주입니다. 제주 특산 과일의 풍미가 고스란히 담겨 있습니다.',abv:'9–12',sweet:'2–3',body:'1–2',process:'제주 감귤을 으깨어 당과 효모를 첨가한 뒤 발효시킵니다.',tip:'가볍게 차갑게 해서 식전주로 즐기세요.',examples:['마셔블랑스프링','1950 천혜향와인','1950 씨유앳더탑']},
+  {name:'과실주',eng:'Gwasil-ju',color:'#F0997B',colors:['#FAECE7','#F5C4B3','#F0997B','#D85A30'],desc:'제주 과실을 발효시켜 만든 순수 과실 발효주입니다. 원재료 그대로의 색과 향을 담고 있으며 가볍고 청량한 음용감이 특징입니다.',abv:'10–12',sweet:'2',body:'1',process:'신선한 과실을 직접 발효시켜 만듭니다. 과실 본연의 당분을 효모가 분해해 알코올을 생성합니다.',tip:'차게 마시면 과실 향이 더욱 선명하게 느껴집니다.',examples:['귤로만','혼디주']},
+];
+
+const BREWERIES=[
+  {name:'제주술익는집',loc:'제주시 애월읍',emoji:'🍶',year:'2018',desc:'제주 애월의 청정 자연에서 오메기떡을 활용한 전통 탁주와 약주를 빚는 양조장입니다. 제주 고유의 발효 문화를 현대적으로 재해석해 하마하마 시리즈를 선보이고 있습니다.',products:['하마하마 너티','하마하마 오메기','니모메','오메기술','오메기맑은술'],color:'#1D9E75',bg:'#E1F5EE'},
+  {name:'제주한잔 자체제조',loc:'제주시 애월읍',emoji:'🌿',year:'2020',desc:'제주한잔이 직접 기획·제조하는 한잔 시리즈 탁주입니다. 제주 각 마을의 특산 재료를 사용해 지역의 색깔을 술에 담아냅니다.',products:['함덕한잔딸기','세화한잔당근','애월한잔레몬','제주한잔블루베리','협재한잔키위','벚꽃피는날에 제주','바질첨벙','정글인제주'],color:'#D4537E',bg:'#FBEAF0'},
+  {name:'달그리안',loc:'서귀포시 남원읍',emoji:'🌾',year:'2015',desc:'남원읍의 청정 지하수와 제주 쌀로 빚는 전통 약주·증류주 전문 양조장입니다. 조선시대 전통 방식을 복원한 경면녹파주와 달그리안소주가 대표 제품입니다.',products:['달그리안 경면녹파주','달그리안소주','별그리안초설감'],color:'#7F77DD',bg:'#EEEDFE'},
+  {name:'제주술도가',loc:'제주시 한경면',emoji:'🔥',year:'2012',desc:'제주 전통 증류주인 고소리술을 현대적으로 복원한 양조장입니다. 제주 무형문화재로 지정된 전통 소주 제조법을 고집합니다.',products:['고소리술','술오름','신례명주','바띠','미상25'],color:'#D85A30',bg:'#FAECE7'},
+  {name:'이시보',loc:'제주시 조천읍',emoji:'🌊',year:'2019',desc:'조천 앞바다에서 이름을 딴 양조장으로, 제주 용암수를 사용한 탁주를 빚습니다. 화산암 지층을 통과한 미네랄 풍부한 물이 술의 부드러운 질감을 만들어냅니다.',products:['이시보 막걸리','이시보 원 막걸리'],color:'#378ADD',bg:'#E6F1FB'},
+  {name:'1950 제주',loc:'서귀포시 표선면',emoji:'🍊',year:'2016',desc:'1950년대 제주 감귤 농업의 시작에서 영감을 얻은 과실주 전문 양조장입니다. 천혜향·감귤 등 제주 특산 과일을 원물 그대로 발효시킵니다.',products:['1950 천혜향와인','1950 씨유앳더탑'],color:'#EF9F27',bg:'#FAEEDA'},
+  {name:'무릉도원',loc:'제주시 한림읍',emoji:'🌺',year:'2017',desc:'한림읍 협재 해변 인근에 위치한 과실 리큐르 전문 양조장입니다. 제주 야생 베리와 봄 꽃을 활용해 아름다운 색감의 리큐르를 빚습니다.',products:['무릉리도원','베리제주','제주리몬첼로','애월283'],color:'#D4537E',bg:'#FBEAF0'},
+];
+
+const DB=[
+  {name:'귤로만',type:'과실주',도수:10,당도:2,산미:2,바디:1,brewery:'제주 서귀포',story:'제주 방언으로 "오롯이 혼자"를 뜻하는 이름. 과실 하나의 맛에 집중한 순수 발효주.',ingredients:[{icon:'🍊',name:'제주 감귤',desc:'서귀포산 신선한 감귤을 원물 그대로 발효'},{icon:'💧',name:'제주 용암수',desc:'화산암 지층을 통과한 미네랄이 풍부한 지하수'}],pairing:['회','탕수육','과일 샐러드'],color_story:'제주 감귤 껍질 색처럼 따뜻한 코랄 오렌지 계열',terroir:{zone:'CITRUS VALLEY',ko:'감귤 계곡',material:'제주 감귤',region:'서귀포 감귤권(추정)',reason:'서귀포 감귤을 원물 그대로 발효한 과실주로 감귤 계곡 떼루아입니다.',color:'#EF9F27',bg:'#FAEEDA',estimated:true}},
+  {name:'혼디주',type:'과실주',도수:12,당도:2,산미:3,바디:1,brewery:'제주 서귀포',story:'"함께"를 뜻하는 제주 방언 "혼디"에서 따온 이름. 여럿이 함께 나눠 마시기 좋습니다.',ingredients:[{icon:'🍒',name:'제주 베리류',desc:'제주 야생 베리를 수확해 발효'},{icon:'💧',name:'제주 용암수',desc:'미네랄 풍부한 제주 지하수'}],pairing:['치즈','과일','가벼운 전채'],color_story:'베리의 진한 붉은빛 코랄 레드 계열',terroir:{zone:'VOLCANIC RIDGE',ko:'화산 능선',material:'제주 베리류',region:'제주 중산간 과수지(추정)',reason:'제주 야생 베리를 발효한 과실주로 화산 능선 과수 떼루아 계열입니다.',color:'#D85A30',bg:'#FAECE7',estimated:true}},
+  {name:'제주리몬첼로',type:'리큐르',도수:22,당도:5,산미:3,바디:3,brewery:'무릉도원',story:'이탈리아 리몬첼로 방식을 제주 레몬으로 재현. 식후주로 마시면 상쾌함이 오래 지속됩니다.',ingredients:[{icon:'🍋',name:'제주 레몬',desc:'애월에서 재배한 무농약 레몬 껍질 침출'},{icon:'🥃',name:'제주 소주 베이스',desc:'제주 전통 증류주 기반'}],pairing:['해산물 파스타','생선 요리','디저트'],color_story:'레몬 껍질처럼 선명한 옐로우 핑크 계열',terroir:{zone:'CITRUS VALLEY',ko:'감귤 계곡',material:'제주 레몬',region:'애월 레몬 재배지(추정)',reason:'제주 레몬 껍질을 침출한 리큐르로 감귤·시트러스 떼루아에 속합니다.',color:'#EF9F27',bg:'#FAEEDA',estimated:true}},
+  {name:'무릉리도원',type:'리큐르',도수:22,당도:5,산미:1,바디:4,brewery:'제주곶밭',story:'무릉리 화산회토에서 자란 복숭아를 담은 리큐르. 큰 일교차가 만든 진한 과실향이 특징입니다.',ingredients:[{icon:'🍑',name:'무릉리 복숭아',desc:'서귀포 대정읍 무릉리 화산회토에서 재배한 복숭아'},{icon:'🌸',name:'봄 꽃',desc:'제주 봄꽃을 첨가해 화사한 향'}],pairing:['치즈케이크','마카롱','딸기'],color_story:'복숭아 과육처럼 따뜻한 핑크 앰버 계열',terroir:{zone:'VOLCANIC RIDGE',ko:'화산 능선',material:'무릉리 복숭아',region:'서귀포시 대정읍 무릉리',reason:'무릉리 중산간의 화산회토와 큰 일교차가 복숭아의 향과 당도를 높입니다. 제주에서는 드문 온대과수 산지로, 향이 농축된 과실 떼루아의 특징이 뚜렷합니다.',color:'#D85A30',bg:'#FAECE7',estimated:false}},
+  {name:'베리제주',type:'리큐르',도수:22,당도:5,산미:1,바디:3,brewery:'무릉도원',story:'제주 청정 지역에서 자란 베리의 건강한 달콤함을 그대로 담았습니다.',ingredients:[{icon:'🫐',name:'제주 블루베리',desc:'제주 청정 환경에서 자란 블루베리'},{icon:'🌿',name:'허브',desc:'제주 자생 허브 소량 첨가'}],pairing:['바닐라 아이스크림','초콜릿','요거트'],color_story:'블루베리처럼 깊고 진한 퍼플 핑크 계열',terroir:{zone:'VOLCANIC RIDGE',ko:'화산 능선',material:'제주 블루베리',region:'제주 중산간 과수지(추정)',reason:'제주 블루베리를 발효한 리큐르로 화산 능선 과수 떼루아 계열입니다.',color:'#D85A30',bg:'#FAECE7',estimated:true}},
+  {name:'애월283',type:'리큐르',도수:25,당도:4,산미:1,바디:3,brewery:'무릉도원',story:'애월 283번지 과수원의 한라봉을 담은 리큐르. 제주 감귤 문화의 정수.',ingredients:[{icon:'🍊',name:'한라봉',desc:'애월 283번지 과수원의 한라봉'},{icon:'🥃',name:'증류주 베이스',desc:'제주 전통 증류주 기반'}],pairing:['닭 요리','치즈','과일 타르트'],color_story:'한라봉의 주황빛 따뜻한 앰버 오렌지 계열',terroir:{zone:'CITRUS VALLEY',ko:'감귤 계곡',material:'한라봉',region:'애월 감귤 과수원(추정)',reason:'애월 283번지 한라봉을 침출한 리큐르로 감귤 떼루아 계열입니다.',color:'#EF9F27',bg:'#FAEEDA',estimated:true}},
+  {name:'니모메',type:'약주',도수:11,당도:3,산미:1,바디:1,brewery:'제주샘영농조합법인',story:'"나 홀로"를 뜻하는 제주 방언. 하논 분지의 제주 쌀로 빚어 조용히 혼자 음미하기 좋은 약주입니다.',ingredients:[{icon:'🌾',name:'하논쌀',desc:'하논·무릉리 논에서 생산한 제주 쌀. 감귤향보다 쌀의 구조가 술의 중심을 이룹니다'},{icon:'🍊',name:'귤피',desc:'제주 감귤 껍질을 소량 더해 은은한 향을 냅니다'}],pairing:['두부','나물 무침','담백한 전'],color_story:'맑고 투명한 쌀빛 라벤더 계열',terroir:{zone:'HANON BASIN',ko:'하논 분지',material:'하논쌀·귤피',region:'하논, 무릉리논 등 (귤은 제주 전역 예상)',reason:'하논과 무릉리 논에서 생산한 제주 쌀을 사용하며, 감귤향보다 쌀의 구조가 술의 중심을 이룹니다. 하논의 화산분화구 습지·논농사 스토리가 강합니다.',color:'#7F77DD',bg:'#EEEDFE',estimated:false}},
+  {name:'오메기술',type:'약주',도수:15,당도:2,산미:1,바디:2,brewery:'제주술익는집',story:'제주 무형문화재로 지정된 전통 제조법으로 빚는 제주 대표 전통주.',ingredients:[{icon:'🌾',name:'차조',desc:'제주 전통 곡물인 차조로 만든 오메기떡 발효'},{icon:'💧',name:'제주 지하수',desc:'제주 화산암층을 통과한 청정 지하수'}],pairing:['고기류','전','오메기떡'],color_story:'차조의 황금빛을 담은 옅은 앰버 계열',terroir:{zone:'WEST FIELD',ko:'서부 밭농업 지대',material:'차조',region:'제주 서부 밭농업 지대(추정)',reason:'제주 전통 곡물 차조를 오메기떡으로 발효한 술로, 서부 밭농업 떼루아와 원물 성격이 이어집니다.',color:'#BA7517',bg:'#FAEEDA',estimated:true}},
+  {name:'달그리안 경면녹파주',type:'약주',도수:15,당도:1,산미:4,바디:2,brewery:'달그리안',story:'조선시대 녹파주 제조법을 제주 녹차로 재현한 약주. 은은한 초록빛과 산뜻한 산미.',ingredients:[{icon:'🌿',name:'제주 녹차',desc:'서귀포 다원의 녹차 첨가'},{icon:'🌾',name:'제주 쌀·누룩',desc:'전통 방식 쌀 약주 기반'}],pairing:['해산물','냉채','봄 나물'],color_story:'녹차 빛깔을 담은 청아한 그린 퍼플 계열',terroir:{zone:'SOUTHWEST HERB',ko:'남서부 허브 지대',material:'제주 녹차',region:'서귀포 다원(추정)',reason:'서귀포 녹차를 가미한 약주로 중산간 허브·약초 떼루아 계열입니다.',color:'#1D9E75',bg:'#E1F5EE',estimated:true}},
+  {name:'녹고의눈물',type:'약주',도수:16,당도:1,산미:2,바디:2,brewery:'토향',story:'한라산 녹고 오름에서 흘러내리는 물을 형상화. 제주 자생 섬오가피의 은은한 향이 퍼지는 청아한 약주.',ingredients:[{icon:'🌿',name:'제주 섬오가피',desc:'제주 자생 약용식물로 허브·약초 계열의 향과 쌉쌀한 풍미'},{icon:'🌾',name:'제주 쌀',desc:'제주산 쌀 기반 약주'}],pairing:['생선 구이','나물','백김치'],color_story:'한라산 소나무 숲처럼 깊고 맑은 그린 계열',terroir:{zone:'SOUTHWEST HERB',ko:'남서부 허브 지대',material:'제주 섬오가피',region:'한라산 중산간, 청수리·애월·조천 일대 자생지',reason:'섬오가피는 제주 자생 약용식물로 허브·약초 계열의 향과 쌉쌀한 풍미가 특징입니다. 곶자왈과 중산간 생태계에서 자라는 야생 식생의 특성을 가장 잘 보여줍니다.',color:'#1D9E75',bg:'#E1F5EE',estimated:false}},
+  {name:'오메기맑은술',type:'약주',도수:16,당도:2,산미:3,바디:3,brewery:'제주술익는집',story:'오메기술을 체로 걸러 맑게 만든 약주. 탁주보다 산뜻하고 깔끔한 맛.',ingredients:[{icon:'🌾',name:'차조 오메기',desc:'전통 차조 오메기떡 발효 후 맑게 걸러냄'},{icon:'💧',name:'제주 청정수',desc:'제주 지하수'}],pairing:['회','해산물','담백한 구이'],color_story:'맑고 투명한 쌀빛 퍼플 계열',terroir:{zone:'WEST FIELD',ko:'서부 밭농업 지대',material:'차조',region:'제주 서부 밭농업 지대(추정)',reason:'오메기술을 맑게 거른 약주로, 같은 차조 원물의 서부 밭농업 떼루아에 속합니다.',color:'#BA7517',bg:'#FAEEDA',estimated:true}},
+  {name:'마셔블랑스프링',type:'와인',도수:9,당도:3,산미:1,바디:2,brewery:'1950 제주',story:'화이트 와인 방식으로 빚은 제주 봄의 술. 봄꽃 향이 화사하게 퍼집니다.',ingredients:[{icon:'🍇',name:'제주 청포도',desc:'제주 기후에서 자란 청포도'},{icon:'🌸',name:'봄꽃',desc:'제주 봄꽃 첨가'}],pairing:['치즈','샐러드','연어'],color_story:'봄 하늘처럼 청아한 페일 핑크 계열',terroir:{zone:'COASTAL WATER',ko:'해안 용암수 지대',material:'제주 청포도',region:'제주 해안 과수지(추정)',reason:'제주 청포도를 발효한 화이트 와인 스타일로 해안권 떼루아 계열입니다.',color:'#378ADD',bg:'#E6F1FB',estimated:true}},
+  {name:'1950 천혜향와인',type:'와인',도수:9,당도:3,산미:1,바디:1,brewery:'1950 제주',story:'1950년대 제주 감귤 산업의 시작을 기리는 이름. 천혜향의 달콤한 향을 그대로.',ingredients:[{icon:'🍊',name:'천혜향',desc:'서귀포에서 재배한 천혜향 원물 발효'},{icon:'💧',name:'제주 지하수',desc:'청정 지하수'}],pairing:['치즈','해산물','과일'],color_story:'천혜향의 주황빛 따뜻한 코랄 핑크 계열',terroir:{zone:'CITRUS VALLEY',ko:'감귤 계곡',material:'천혜향',region:'서귀포 감귤권(추정)',reason:'서귀포 천혜향을 원물로 하여 감귤 계곡 떼루아의 향과 산미를 담습니다.',color:'#EF9F27',bg:'#FAEEDA',estimated:true}},
+  {name:'1950 씨유앳더탑',type:'와인',도수:12,당도:2,산미:2,바디:2,brewery:'1950 제주',story:'한라산 정상에서의 만남을 약속하는 이름. 두 과실이 균형잡힌 맛을 냅니다.',ingredients:[{icon:'🍊',name:'한라봉',desc:'제주 대표 감귤 발효'},{icon:'🫐',name:'제주 블루베리',desc:'블루베리 블렌딩으로 산미'}],pairing:['바비큐','치즈 플레이트','파스타'],color_story:'두 과실이 만나는 딥 코랄 로제 계열',terroir:{zone:'CITRUS VALLEY',ko:'감귤 계곡',material:'한라봉·블루베리',region:'서귀포 감귤권(추정)',reason:'한라봉을 주원물로 하는 과실주로 감귤 계곡 떼루아에 가깝습니다.',color:'#EF9F27',bg:'#FAEEDA',estimated:true}},
+  {name:'바띠',type:'증류주',도수:21,당도:1,산미:1,바디:2,brewery:'제주술도가',story:'"바람이 티끌 하나 없이 맑다"는 제주 방언. 가장 부드러운 도수의 제주 증류주.',ingredients:[{icon:'🌾',name:'오메기',desc:'제주 차조 오메기 발효 증류'},{icon:'💧',name:'제주 용암수',desc:'미네랄 풍부한 용암층 지하수'}],pairing:['회','냉채','담백한 안주'],color_story:'맑고 투명한 코랄 계열',terroir:{zone:'WEST FIELD',ko:'서부 밭농업 지대',material:'오메기(차조)',region:'제주 서부 밭농업 지대(추정)',reason:'차조 오메기를 증류한 소주로, 서부 밭농업 원물에서 출발합니다.',color:'#BA7517',bg:'#FAEEDA',estimated:true}},
+  {name:'미상25',type:'증류주',도수:25,당도:1,산미:1,바디:2,brewery:'시트러스',story:'미상(未嘗)은 "아직 맛보지 못한"이라는 뜻. 새로운 맛을 기대하게 만드는 25도.',ingredients:[{icon:'🍊',name:'제주 감귤',desc:'남원권 감귤을 활용한 증류주'},{icon:'💧',name:'한라산 지하수',desc:'한라산에서 내려오는 청정수'}],pairing:['삼겹살','전','냉면'],color_story:'깔끔하고 투명한 연한 코랄 계열',terroir:{zone:'CITRUS VALLEY',ko:'감귤 계곡',material:'감귤',region:'남원·위미·신례리 일대',reason:'제주 최대 감귤 산지인 남원권의 감귤을 활용합니다. 풍부한 일조량, 해풍, 완만한 경사가 감귤의 향과 산미를 형성하는 대표적인 감귤 떼루아입니다.',color:'#EF9F27',bg:'#FAEEDA',estimated:false}},
+  {name:'고소리술',type:'증류주',도수:40,당도:1,산미:1,바디:4,brewery:'제주샘영농조합법인',story:'제주 무형문화재로 지정된 전통 증류주. 소줏고리라는 전통 도구로 만들어 "고소리술"이라 불립니다.',ingredients:[{icon:'🌾',name:'차조 오메기',desc:'전통 오메기떡 발효 후 소줏고리 증류'},{icon:'🔥',name:'전통 증류',desc:'무형문화재 제주 전통 소주 제조법'}],pairing:['오메기떡','돼지고기','제주 흑돼지'],color_story:'깊고 강한 다크 앰버 계열',terroir:{zone:'WEST FIELD',ko:'서부 밭농업 지대',material:'차조(좁쌀)',region:'한경·한림·애월 중산간, 구좌·표선 등 제주 전통 밭농업 지역',reason:'차조는 제주 전통 농업을 대표하는 곡물로, 특히 서부 평야와 중산간 밭지대에서 널리 재배되었습니다. 화산회토와 강한 바람이 만든 제주 밭농업의 상징적인 원물입니다.',color:'#BA7517',bg:'#FAEEDA',estimated:false}},
+  {name:'술오름',type:'증류주',도수:40,당도:1,산미:1,바디:4,brewery:'제주술도가',story:'한라산 오름의 소나무에서 영감. 소나무 향이 깊게 배어 있어 독특한 풍미.',ingredients:[{icon:'🌲',name:'한라산 소나무',desc:'소나무 잎 가미로 피톤치드 향'},{icon:'🌾',name:'제주 오메기',desc:'전통 오메기 증류주 베이스'}],pairing:['육회','고기 요리','견과류'],color_story:'한라산 소나무처럼 깊고 진한 다크 앰버',terroir:{zone:'SOUTHWEST HERB',ko:'남서부 허브 지대',material:'한라산 소나무',region:'한라산 중산간(추정)',reason:'한라산 소나무 잎을 가미한 증류주로 중산간 자생 식생 떼루아에 가깝습니다.',color:'#1D9E75',bg:'#E1F5EE',estimated:true}},
+  {name:'별그리안초설감',type:'증류주',도수:40,당도:1,산미:1,바디:5,brewery:'달그리안',story:'초설(初雪)처럼 첫 눈이 내리는 날의 순수한 감동을 담은 이름. 바디감이 강해 음미하는 술.',ingredients:[{icon:'🥭',name:'제주 감귤 증류',desc:'감귤 뉘앙스를 더한 고도 증류주'},{icon:'🌾',name:'제주 곡물',desc:'제주산 곡물 발효·증류 베이스'}],pairing:['초콜릿','견과류','치즈'],color_story:'제주 초겨울처럼 깊고 무거운 다크 코랄',terroir:{zone:'VOLCANIC RIDGE',ko:'화산 능선',material:'제주 감귤·곡물',region:'제주 중산간(추정)',reason:'감귤 뉘앙스의 고도 증류주로 화산 능선 떼루아 특성에 가깝습니다.',color:'#D85A30',bg:'#FAECE7',estimated:true}},
+  {name:'신례명주',type:'증류주',도수:50,당도:1,산미:1,바디:4,brewery:'제주술도가',story:'신례리의 전통을 이은 명주. 50도의 강한 도수이지만 부드럽게 목을 넘어가는 것이 특징.',ingredients:[{icon:'🌾',name:'제주 쌀·차조',desc:'쌀과 차조를 혼합 발효해 3회 증류'},{icon:'🍃',name:'제주 허브',desc:'제주 자생 약초로 복합적인 향'}],pairing:['제주 흑돼지','전통 전','홀로 음미'],color_story:'강렬하고 깊은 다크 코랄 브라운 계열',terroir:{zone:'HANON BASIN',ko:'하논 분지',material:'제주 쌀·차조',region:'서귀포 신례리 논농사(추정)',reason:'신례리 전통을 이은 쌀 기반 명주로 논농사 떼루아 계열입니다.',color:'#7F77DD',bg:'#EEEDFE',estimated:true}},
+  {name:'달그리안소주',type:'증류주',도수:52,당도:1,산미:1,바디:5,brewery:'달그리안',story:'달그리안 양조장이 만드는 가장 강한 술. 52도이지만 오랜 숙성으로 부드러운 여운.',ingredients:[{icon:'🌾',name:'제주 쌀·보리',desc:'쌀과 보리 혼합 발효·증류'},{icon:'💧',name:'남원 지하수',desc:'서귀포 남원읍의 청정 지하수'}],pairing:['오랜 친구와','특별한 날','전통 안주'],color_story:'가장 깊고 강한 다크 앰버 브라운',terroir:{zone:'HANON BASIN',ko:'하논 분지',material:'제주 쌀·보리',region:'서귀포 남원 논농사(추정)',reason:'쌀·보리 곡물 기반 증류주로 논농사 떼루아에 가깝습니다.',color:'#7F77DD',bg:'#EEEDFE',estimated:true}},
+  {name:'하마하마 너티',type:'탁주',도수:8,당도:4,산미:1,바디:3,brewery:'제주술익는집',story:'너티(nutty)한 고소함이 특징. 달콤하고 고소해 전통주 입문자에게 가장 추천하는 술.',ingredients:[{icon:'🌰',name:'땅콩',desc:'제주 땅콩 첨가로 고소하고 달콤한 너티한 맛'},{icon:'🌾',name:'제주 쌀·차조',desc:'제주 쌀과 차조 기반 발효'}],pairing:['파전','두부','과자류'],color_story:'땅콩처럼 따뜻하고 고소한 앰버 크림 계열',terroir:{zone:'COASTAL WATER',ko:'해안 용암수 지대',material:'땅콩 + 쌀·차조',region:'제주 해안권(추정)',reason:'제주 땅콩을 더한 탁주로 해안권 원물 떼루아 계열로 배치했습니다.',color:'#378ADD',bg:'#E6F1FB',estimated:true}},
+  {name:'하마하마 오메기',type:'탁주',도수:8,당도:2,산미:4,바디:2,brewery:'제주술익는집',story:'제주 전통 오메기술을 현대적으로 재해석. 차조 특유의 구수함과 자연 발효 산미가 어우러집니다.',ingredients:[{icon:'🌾',name:'차조 오메기',desc:'제주 전통 차조 오메기 발효'},{icon:'🍋',name:'유산균',desc:'자연 발효 유산균이 풍부한 새콤한 산미'}],pairing:['삼겹살','파전','오메기떡'],color_story:'차조의 황금빛을 담은 민트 그린 계열',terroir:{zone:'WEST FIELD',ko:'서부 밭농업 지대',material:'차조',region:'제주 서부 밭농업 지대(추정)',reason:'제주 차조 오메기를 발효한 탁주로, 서부 밭작물 떼루아 계열입니다.',color:'#BA7517',bg:'#FAEEDA',estimated:true}},
+  {name:'정글인제주',type:'탁주',도수:8,당도:2,산미:2,바디:2,brewery:'제주한잔 자체제조',story:'제주 숲속을 걷는 듯한 청량한 느낌. 다양한 허브가 어우러져 복합적인 향.',ingredients:[{icon:'🌿',name:'제주 허브 믹스',desc:'제주 자생 허브 블렌딩'},{icon:'🌾',name:'제주 쌀',desc:'제주산 쌀 기반 발효'}],pairing:['삼겹살','해산물','녹색 채소'],color_story:'제주 숲처럼 청량한 민트 그린 계열',terroir:{zone:'SOUTHWEST HERB',ko:'남서부 허브 지대',material:'제주 자생 허브',region:'제주 중산간 자생지(추정)',reason:'제주 자생 허브를 블렌딩한 탁주로 남서부 허브 떼루아 성격을 지닙니다.',color:'#1D9E75',bg:'#E1F5EE',estimated:true}},
+  {name:'바질첨벙',type:'탁주',도수:8,당도:3,산미:1,바디:2,brewery:'제주한잔 자체제조',story:'바질의 허브향이 첨벙 담긴 탁주. 이탈리안 허브와 제주 전통주의 독창적인 만남.',ingredients:[{icon:'🌿',name:'신선 바질',desc:'제주 재배 신선한 바질 첨가'},{icon:'🌾',name:'제주 쌀',desc:'제주산 쌀 탁주 베이스'}],pairing:['피자','파스타','카프레제'],color_story:'바질 잎처럼 산뜻한 그린 민트 계열',terroir:{zone:'SOUTHWEST HERB',ko:'남서부 허브 지대',material:'바질(허브)',region:'제주 허브 재배지(추정)',reason:'허브 바질을 접목한 탁주로 허브 떼루아 계열로 묶입니다.',color:'#1D9E75',bg:'#E1F5EE',estimated:true}},
+  {name:'함덕한잔딸기',type:'탁주',도수:10,당도:4,산미:3,바디:2,brewery:'제주한잔 자체제조',story:'함덕 해변만큼 싱그러운 딸기 탁주. 계절 과일을 신선하게 담아낸 한잔 시리즈.',ingredients:[{icon:'🍓',name:'함덕 딸기',desc:'함덕 딸기 농장 신선 딸기'},{icon:'🌾',name:'제주 쌀',desc:'제주 쌀 탁주 베이스'}],pairing:['크림치즈','과자','요거트'],color_story:'함덕 딸기의 선명한 핑크 코랄 계열',terroir:{zone:'COASTAL WATER',ko:'해안 용암수 지대',material:'함덕 딸기',region:'함덕 해안 재배지(추정)',reason:'함덕 딸기를 담은 탁주로 해안권 떼루아에 묶입니다.',color:'#378ADD',bg:'#E6F1FB',estimated:true}},
+  {name:'세화한잔당근',type:'탁주',도수:10,당도:2,산미:4,바디:1,brewery:'제주한잔 자체제조',story:'세화 해변 당근밭의 신선한 당근이 들어간 이색 탁주. 은은한 단맛과 산미.',ingredients:[{icon:'🥕',name:'세화 당근',desc:'세화 해변 당근밭 신선 당근 착즙'},{icon:'🌾',name:'제주 쌀',desc:'제주 쌀 탁주 베이스'}],pairing:['샐러드','백숙','나물'],color_story:'당근의 생기 있는 오렌지 민트 계열',terroir:{zone:'COASTAL WATER',ko:'해안 용암수 지대',material:'세화 당근',region:'세화 해안 당근밭(추정)',reason:'세화 해안 당근을 착즙한 탁주로 해안권 떼루아 계열입니다.',color:'#378ADD',bg:'#E6F1FB',estimated:true}},
+  {name:'애월한잔레몬',type:'탁주',도수:10,당도:1,산미:5,바디:1,brewery:'제주한잔 자체제조',story:'애월 레몬 농장에서 직접 가져온 레몬으로 만든 가장 새콤한 탁주.',ingredients:[{icon:'🍋',name:'애월 레몬',desc:'애월 무농약 레몬 직접 착즙'},{icon:'🌾',name:'제주 쌀',desc:'제주 쌀 탁주에 레몬즙 블렌딩'}],pairing:['생선','해산물','닭요리'],color_story:'레몬처럼 선명하고 상큼한 옐로우 민트 계열',terroir:{zone:'CITRUS VALLEY',ko:'감귤 계곡',material:'애월 레몬',region:'애월 레몬 농장(추정)',reason:'애월 레몬을 착즙한 탁주로 시트러스 떼루아 특성이 뚜렷합니다.',color:'#EF9F27',bg:'#FAEEDA',estimated:true}},
+  {name:'제주한잔블루베리',type:'탁주',도수:10,당도:3,산미:3,바디:2,brewery:'제주한잔 자체제조',story:'제주 블루베리 농가와 협력해 만든 탁주. 보라빛 색감이 아름답고 달콤새콤한 맛이 균형잡혀 있습니다.',ingredients:[{icon:'🫐',name:'제주 블루베리',desc:'제주 청정 블루베리 통째로 발효'},{icon:'🌾',name:'제주 쌀',desc:'제주 쌀 탁주 베이스'}],pairing:['요거트','치즈','과자'],color_story:'블루베리처럼 아름다운 퍼플 민트 계열',terroir:{zone:'VOLCANIC RIDGE',ko:'화산 능선',material:'제주 블루베리',region:'제주 중산간 과수지(추정)',reason:'제주 블루베리를 담은 탁주로 화산 능선 온대 과수 떼루아에 속합니다.',color:'#D85A30',bg:'#FAECE7',estimated:true}},
+  {name:'협재한잔키위',type:'탁주',도수:10,당도:3,산미:3,바디:2,brewery:'제주한잔 자체제조',story:'협재 에메랄드 바다처럼 상큼한 키위 탁주. 초록빛 키위가 탁주와 만나 독특한 풍미.',ingredients:[{icon:'🥝',name:'협재 키위',desc:'협재 키위 농장의 키위'},{icon:'🌾',name:'제주 쌀',desc:'제주 쌀 탁주 베이스'}],pairing:['샐러드','닭요리','과일'],color_story:'키위처럼 싱그러운 그린 민트 계열',terroir:{zone:'COASTAL WATER',ko:'해안 용암수 지대',material:'협재 키위',region:'협재 해안 재배지(추정)',reason:'협재 키위를 담은 탁주로 해안권 떼루아에 속합니다.',color:'#378ADD',bg:'#E6F1FB',estimated:true}},
+  {name:'벚꽃피는날에 제주',type:'탁주',도수:12,당도:3,산미:2,바디:2,brewery:'제주한잔 자체제조',story:'제주 왕벚나무 발원지를 기리는 봄 한정 탁주. 벚꽃 향이 술잔에서 피어납니다.',ingredients:[{icon:'🌸',name:'제주 벚꽃',desc:'제주 왕벚나무 벚꽃 첨가'},{icon:'🌾',name:'제주 쌀',desc:'제주 쌀 탁주에 벚꽃 가미'}],pairing:['화전','봄나물','담백한 전채'],color_story:'벚꽃처럼 부드러운 핑크 민트 계열',terroir:{zone:'COASTAL WATER',ko:'해안 용암수 지대',material:'제주 벚꽃 + 쌀',region:'제주 해안권(추정)',reason:'벚꽃을 가미한 탁주로 해안권 원물 떼루아 계열로 배치했습니다.',color:'#378ADD',bg:'#E6F1FB',estimated:true}},
+  {name:'이시보 막걸리',type:'탁주',도수:12,당도:2,산미:3,바디:2,brewery:'이시보',story:'이시보(以示甫)는 "좋은 것을 보여준다"는 뜻. 제주 용암수의 미네랄이 깊은 맛을 만들어냅니다.',ingredients:[{icon:'🌊',name:'제주 용암수',desc:'조천 용암층 미네랄 풍부한 물'},{icon:'🌾',name:'제주 쌀·차조',desc:'제주산 쌀과 차조 블렌딩 발효'}],pairing:['파전','두부','오징어'],color_story:'조천 바다처럼 깊은 민트 그린 계열',terroir:{zone:'COASTAL WATER',ko:'해안 용암수 지대',material:'용암수 + 쌀·차조',region:'조천 해안 용암층(추정)',reason:'조천 해안 용암수를 강조한 탁주로 물의 떼루아를 중심으로 묶입니다.',color:'#378ADD',bg:'#E6F1FB',estimated:true}},
+  {name:'이시보 원 막걸리',type:'탁주',도수:15.5,당도:1,산미:4,바디:3,brewery:'이시보',story:'"원(原)"은 원래 그대로를 뜻합니다. 쌀·차조·누룩·물만으로 빚은 가감 없는 순수 발효주.',ingredients:[{icon:'🌊',name:'제주 용암수',desc:'미네랄 풍부한 용암층 지하수'},{icon:'🌾',name:'원물 그대로',desc:'쌀·차조·누룩·물만. 아무것도 첨가하지 않음'}],pairing:['홍어','돼지고기','묵은지'],color_story:'가장 전통적인 청회색 민트 계열',terroir:{zone:'COASTAL WATER',ko:'해안 용암수 지대',material:'용암수 + 쌀·차조',region:'조천 해안 용암층(추정)',reason:'용암수와 원물만으로 빚은 탁주로 해안 용암수 떼루아를 대표합니다.',color:'#378ADD',bg:'#E6F1FB',estimated:true}},
+];
+
+/* ══════════════════ UTIL ══════════════════ */
+const TS={
+  '탁주':{c:'#1D9E75',bg:'#E1F5EE',dk:'#085041'},
+  '약주':{c:'#7F77DD',bg:'#EEEDFE',dk:'#26215C'},
+  '리큐르':{c:'#D4537E',bg:'#FBEAF0',dk:'#4B1528'},
+  '와인':{c:'#ED93B1',bg:'#FBEAF0',dk:'#4B1528'},
+  '과실주':{c:'#D85A30',bg:'#FAECE7',dk:'#4A1B0C'},
+  '증류주':{c:'#BA7517',bg:'#FAEEDA',dk:'#412402'},
+};
+const TERROIR_ZONES=[
+  {zone:'WEST FIELD',ko:'서부 밭농업 지대',x:88,y:100,color:'#BA7517',bg:'#FAEEDA'},
+  {zone:'SOUTHWEST HERB',ko:'남서부 허브 지대',x:120,y:145,color:'#1D9E75',bg:'#E1F5EE'},
+  {zone:'VOLCANIC RIDGE',ko:'화산 능선',x:160,y:160,color:'#D85A30',bg:'#FAECE7'},
+  {zone:'HANON BASIN',ko:'하논 분지',x:235,y:162,color:'#7F77DD',bg:'#EEEDFE'},
+  {zone:'CITRUS VALLEY',ko:'감귤 계곡',x:300,y:155,color:'#EF9F27',bg:'#FAEEDA'},
+  {zone:'COASTAL WATER',ko:'해안 용암수 지대',x:335,y:88,color:'#378ADD',bg:'#E6F1FB'},
+];
+
+function drinkHueSat(d){
+  const n=d.name, t=d.type;
+  const has=(s)=>n.includes(s);
+  // 원물 계열 판별 (이름·재료 기반)
+  if(has('레몬'))return{h:50,s:.60};
+  if(has('감귤')||has('천혜향')||has('한라봉')||has('리몬')||has('283')||has('귤로만')||has('미상'))return{h:42,s:.55};
+  if(has('딸기'))return{h:8,s:.55};
+  if(has('블루베리')||has('베리'))return{h:352,s:.42};
+  if(has('복숭아')||has('도원'))return{h:18,s:.52};
+  if(has('키위'))return{h:75,s:.42};
+  if(has('당근'))return{h:28,s:.5};
+  if(has('바질')||has('정글')||has('녹고')||has('녹파')||has('술오름')||has('오가피'))return{h:95,s:.30};
+  if(has('벚꽃')||has('블랑')||has('마셔'))return{h:340,s:.32};
+  // 주종 기본값
+  if(t==='증류주')return{h:28,s:.34};      // 곡물 증류 → 웜 브라운
+  if(t==='약주')return{h:46,s:.28};        // 쌀 약주 → 뉴트럴 베이지
+  if(t==='탁주')return{h:44,s:.32};        // 쌀·차조 탁주 → 베이지
+  if(t==='리큐르')return{h:15,s:.5};
+  if(t==='와인')return{h:345,s:.35};
+  if(t==='과실주')return{h:30,s:.5};
+  return{h:42,s:.35};
+}
+// 맛의 무게감 (0 가벼움 ~ 1 묵직)
+function weightScore(d){
+  const raw=d.바디*2 + d.당도*0.6 + (d.도수/52)*3;
+  return Math.max(0,Math.min(1,(raw-3)/(12-3)));
+}
+function hslToHex(h,s,l){
+  h/=360;
+  const a=s*Math.min(l,1-l);
+  const f=n=>{const k=(n+h*12)%12;const c=l-a*Math.max(-1,Math.min(k-3,Math.min(9-k,1)));return Math.round(255*c);};
+  return '#'+[f(0),f(8),f(4)].map(x=>x.toString(16).padStart(2,'0')).join('').toUpperCase();
+}
+// ── 5구간 축별 팔레트 (참고 이미지) ──
+const AXIS_PAL={
+  당도:['#D6D2CF','#E9DEDE','#EDD1D8','#EA9DB6','#D05C7F'],
+  산미:['#F1EBD9','#E5DFB9','#D5D389','#BBC964','#A6C637'],
+  바디:['#EFE7D6','#D8C7AE','#C0A882','#9E8158','#7E6144'],
+};
+// 대표 5종 브랜드 확정색 (직접 지정)
+const FIXED_COLOR={
+  '고소리술':'#B89638',
+  '미상25':'#9F4B2D',
+  '녹고의눈물':'#647F4F',
+  '무릉리도원':'#D87055',
+  '니모메':'#DA7847',
+};
+function _hx(h){h=h.replace('#','');return[parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];}
+function _hex(r,g,b){return '#'+[r,g,b].map(x=>Math.max(0,Math.min(255,Math.round(x))).toString(16).padStart(2,'0')).join('').toUpperCase();}
+function _rgb2hsl(r,g,b){r/=255;g/=255;b/=255;const mx=Math.max(r,g,b),mn=Math.min(r,g,b);let h,s,l=(mx+mn)/2;if(mx===mn){h=s=0;}else{const d=mx-mn;s=l>0.5?d/(2-mx-mn):d/(mx+mn);switch(mx){case r:h=(g-b)/d+(g<b?6:0);break;case g:h=(b-r)/d+2;break;default:h=(r-g)/d+4;}h/=6;}return[h,s,l];}
+function _hsl2rgb(h,s,l){let r,g,b;if(s===0){r=g=b=l;}else{const hue2=(p,q,t)=>{if(t<0)t+=1;if(t>1)t-=1;if(t<1/6)return p+(q-p)*6*t;if(t<1/2)return q;if(t<2/3)return p+(q-p)*(2/3-t)*6;return p;};const q=l<0.5?l*(1+s):l+s-l*s;const p=2*l-q;r=hue2(p,q,h+1/3);g=hue2(p,q,h);b=hue2(p,q,h-1/3);}return[r*255,g*255,b*255];}
+
+// 당·산·바디 컬러를 혼합해 메인 컬러 도출
+function getColor(d){
+  if(FIXED_COLOR[d.name])return FIXED_COLOR[d.name];
+  const cs=_hx(AXIS_PAL['당도'][d.당도-1]);
+  const ca=_hx(AXIS_PAL['산미'][d.산미-1]);
+  const cb=_hx(AXIS_PAL['바디'][d.바디-1]);
+  // 바디 가중 혼합 (바디가 메인 톤을 잡고, 당도·산도가 색조를 조정)
+  const ws=1.0, wa=1.0, wb=1.6, tot=ws+wa+wb;
+  let r=(cs[0]*ws+ca[0]*wa+cb[0]*wb)/tot;
+  let g=(cs[1]*ws+ca[1]*wa+cb[1]*wb)/tot;
+  let b=(cs[2]*ws+ca[2]*wa+cb[2]*wb)/tot;
+  // 채도 강화 + 살짝 어둡게 (참고 5종 톤에 맞춤)
+  let [h,s,l]=_rgb2hsl(r,g,b);
+  s=Math.min(1,s*1.9);
+  l=l*0.80;
+  const [rr,gg,bb]=_hsl2rgb(h,s,l);
+  return _hex(rr,gg,bb);
+}
+// ── 5구간 취향 컬러바 (참고 이미지 스타일) ──
+const TCS_PAL={
+  당도:['#D6D2CF','#E9DEDE','#EDD1D8','#EA9DB6','#D05C7F'],
+  산미:['#F1EBD9','#E5DFB9','#D5D389','#BBC964','#A6C637'],
+  바디:['#EFE7D6','#D8C7AE','#C0A882','#9E8158','#7E6144'],
+};
+const TCS_EN={당도:'Sugar',산미:'Acidity',바디:'Body'};
+// value: 1~5, size: 'sm'(카드) | 'lg'(모달)
+function tcsBar(label,value,size='sm'){
+  const pal=TCS_PAL[label];
+  const segs=pal.map((c,i)=>{
+    const n=i+1;const on=n===value;
+    return `<div class="tcs-seg${on?' on':''}" style="background:${c}"><span class="tcs-num">${n}</span></div>`;
+  }).join('');
+  if(size==='lg'){
+    return `<div class="tcs-bar lg">
+      <div class="tcs-title-row"><span class="tcs-bar-lbl">${label}</span><span class="tcs-title-en">${TCS_EN[label]}</span></div>
+      <div class="tcs-seg-wrap">${segs}</div>
+    </div>`;
+  }
+  return `<div class="tcs-bar"><span class="tcs-bar-lbl">${label}</span><div class="tcs-seg-wrap">${segs}</div></div>`;
+}
+
+const ts=(t,k)=>(TS[t]||TS['탁주'])[k];
+const $=id=>document.getElementById(id);
+function alcRange(d){return d<=15.5?'low':d<=25?'mid':'high';}
+function scoreD(d){
+  return Math.abs(d.당도-state.sweet)+Math.abs(d.산미-state.sour)
+    +(alcRange(d.도수)===state.alc?0:1.5)+((state.type==='all'||d.type===state.type)?0:2);
+}
+function today(){const t=new Date();return new Date(t.getTime()-t.getTimezoneOffset()*6e4).toISOString().split('T')[0];}
+const ALC_L={low:'저도',mid:'중도',high:'고도'};
+const CTX_OPTS=['혼자','친구와','연인과','가족과','동료와'];
+const FLV_OPTS=['달콤','새콤','구수','청량','꽃향','과일향','약향','곡향','묵직','드라이','탄산감','여운 긴'];
+
+/* ══════════════════ STATE ══════════════════ */
+const state={sweet:3,sour:1,alc:'low',type:'탁주'};
+const rec={drink:null,stars:0,emotion:'',weather:'',ctx:[],flavors:[]};
+let logs=[],currentResults=[],logFilter='all',allFilter='all',exploreTab='all',searched=false;
+
+/* 저장 — 로컬 저장이 막힌 환경에서는 메모리로만 동작 */
+const store={
+  save(){try{localStorage.setItem('jjh_logs',JSON.stringify(logs));}catch(e){}},
+  load(){try{const v=localStorage.getItem('jjh_logs');if(v)logs=JSON.parse(v);}catch(e){}}
+};
+
+/* ══════════════════ NAV ══════════════════ */
+function go(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  $('s-'+id).classList.add('active');
+  document.querySelectorAll('.dnav').forEach(b=>b.classList.toggle('on',b.dataset.s===id));
+  $('fab').classList.toggle('show',id==='diary');
+  $('screens').scrollTop=0;
+  closeDrawer();
+}
+/* ── 햄버거 드로어 (v14의 좌측 사이드바 + 상단 7탭) ── */
+function openDrawer(){
+  closeSheets();
+  $('dov').classList.add('open');$('drawer').classList.add('open');
+  document.body.style.overflow='hidden';
+  $('dw-body').scrollTop=0;
+}
+function closeDrawer(){
+  $('dov').classList.remove('open');$('drawer').classList.remove('open');
+  if(!document.querySelector('.sheet.open'))document.body.style.overflow='';
+}
+function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),1900);}
+
+/* ══════════════════ SHEETS ══════════════════ */
+function openSheet(id){$('ov').classList.add('open');$(id).classList.add('open');document.body.style.overflow='hidden';}
+function closeSheets(){$('ov').classList.remove('open');document.querySelectorAll('.sheet').forEach(s=>s.classList.remove('open'));document.body.style.overflow='';}
+
+/* ══════════════════ TASTE ══════════════════ */
+function setSc(g,v){state[g]=v;document.querySelectorAll(`#${g}-row .sc`).forEach(b=>b.classList.toggle('on',+b.dataset.v===v));}
+function setAlc(v){state.alc=v;document.querySelectorAll('#alc-row .alc').forEach(b=>b.classList.toggle('on',b.dataset.v===v));}
+function setType(v){state.type=v;document.querySelectorAll('#type-grid .tybtn').forEach(b=>b.classList.toggle('on',b.dataset.v===v));}
+function toggleTaste(){$('taste-panel').classList.toggle('collapsed');}
+function openTaste(){go('home');$('taste-panel').classList.remove('collapsed');$('screens').scrollTop=0;}
+
+function renderTypeGrid(){
+  const types=['탁주','약주','증류주','리큐르'];
+  const items=types.map(t=>({v:t,n:t,c:DB.filter(d=>d.type===t).length,ic:typeIcon(t)}));
+  items.push({v:'all',n:'전체',c:DB.length,ic:typeIcon('all')});
+  $('type-grid').innerHTML=items.map(it=>`
+    <button class="tybtn ${state.type===it.v?'on':''}" data-v="${it.v}" onclick="setType('${it.v}')">
+      ${it.ic}<div><div class="tn">${it.n}</div><div class="tc">${it.c}종</div></div></button>`).join('');
+  $('type-desc').innerHTML=JUJONG.slice(0,4).map(j=>`<div style="margin-bottom:4px"><b style="color:${j.color}">${j.name}</b> ${j.desc.split('.')[0]}</div>`).join('');
+}
+function typeIcon(t){
+  const m={
+   '탁주':'<svg width="18" height="18" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="6" fill="#9FE1CB"/><rect x="4" y="5" width="8" height="3" rx="1.5" fill="#1D9E75" opacity=".5"/><rect x="4" y="1" width="8" height="2" rx="1" fill="#1D9E75"/></svg>',
+   '약주':'<svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M5 2H11L12 6H4L5 2Z" fill="#AFA9EC"/><rect x="4" y="6" width="8" height="8" rx="1.5" fill="#7F77DD"/></svg>',
+   '증류주':'<svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M5 2H11L12 6H4L5 2Z" fill="#F0997B"/><rect x="4" y="6" width="8" height="8" rx="1.5" fill="#D85A30"/></svg>',
+   '리큐르':'<svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M6 2H10L11 5H5L6 2Z" fill="#F4C0D1"/><rect x="4" y="5" width="8" height="9" rx="2" fill="#D4537E"/></svg>',
+   'all':'<svg width="18" height="18" viewBox="0 0 16 16" fill="none"><circle cx="6" cy="10" r="4" fill="#FAC775" opacity=".8"/><circle cx="10" cy="10" r="4" fill="#ED93B1" opacity=".7"/><circle cx="8" cy="6" r="4" fill="#AFA9EC" opacity=".7"/></svg>'};
+  return m[t]||m['all'];
+}
+function tasteChips(){
+  return [
+    `<span class="pill" style="color:var(--pink);border-color:var(--pink)"><span class="pill-dot" style="background:var(--pink)"></span>당도 ${state.sweet}</span>`,
+    `<span class="pill" style="color:var(--teal);border-color:var(--teal)"><span class="pill-dot" style="background:var(--teal)"></span>산미 ${state.sour}</span>`,
+    `<span class="pill" style="color:var(--coral);border-color:var(--coral)"><span class="pill-dot" style="background:var(--coral)"></span>${ALC_L[state.alc]}</span>`,
+    state.type!=='all'?`<span class="pill" style="color:${ts(state.type,'dk')};border-color:${ts(state.type,'c')}"><span class="pill-dot" style="background:${ts(state.type,'c')}"></span>${state.type}</span>`:''
+  ].join('');
+}
+
+/* ══════════════════ SEARCH ══════════════════ */
+function doSearch(){
+  currentResults=[...DB].sort((a,b)=>scoreD(a)-scoreD(b)).slice(0,7);
+  searched=true;
+  $('taste-chips').innerHTML=tasteChips();
+  renderBanner(currentResults[0]);
+  renderHero(currentResults[0]);
+  renderResults(currentResults.slice(1));
+  updateReport();
+  $('home-empty').style.display='none';
+  $('home-results').style.display='flex';
+  $('ab-pill').textContent=currentResults.length+'종 추천';
+  closeDrawer();
+  go('home');
+  $('taste-panel').classList.add('collapsed');
+  toast('취향에 맞는 술 '+currentResults.length+'종을 찾았어요');
+}
+
+function renderBanner(d){
+  const col=getColor(d);
+  const cols=[col,ts(d.type,'bg'),ts(d.type,'c'),ts(d.type,'dk')];
+  const sL=['','드라이','살짝 달콤','중간 단맛','달콤한','매우 달콤한'];
+  const tz=d.terroir;
+  $('pb').innerHTML=`
+    <div class="pb-sw-row">${cols.map(c=>`<div class="pb-sw" style="background:${c}"></div>`).join('')}</div>
+    <div class="pb-in">
+      <div class="pb-title">${sL[state.sweet]} ${d.type} 취향</div>
+      <div class="pb-sub">${d.name} 계열이 가장 잘 맞아요</div>
+      ${tz?`<div class="pb-terroir" onclick="go('terroir')">
+        <div><div class="pbt-zone" style="color:${tz.color}">${tz.zone}</div><div class="pbt-ko">🗺️ ${tz.ko}</div></div>
+        <div class="pbt-more">지도 보기 ›</div></div>`:''}
+    </div>`;
+}
+
+function renderHero(d){
+  const col=getColor(d),tz=d.terroir,nm=d.name.replace(/'/g,"\\'");
+  $('hero-card').innerHTML=`
+    <div class="hero">
+      <div class="hero-top" style="background:${col}"></div>
+      <div class="hero-in">
+        <div>
+          <div class="hero-badge">⭐ 가장 잘 맞는 한 잔</div>
+          <div class="hero-name" style="margin-top:8px">${d.name}</div>
+          <div class="hero-meta">${d.도수}% · ${d.type} · ${d.brewery||''}</div>
+        </div>
+        <div class="hero-sw-row">
+          <div class="hero-sw" style="background:${col}"></div>
+          <div class="hero-cs">${d.color_story||''}</div>
+        </div>
+        <div class="tcs-lg-stack">${tcsBar('당도',d.당도,'lg')}${tcsBar('산미',d.산미,'lg')}${tcsBar('바디',d.바디,'lg')}</div>
+        ${d.story?`<div><div class="hero-lbl">이 술 이야기</div><div class="hero-story">${d.story}</div></div>`:''}
+        ${tz?`<div style="background:${tz.bg};border-radius:12px;padding:12px 13px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;flex-wrap:wrap">
+            <span style="font-size:11.5px;font-weight:600;letter-spacing:.04em;color:${tz.color}">${tz.zone}</span>
+            <span style="font-size:11px;color:var(--ink3)">${tz.ko}</span>
+            ${tz.estimated===false?`<span style="font-size:9.5px;padding:2px 8px;border-radius:8px;background:${tz.color};color:#fff;margin-left:auto">공식</span>`:`<span style="font-size:9.5px;padding:2px 8px;border-radius:8px;color:var(--ink3);border:0.5px dashed var(--ink3);margin-left:auto">추정</span>`}
+          </div>
+          <div style="font-size:12.5px;color:var(--ink2);line-height:1.7">📍 ${tz.region}<br>${tz.reason}</div>
+        </div>`:''}
+        <div class="hero-acts">
+          <button class="hero-btn p" onclick="openRecord('${nm}')">이 술 기록하기</button>
+          <button class="hero-btn s" onclick="openDetail('${nm}')">더 자세히</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function drinkRow(d,opts={}){
+  const col=getColor(d);
+  const nm=d.name.replace(/'/g,"\\'");
+  return `<div class="drink-row" onclick="openDetail('${nm}')">
+    <div class="dr-bar" style="background:${col}"></div>
+    <div class="dr-in">
+      <div class="dr-top"><div class="dr-name">${d.name}</div><div class="dr-abv">${d.도수}%</div></div>
+      <div class="dr-meta">${d.brewery||d.type}</div>
+      ${d.terroir?`<div class="dr-zone" style="background:${d.terroir.bg};color:${d.terroir.color}">📍 ${d.terroir.zone}${d.terroir.estimated===false?' ✓':''}</div>`:''}
+      <div class="tcs-stack">${tcsBar('당도',d.당도)}${tcsBar('산미',d.산미)}${tcsBar('바디',d.바디)}</div>
+      <div class="dr-foot">
+        <span class="type-badge" style="background:${ts(d.type,'bg')};color:${ts(d.type,'dk')};border:0.5px solid ${ts(d.type,'c')}">${d.type}</span>
+        ${opts.rec!==false?`<button class="dr-rec" onclick="event.stopPropagation();openRecord('${nm}')">기록하기</button>`:'<span style="margin-left:auto;font-size:11.5px;color:var(--point-d)">상세 ›</span>'}
+      </div>
+    </div></div>`;
+}
+
+function renderResults(list){
+  $('res-count').textContent=list.length+'종';
+  $('res-list').innerHTML=list.map(d=>drinkRow(d)).join('');
+}
+
+/* ══════════════════ DETAIL ══════════════════ */
+function openDetail(name){
+  const d=DB.find(x=>x.name===name);if(!d)return;
+  const col=getColor(d);
+  $('dt-hd').innerHTML=`
+    <div class="mcolor" style="background:${col}"></div>
+    <div style="flex:1;min-width:0">
+      <div class="sh-title">${d.name}</div>
+      <div class="sh-sub">${d.도수}% · ${d.type} · ${d.brewery||''}</div>
+    </div>
+    <button class="sh-x" onclick="closeSheets()">✕</button>`;
+  const bw=BREWERIES.find(b=>b.products.includes(d.name));
+  $('dt-body').innerHTML=`
+    <div><div class="m-lbl">맛 프로파일</div>
+      <div class="tcs-lg-stack">${tcsBar('당도',d.당도,'lg')}${tcsBar('산미',d.산미,'lg')}${tcsBar('바디',d.바디,'lg')}</div>
+      <div style="display:flex;align-items:center;gap:8px;margin-top:13px;padding-top:12px;border-top:0.5px solid var(--border)">
+        <span style="font-size:12px;font-weight:600;color:var(--ink2)">도수</span>
+        <span style="font-size:10px;color:var(--ink3)">ABV</span>
+        <div style="flex:1;height:6px;background:var(--cream);border-radius:3px;overflow:hidden;margin:0 4px"><div style="width:${Math.round(d.도수/52*100)}%;height:100%;background:var(--coral);border-radius:3px"></div></div>
+        <span style="font-size:13px;font-weight:600">${d.도수}%</span>
+      </div></div>
+    ${d.story?`<div><div class="m-lbl">이 술 이야기</div><div class="mdesc">${d.story}</div></div>`:''}
+    ${d.color_story?`<div><div class="m-lbl">컬러 스토리</div><div style="display:flex;align-items:center;gap:11px"><div style="width:30px;height:30px;border-radius:8px;background:${col};flex-shrink:0"></div><div class="mdesc">${d.color_story}</div></div></div>`:''}
+    ${d.ingredients?`<div><div class="m-lbl">주요 재료</div><div style="display:flex;flex-direction:column;gap:11px">${d.ingredients.map(g=>`<div class="ing"><div class="ing-ic">${g.icon}</div><div><div class="ing-n">${g.name}</div><div class="ing-d">${g.desc}</div></div></div>`).join('')}</div></div>`:''}
+    ${d.terroir?`<div><div class="m-lbl">떼루아 · 원물의 땅</div>
+      <div style="background:${d.terroir.bg};border-radius:12px;padding:13px 14px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:9px;flex-wrap:wrap">
+          <span style="font-size:11.5px;font-weight:600;letter-spacing:.04em;color:${d.terroir.color}">${d.terroir.zone}</span>
+          <span style="font-size:11px;color:var(--ink3)">${d.terroir.ko}</span>
+          ${d.terroir.estimated===false?`<span style="font-size:9.5px;padding:2px 8px;border-radius:8px;background:${d.terroir.color};color:#fff;margin-left:auto">공식 분류</span>`:`<span style="font-size:9.5px;padding:2px 8px;border-radius:8px;color:var(--ink3);border:0.5px dashed var(--ink3);margin-left:auto">추정 분류</span>`}
+        </div>
+        <div style="display:flex;gap:16px;margin-bottom:9px">
+          <div><div style="font-size:10px;color:var(--ink3)">원물</div><div style="font-size:12.5px;font-weight:500">${d.terroir.material}</div></div>
+          <div style="flex:1"><div style="font-size:10px;color:var(--ink3)">재배 지역</div><div style="font-size:12.5px;color:var(--ink2)">${d.terroir.region}</div></div>
+        </div>
+        <div style="font-size:12.5px;color:var(--ink2);line-height:1.7;padding-top:9px;border-top:0.5px solid rgba(0,0,0,.06)">${d.terroir.reason}</div>
+      </div></div>`:''}
+    ${bw?`<div><div class="m-lbl">양조장</div><div class="bw-mini"><div class="bw-mini-n">${bw.emoji} ${bw.name}</div><div class="bw-mini-l">📍 ${bw.loc} · 설립 ${bw.year}년</div><div class="bw-mini-d">${bw.desc}</div></div></div>`:''}
+    ${d.pairing?`<div><div class="m-lbl">어울리는 안주</div><div class="pair">${d.pairing.map(p=>`<span class="pair-t">${p}</span>`).join('')}</div></div>`:''}`;
+  $('dt-foot').innerHTML=`<button class="btn-primary" onclick="openRecord('${d.name.replace(/'/g,"\\'")}')">이 술 기록하기</button>`;
+  openSheet('sheet-detail');
+}
+
+/* ══════════════════ RECORD ══════════════════ */
+function setStar(n){rec.stars=n;document.querySelectorAll('#star-row .star').forEach((b,i)=>b.classList.toggle('on',i<n));}
+function setEmo(el){rec.emotion=el.dataset.e;document.querySelectorAll('#emo-row .emo').forEach(b=>b.classList.toggle('on',b===el));}
+function setWx(el){rec.weather=el.dataset.w;document.querySelectorAll('#wx-row .wx').forEach(b=>b.classList.toggle('on',b===el));}
+function toggleOpt(el,key){el.classList.toggle('on');rec[key]=Array.from(document.querySelectorAll(`#${key==='ctx'?'ctx':'flv'}-row .opt.on`)).map(b=>b.textContent);}
+function pickDrink(name){
+  const d=DB.find(x=>x.name===name);
+  rec.drink=d||null;
+  $('rec-sub').textContent=d?`${d.name} · ${d.type} · ${d.도수}%`:'마신 술을 선택해주세요';
+}
+function resetRecordForm(){
+  rec.stars=0;rec.emotion='';rec.weather='';rec.ctx=[];rec.flavors=[];
+  document.querySelectorAll('#star-row .star,#emo-row .emo,#wx-row .wx,#ctx-row .opt,#flv-row .opt').forEach(b=>b.classList.remove('on'));
+  $('feel-in').value='';$('memo-in').value='';$('rec-date').value=today();
+}
+function openRecord(name){
+  resetRecordForm();
+  $('drink-select').value=name||'';
+  pickDrink(name||'');
+  closeSheets();
+  setTimeout(()=>openSheet('sheet-record'),name?180:0);
+}
+function saveRecord(){
+  if(!rec.drink){toast('마신 술을 선택해주세요');return;}
+  logs.unshift({
+    id:Date.now(),drink:rec.drink,color:getColor(rec.drink),
+    date:$('rec-date').value||today(),stars:rec.stars,emotion:rec.emotion,weather:rec.weather,
+    ctx:[...rec.ctx],flavors:[...rec.flavors],
+    feeling:$('feel-in').value.trim(),memo:$('memo-in').value.trim()
+  });
+  store.save();
+  renderDiary();
+  if(searched)updateReport();
+  closeSheets();
+  go('diary');
+  toast('기록이 저장되었어요');
+}
+function deleteLog(id){logs=logs.filter(e=>e.id!==id);store.save();renderDiary();if(searched)updateReport();toast('기록을 삭제했어요');}
+
+/* ══════════════════ DIARY ══════════════════ */
+function renderDiary(){
+  $('diary-count').textContent=logs.length+'종';
+  $('dn-diary').textContent=logs.length?logs.length+'종':'';
+  const sb=$('diary-stats');
+  if(!logs.length){
+    sb.style.display='none';$('diary-filter').innerHTML='';
+    $('diary-list').innerHTML=`<div class="card empty"><div class="empty-t">첫 번째 기록을 남겨보세요</div><div class="empty-s">추천 결과에서 술을 고르거나<br>아래 ＋ 버튼으로 바로 기록할 수 있어요</div></div>`;
+    return;
+  }
+  sb.style.display='grid';
+  const avg=(logs.reduce((s,e)=>s+e.stars,0)/logs.length).toFixed(1);
+  const cnt=a=>Object.entries(a).sort((x,y)=>y[1]-x[1])[0]?.[0]||'–';
+  const tf={};logs.forEach(e=>tf[e.drink.type]=(tf[e.drink.type]||0)+1);
+  const ff={};logs.forEach(e=>e.flavors.forEach(f=>ff[f]=(ff[f]||0)+1));
+  const ef={};logs.forEach(e=>{if(e.emotion)ef[e.emotion]=(ef[e.emotion]||0)+1;});
+  sb.innerHTML=`
+    <div class="stat"><div class="stat-l">총 기록</div><div class="stat-v">${logs.length}<span style="font-size:13px;color:var(--ink3)">종</span></div></div>
+    <div class="stat"><div class="stat-l">평균 별점</div><div class="stat-v">${avg}<span style="font-size:13px;color:#EF9F27"> ★</span></div></div>
+    <div class="stat"><div class="stat-l">선호 주종</div><div class="stat-v" style="font-size:16px">${cnt(tf)}</div></div>
+    <div class="stat"><div class="stat-l">자주 느낀 향</div><div class="stat-v" style="font-size:16px">${cnt(ff)}</div><div class="stat-s">${cnt(ef)} 기분</div></div>`;
+  const types=['all',...new Set(logs.map(e=>e.drink.type))];
+  $('diary-filter').innerHTML=types.map(t=>`<button class="chip ${logFilter===t?'on':''}" onclick="setLogFilter('${t}')">${t==='all'?'전체':t}</button>`).join('');
+  const list=logFilter==='all'?logs:logs.filter(e=>e.drink.type===logFilter);
+  if(!list.length){$('diary-list').innerHTML='<div class="card empty"><div class="empty-t">이 주종의 기록이 없어요</div></div>';return;}
+  $('diary-list').innerHTML=list.map(e=>{
+    const tc=ts(e.drink.type,'c'),tbg=ts(e.drink.type,'bg'),tdk=ts(e.drink.type,'dk');
+    return`<div class="log">
+      <div class="log-strip" style="background:${e.color}"></div>
+      <div class="log-in">
+        <div class="log-hd"><div class="log-name">${e.drink.name}</div><div class="log-date">${(e.date||'').replace(/-/g,'.')}</div></div>
+        <div class="log-meta">
+          ${e.stars?`<span style="font-size:13px;color:#EF9F27">${'★'.repeat(e.stars)}<span style="color:#E2DFDA">${'★'.repeat(5-e.stars)}</span></span>`:''}
+          ${e.emotion?`<span style="font-size:16px">${e.emotion}</span>`:''}${e.weather?`<span style="font-size:15px">${e.weather}</span>`:''}
+          <span class="type-badge" style="background:${tbg};color:${tdk};border:0.5px solid ${tc}">${e.drink.type}</span>
+          <span style="font-size:11px;color:var(--ink3)">${e.drink.도수}%</span>
+        </div>
+        ${(e.ctx.length||e.flavors.length)?`<div class="log-ctx">${e.ctx.map(c=>`<span class="ltag">👤 ${c}</span>`).join('')}${e.flavors.map(f=>`<span class="ftag">${f}</span>`).join('')}</div>`:''}
+        ${e.feeling?`<div class="log-feel">${e.feeling}</div>`:''}
+        ${e.memo?`<div class="log-note">${e.memo}</div>`:''}
+        <div class="log-pal">${[e.color,tbg,tc].map(c=>`<div class="lp" style="background:${c}"></div>`).join('')}
+          <span style="font-size:10px;color:var(--ink3);margin-left:5px">단맛 ${e.drink.당도} · 산미 ${e.drink.산미} · 바디 ${e.drink.바디}</span></div>
+        <button class="log-del" onclick="deleteLog(${e.id})">삭제</button>
+      </div></div>`;
+  }).join('');
+}
+function setLogFilter(t){logFilter=t;renderDiary();}
+
+/* ══════════════════ EXPLORE ══════════════════ */
+function renderAll(){
+  const types=['탁주','약주','증류주','리큐르','와인','과실주'];
+  const q=($('ex-search').value||'').trim().toLowerCase();
+  $('all-filter').innerHTML=['all',...types].map(t=>{
+    const c=t==='all'?DB.length:DB.filter(d=>d.type===t).length;
+    return`<button class="chip ${allFilter===t?'on':''}" onclick="setAllFilter('${t}')">${t==='all'?'전체':t} ${c}</button>`;
+  }).join('');
+  const show=allFilter==='all'?types:[allFilter];
+  const html=show.map(type=>{
+    let ds=DB.filter(d=>d.type===type).sort((a,b)=>a.도수-b.도수);
+    if(q)ds=ds.filter(d=>(d.name+' '+(d.brewery||'')).toLowerCase().includes(q));
+    if(!ds.length)return'';
+    return`<div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+        <span style="width:10px;height:10px;border-radius:3px;background:${ts(type,'c')}"></span>
+        <span style="font-size:14px;font-weight:600">${type}</span><span style="font-size:11px;color:var(--ink3)">${ds.length}종</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">${ds.map(d=>drinkRow(d,{rec:false})).join('')}</div></div>`;
+  }).join('');
+  $('all-groups').innerHTML=html||'<div class="card empty"><div class="empty-t">검색 결과가 없어요</div></div>';
+}
+function setAllFilter(t){allFilter=t;renderAll();}
+
+function renderJujong(){
+  $('ex-jujong').innerHTML=JUJONG.map(j=>`
+    <div class="card">
+      <div class="jj-strip">${j.colors.map(c=>`<div class="jj-seg" style="background:${c}"></div>`).join('')}</div>
+      <div class="jj-in">
+        <div><div class="jj-n">${j.name}</div><div class="jj-e">${j.eng}</div></div>
+        <div class="mdesc">${j.desc}</div>
+        <div class="jj-3">
+          <div class="jj-s"><div class="jj-sl">도수</div><div class="jj-sv">${j.abv}%</div></div>
+          <div class="jj-s"><div class="jj-sl">당도</div><div class="jj-sv">${j.sweet}</div></div>
+          <div class="jj-s"><div class="jj-sl">바디</div><div class="jj-sv">${j.body}</div></div>
+        </div>
+        <div style="display:flex;gap:5px;flex-wrap:wrap">${j.examples.map(e=>`<span class="pill" style="color:${j.color};border-color:${j.color}" onclick="openDetail('${e.replace(/'/g,"\\'")}')">${e}</span>`).join('')}</div>
+        <div style="padding-top:10px;border-top:0.5px solid var(--border)">
+          <div style="font-size:10px;font-weight:500;color:var(--ink3);margin-bottom:4px">제조 방식</div>
+          <div class="mdesc" style="font-size:12.5px">${j.process}</div></div>
+        <div class="jj-tip">💡 ${j.tip}</div>
+      </div></div>`).join('');
+}
+function renderBrewery(){
+  $('bw-count').textContent=BREWERIES.length+'개 양조장';
+  $('ex-brewery').innerHTML=BREWERIES.map(b=>`
+    <div class="card" style="padding:15px;display:flex;flex-direction:column;gap:11px">
+      <div class="bw-hd">
+        <div class="bw-em" style="background:${b.bg}">${b.emoji}</div>
+        <div><div class="bw-n">${b.name}</div><div class="bw-l">📍 ${b.loc} · 설립 ${b.year}년</div></div>
+      </div>
+      <div class="mdesc">${b.desc}</div>
+      <div><div style="font-size:10px;color:var(--ink3);margin-bottom:6px;font-weight:500">보유 제품</div>
+        <div style="display:flex;gap:5px;flex-wrap:wrap">${b.products.map(p=>`<span class="prod" onclick="openDetail('${p.replace(/'/g,"\\'")}')">${p}</span>`).join('')}</div></div>
+    </div>`).join('');
+}
+
+/* ══════════════════ TERROIR ══════════════════ */
+function renderTerroir(){
+  const withT=DB.filter(d=>d.terroir);
+  $('tr-count').textContent=TERROIR_ZONES.length+'개 구역';
+  const MAP_POS={'WEST FIELD':{x:212,y:232},'SOUTHWEST HERB':{x:268,y:318},'VOLCANIC RIDGE':{x:400,y:315},'HANON BASIN':{x:540,y:320},'CITRUS VALLEY':{x:660,y:305},'COASTAL WATER':{x:760,y:215}};
+  const markers=TERROIR_ZONES.map(z=>{
+    const n=withT.filter(d=>d.terroir.zone===z.zone).length,p=MAP_POS[z.zone];
+    return`<g style="cursor:pointer" onclick="scrollToZone('${z.zone}')">
+      <path d="M${p.x} ${p.y-28} C${p.x-11} ${p.y-28} ${p.x-11} ${p.y-14} ${p.x} ${p.y-3} C${p.x+11} ${p.y-14} ${p.x+11} ${p.y-28} ${p.x} ${p.y-28} Z" fill="var(--point)"/>
+      <circle cx="${p.x}" cy="${p.y-21}" r="4.5" fill="#fff"/>
+      <text x="${p.x}" y="${p.y-17.5}" text-anchor="middle" font-size="6" font-weight="700" fill="var(--point)">${n}</text>
+      <text x="${p.x}" y="${p.y+15}" text-anchor="middle" font-size="16" font-weight="600" fill="var(--point-dk)">${z.ko}</text>
+      <text x="${p.x}" y="${p.y+30}" text-anchor="middle" font-size="10" font-weight="500" fill="var(--point)" letter-spacing="0.5">${z.zone}</text>
+    </g>`;
+  }).join('');
+  $('map-inner').innerHTML=`
+    <svg width="100%" viewBox="70 110 890 268" style="display:block" font-family="'Noto Sans KR',sans-serif">
+      <path d="M95 250 C90 232 100 216 122 206 C150 193 180 186 210 176 C235 168 258 156 288 150 C318 144 345 152 372 156 C405 161 435 156 468 150 C512 142 555 138 598 140 C645 142 690 150 735 160 C775 169 812 178 848 192 C878 204 905 216 925 234 C940 247 935 262 915 270 C888 281 858 288 828 296 C800 303 772 312 742 318 C728 321 725 332 712 336 C700 340 686 335 672 338 C632 346 592 354 550 358 C505 362 460 362 418 358 C380 354 342 348 305 340 C272 333 240 324 210 312 C182 301 155 289 132 274 C112 261 100 258 95 250 Z"
+        fill="none" stroke="var(--point)" stroke-width="2.5" stroke-linejoin="round" opacity="0.9"/>
+      <ellipse cx="500" cy="250" rx="120" ry="42" fill="none" stroke="var(--point)" stroke-width="1" opacity="0.15"/>
+      <ellipse cx="500" cy="250" rx="65" ry="24" fill="none" stroke="var(--point)" stroke-width="1" opacity="0.11"/>
+      <text x="500" y="254" text-anchor="middle" font-size="12" fill="var(--point)" opacity="0.4">한라산</text>
+      ${markers}
+    </svg>`;
+  $('zone-cards').innerHTML=TERROIR_ZONES.map(z=>{
+    const ds=withT.filter(d=>d.terroir.zone===z.zone);
+    if(!ds.length)return'';
+    const t=ds[0].terroir,off=ds.filter(d=>d.terroir.estimated===false).length;
+    return`<div class="zone-card" id="z-${z.zone.replace(/ /g,'_')}">
+      <div class="zone-top" style="background:${z.color}"></div>
+      <div class="zone-in">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:13px;font-weight:600;letter-spacing:.04em;color:${z.color}">${z.zone}</span>
+          <span style="font-size:11px;color:var(--ink3)">${z.ko}</span>
+          <span style="font-size:10.5px;color:var(--ink3);margin-left:auto">${ds.length}종</span>
+        </div>
+        <div><div style="font-size:10px;color:var(--ink3)">대표 원물</div><div style="font-size:13px;font-weight:500">${t.material}</div></div>
+        <div><div style="font-size:10px;color:var(--ink3)">재배 지역</div><div style="font-size:12px;color:var(--ink2);line-height:1.6">${t.region}</div></div>
+        <div style="font-size:12.5px;color:var(--ink2);line-height:1.7;background:${z.bg};border-radius:10px;padding:11px 12px">${t.reason}</div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <span style="font-size:10px;color:var(--ink3);font-weight:500">이 떼루아의 술</span>
+          ${off?`<span style="font-size:9.5px;padding:2px 7px;border-radius:8px;background:${z.bg};color:${z.color}">공식 ${off}종</span>`:`<span style="font-size:9.5px;padding:2px 7px;border-radius:8px;color:var(--ink3);border:0.5px dashed var(--border2)">추정 분류</span>`}
+        </div>
+        <div style="display:flex;gap:5px;flex-wrap:wrap">${ds.map(d=>{const o=d.terroir.estimated===false;return`<span style="font-size:12px;padding:5px 11px;border-radius:20px;border:${o?'1px solid '+z.color:'0.5px dashed '+z.color};color:${z.color};${o?'font-weight:500':'opacity:.85'}" onclick="openDetail('${d.name.replace(/'/g,"\\'")}')">${d.name}${o?' ✓':''}</span>`;}).join('')}</div>
+      </div></div>`;
+  }).join('');
+}
+function scrollToZone(z){
+  const el=$('z-'+z.replace(/ /g,'_'));
+  if(el)el.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+/* ══════════════════ REPORT ══════════════════ */
+function updateReport(){
+  if(!currentResults.length)return;
+  $('rep-empty').style.display='none';$('rep-content').style.display='flex';
+  const top=currentResults,d=top[0],col=getColor(d);
+  $('rp-pal').innerHTML=[col,ts(d.type,'bg'),ts(d.type,'c'),ts(d.type,'dk')].map(c=>`<i style="background:${c}"></i>`).join('');
+  const sL=['','드라이','살짝 달콤','중간 단맛의','달콤한','매우 달콤한'];
+  const soL=['','산미 없는','약한 산미의','중간 산미의','새콤한','매우 새콤한'];
+  $('rp-type').textContent=`${sL[state.sweet]} ${d.type} 취향`;
+  $('rp-desc').textContent=`${soL[state.sour]} 스타일을 선호해요. ${d.name} 같은 술이 가장 잘 맞을 거예요.`;
+  $('rp-tags').innerHTML=tasteChips();
+  $('rp-cnt').textContent=logs.length+'종';
+  $('rp-pref').textContent=logs.length?(()=>{const f={};logs.forEach(e=>f[e.drink.type]=(f[e.drink.type]||0)+1);return Object.entries(f).sort((a,b)=>b[1]-a[1])[0][0];})():'–';
+  $('rp-stat-tags').innerHTML=top.slice(0,3).map(dr=>`<span class="pill" style="color:${ts(dr.type,'dk')};border-color:${ts(dr.type,'c')}"><span class="pill-dot" style="background:${getColor(dr)}"></span>${dr.name}</span>`).join('');
+  const cx=Math.round(30+d.당도/5*185),cy=Math.round(160-d.도수/52*130);
+  $('rp-map').innerHTML=`
+    <svg width="100%" viewBox="0 0 260 190" style="border-radius:10px;background:var(--cream)" font-family="'Noto Sans KR',sans-serif">
+      <ellipse cx="190" cy="140" rx="52" ry="33" fill="#E1F5EE" opacity=".6"/><ellipse cx="78" cy="97" rx="44" ry="33" fill="#EEEDFE" opacity=".5"/>
+      <ellipse cx="185" cy="52" rx="44" ry="28" fill="#FBEAF0" opacity=".5"/><ellipse cx="66" cy="42" rx="34" ry="26" fill="#FAECE7" opacity=".5"/>
+      <line x1="20" y1="170" x2="245" y2="170" stroke="#E2DFDA" stroke-width=".5"/><line x1="20" y1="10" x2="20" y2="170" stroke="#E2DFDA" stroke-width=".5"/>
+      <text x="130" y="184" text-anchor="middle" font-size="9" fill="#928F87">← 드라이 · 달콤 →</text>
+      <text x="10" y="92" text-anchor="middle" font-size="9" fill="#928F87" transform="rotate(-90,10,92)">저도 ↑ 고도 ↓</text>
+      <text x="190" y="133" text-anchor="middle" font-size="9.5" fill="#085041" font-weight="500">막걸리</text>
+      <text x="78" y="90" text-anchor="middle" font-size="9.5" fill="#26215C" font-weight="500">약주</text>
+      <text x="185" y="46" text-anchor="middle" font-size="9.5" fill="#4B1528" font-weight="500">과실주</text>
+      <text x="63" y="37" text-anchor="middle" font-size="9.5" fill="#4A1B0C" font-weight="500">소주</text>
+      <circle cx="${cx}" cy="${cy}" r="14" fill="${col}" opacity=".25"/><circle cx="${cx}" cy="${cy}" r="7" fill="${col}"/>
+    </svg>`;
+  $('rp-buy').innerHTML=top.slice(0,4).map(dr=>`
+    <div class="buy" onclick="openDetail('${dr.name.replace(/'/g,"\\'")}')">
+      <div class="buy-sw" style="background:${getColor(dr)}"></div>
+      <div style="flex:1;min-width:0"><div class="buy-n">${dr.name}</div><div class="buy-m">${dr.도수}% · ${dr.type}</div></div>
+      <button class="buy-b" onclick="event.stopPropagation();toast('장바구니는 준비 중입니다')">담기</button>
+    </div>`).join('');
+}
+
+/* ══════════════════ INIT ══════════════════ */
+(function init(){
+  store.load();
+  renderTypeGrid();
+  $('taste-chips').innerHTML=tasteChips();
+  const sel=$('drink-select');
+  DB.forEach(d=>{const o=document.createElement('option');o.value=d.name;o.textContent=`${d.name} (${d.type} · ${d.도수}%)`;sel.appendChild(o);});
+  $('ctx-row').innerHTML=CTX_OPTS.map(c=>`<button class="opt" onclick="toggleOpt(this,'ctx')">${c}</button>`).join('');
+  $('flv-row').innerHTML=FLV_OPTS.map(f=>`<button class="opt" onclick="toggleOpt(this,'flavors')">${f}</button>`).join('');
+  $('rec-date').value=today();
+  renderAll();renderJujong();renderBrewery();renderTerroir();renderDiary();
+  $('ab-pill').textContent='보유 '+DB.length+'종';
+  $('all-count').textContent=DB.length+'종';
+  $('dn-all').textContent=DB.length+'종';
+  $('dn-bw').textContent=BREWERIES.length+'곳';
+
+  /* 왼쪽 가장자리 스와이프로 드로어 열기 / 닫기 */
+  let sx=0,sy=0;
+  document.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+  document.addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-sx, dy=Math.abs(e.changedTouches[0].clientY-sy);
+    if(dy>50)return;
+    const open=$('drawer').classList.contains('open');
+    if(!open && sx<28 && dx>62 && !document.querySelector('.sheet.open'))openDrawer();
+    if(open && dx<-62)closeDrawer();
+  },{passive:true});
+})();
+</script>
+</body>
+</html>
